@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>손수오 교수 | 대한민국 1위 보이스 컨설턴트</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --warm-cream: #FAF5EF; --warm-gold: #C9933E; --warm-gold-light: #E8C47A;
+  --deep-charcoal: #1A1714; --soft-brown: #3D3028; --muted-taupe: #8A7E72;
+  --cold-blue: #4A6FA5; --cold-steel: #8B9EB7; --accent-coral: #D4725C;
+  --light-sand: #F0E8DC; --section-bg: #F7F2EB;
+}
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: 'Noto Sans KR', sans-serif; color: var(--deep-charcoal); background: var(--warm-cream); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+ 
+/* ── NAV ── */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 3rem; display: flex; justify-content: space-between; align-items: center; transition: all 0.5s; background: transparent; }
+nav.scrolled { background: rgba(250,245,239,0.92); backdrop-filter: blur(20px); box-shadow: 0 1px 20px rgba(0,0,0,0.06); padding: 0.8rem 3rem; }
+.nav-logo { font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 1.3rem; }
+.nav-logo span { color: var(--warm-gold); }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a { text-decoration: none; color: var(--soft-brown); font-size: 0.88rem; font-weight: 500; position: relative; transition: color 0.3s; }
+.nav-links a:hover { color: var(--warm-gold); }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--warm-gold); transition: width 0.3s; }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta { background: var(--warm-gold) !important; color: #fff !important; padding: 0.55rem 1.4rem !important; border-radius: 100px; font-weight: 600 !important; transition: all 0.3s !important; }
+.nav-cta:hover { background: var(--accent-coral) !important; }
+.nav-cta::after { display: none !important; }
+ 
+/* ── HERO ── */
+.hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(135deg, #1A1714 0%, #2A2520 40%, #3D3028 100%); }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,147,62,0.12) 0%, transparent 70%), radial-gradient(ellipse 50% 80% at 20% 80%, rgba(212,114,92,0.08) 0%, transparent 60%); }
+.hero-grid-overlay { position: absolute; inset: 0; opacity: 0.04; background-image: linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px); background-size: 80px 80px; }
+.hero-particles { position: absolute; inset: 0; overflow: hidden; }
+.particle { position: absolute; border-radius: 50%; background: var(--warm-gold-light); opacity: 0; animation: float-up 8s infinite; }
+@keyframes float-up { 0% { opacity: 0; transform: translateY(100vh) scale(0); } 20% { opacity: 0.6; } 80% { opacity: 0.3; } 100% { opacity: 0; transform: translateY(-20vh) scale(1); } }
+.hero-content { position: relative; z-index: 2; max-width: 900px; padding: 2rem; text-align: center; animation: fadeInUp 1.2s ease-out; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+.hero-badge { display: inline-block; background: rgba(201,147,62,0.15); border: 1px solid rgba(201,147,62,0.3); color: var(--warm-gold-light); padding: 0.45rem 1.4rem; border-radius: 100px; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 2rem; animation: fadeInUp 1.2s ease-out 0.2s both; }
+.hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 900; line-height: 1.35; color: #fff; margin-bottom: 1.8rem; letter-spacing: -0.02em; animation: fadeInUp 1.2s ease-out 0.4s both; }
+.hero h1 .highlight { color: var(--warm-gold-light); position: relative; }
+.hero h1 .highlight::after { content: ''; position: absolute; bottom: 2px; left: 0; right: 0; height: 3px; background: var(--warm-gold); border-radius: 2px; }
+.hero-sub { font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(255,255,255,0.65); line-height: 1.8; max-width: 680px; margin: 0 auto 2.8rem; font-weight: 300; animation: fadeInUp 1.2s ease-out 0.6s both; }
+.hero-cta { display: inline-flex; align-items: center; gap: 0.7rem; background: linear-gradient(135deg, var(--warm-gold), #D4A045); color: #fff; text-decoration: none; padding: 1rem 2.4rem; border-radius: 100px; font-size: 1.05rem; font-weight: 600; transition: all 0.4s; box-shadow: 0 8px 30px rgba(201,147,62,0.3); animation: fadeInUp 1.2s ease-out 0.8s both; }
+.hero-cta:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(201,147,62,0.45); }
+.hero-cta svg { transition: transform 0.3s; } .hero-cta:hover svg { transform: translateX(4px); }
+.hero-scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.3); font-size: 0.78rem; text-align: center; animation: bounce 2s infinite 2s; }
+@keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+ 
+/* ── SHARED ── */
+.section-label { display: inline-block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-gold); margin-bottom: 1rem; position: relative; padding-left: 2rem; }
+.section-label::before { content: ''; position: absolute; left: 0; top: 50%; width: 1.2rem; height: 2px; background: var(--warm-gold); }
+.section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.35; color: var(--deep-charcoal); margin-bottom: 1.2rem; letter-spacing: -0.02em; }
+.section-desc { font-size: 1.05rem; color: var(--muted-taupe); line-height: 1.8; max-width: 600px; margin-bottom: 3.5rem; }
+ 
+/* ── FREE TRIAL BANNER ── */
+.free-trial { padding: 3.5rem 2rem; background: linear-gradient(135deg, rgba(201,147,62,0.06), rgba(212,114,92,0.04)); border-bottom: 1px solid rgba(201,147,62,0.15); position: relative; overflow: hidden; }
+.free-trial-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+.free-trial-text h3 { font-family: 'Noto Serif KR', serif; font-size: 1.4rem; font-weight: 700; color: var(--deep-charcoal); margin-bottom: 0.4rem; }
+.free-trial-text h3 em { color: var(--warm-gold); font-style: normal; }
+.free-trial-text p { font-size: 0.95rem; color: var(--muted-taupe); line-height: 1.7; }
+.free-trial-cta { display: inline-flex; align-items: center; gap: 0.6rem; padding: 1rem 2.2rem; border-radius: 100px; background: var(--deep-charcoal); color: #fff; text-decoration: none; font-size: 1rem; font-weight: 600; transition: all 0.4s; white-space: nowrap; box-shadow: 0 6px 24px rgba(0,0,0,0.12); }
+.free-trial-cta:hover { background: var(--warm-gold); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(201,147,62,0.3); }
+.free-trial-badge { display: inline-block; background: var(--accent-coral); color: #fff; font-size: 0.68rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 100px; margin-left: 0.5rem; letter-spacing: 0.05em; }
+@media (max-width: 768px) { .free-trial-inner { flex-direction: column; text-align: center; } }
+
+/* ── CREDENTIAL BADGES ── */
+.cred-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 2rem; }
+.cred-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); }
+.cred-icon-wrap { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; background: rgba(201,147,62,0.12); flex-shrink: 0; }
+.cred-item .cred-label { font-size: 0.72rem; color: rgba(255,255,255,0.4); }
+.cred-item .cred-val { font-size: 0.85rem; color: #fff; font-weight: 600; }
+@media (max-width: 900px) { .cred-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ── SOCIAL PROOF / TESTIMONIALS ── */
+.testimonials { padding: 7rem 2rem; background: var(--warm-cream); position: relative; }
+.testimonials::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--warm-gold-light), transparent); }
+.testimonials-inner { max-width: 1100px; margin: 0 auto; }
+.testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.testi-card { background: #fff; border-radius: 20px; padding: 2rem; border: 1px solid rgba(0,0,0,0.05); transition: all 0.4s; position: relative; }
+.testi-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.06); }
+.testi-card.featured-testi { border: 2px solid var(--warm-gold); box-shadow: 0 8px 30px rgba(201,147,62,0.08); }
+.testi-stars { color: var(--warm-gold); font-size: 0.82rem; letter-spacing: 2px; margin-bottom: 1rem; }
+.testi-quote { font-size: 0.95rem; color: var(--soft-brown); line-height: 1.8; margin-bottom: 1.5rem; font-style: italic; position: relative; padding-left: 1.2rem; border-left: 3px solid var(--warm-gold-light); }
+.testi-author { display: flex; align-items: center; gap: 0.8rem; }
+.testi-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; color: #fff; flex-shrink: 0; }
+.testi-author-info .testi-name { font-weight: 600; font-size: 0.88rem; }
+.testi-author-info .testi-title { font-size: 0.78rem; color: var(--muted-taupe); }
+.testi-audio-badge { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 1rem; padding: 0.4rem 0.9rem; border-radius: 100px; background: rgba(201,147,62,0.08); font-size: 0.72rem; color: var(--warm-gold); font-weight: 600; border: 1px solid rgba(201,147,62,0.15); cursor: pointer; transition: all 0.3s; }
+.testi-audio-badge:hover { background: rgba(201,147,62,0.15); }
+.audio-wave { display: flex; align-items: center; gap: 2px; height: 14px; }
+.audio-wave span { width: 3px; border-radius: 2px; background: var(--warm-gold); animation: wave-anim 1.2s ease-in-out infinite; }
+.audio-wave span:nth-child(1) { height: 4px; animation-delay: 0s; }
+.audio-wave span:nth-child(2) { height: 8px; animation-delay: 0.15s; }
+.audio-wave span:nth-child(3) { height: 12px; animation-delay: 0.3s; }
+.audio-wave span:nth-child(4) { height: 6px; animation-delay: 0.45s; }
+.audio-wave span:nth-child(5) { height: 10px; animation-delay: 0.6s; }
+@keyframes wave-anim { 0%, 100% { transform: scaleY(0.5); } 50% { transform: scaleY(1.2); } }
+@media (max-width: 900px) { .testi-grid { grid-template-columns: 1fr; } }
+
+/* ── PERSONA SECTION ── */
+.persona { padding: 5rem 2rem; background: var(--section-bg); }
+.persona-inner { max-width: 1100px; margin: 0 auto; }
+.persona-tabs { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
+.persona-tab { padding: 0.7rem 1.6rem; border-radius: 100px; border: 1.5px solid rgba(0,0,0,0.08); background: #fff; color: var(--soft-brown); font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.3s; font-family: 'Noto Sans KR', sans-serif; }
+.persona-tab:hover { border-color: var(--warm-gold); color: var(--warm-gold); }
+.persona-tab.active { background: var(--deep-charcoal); color: #fff; border-color: var(--deep-charcoal); }
+.persona-content { display: none; }
+.persona-content.active { display: block; animation: fadeInUp 0.5s ease-out; }
+.persona-card { background: #fff; border-radius: 20px; padding: 2.5rem; border: 1px solid rgba(0,0,0,0.05); display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center; }
+.persona-pain h3 { font-family: 'Noto Serif KR', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; }
+.persona-pain h3 em { color: var(--warm-gold); font-style: normal; }
+.persona-pain p { font-size: 0.95rem; color: var(--muted-taupe); line-height: 1.8; margin-bottom: 1.5rem; }
+.persona-pain-list { list-style: none; }
+.persona-pain-list li { padding: 0.5rem 0; font-size: 0.9rem; display: flex; align-items: flex-start; gap: 0.6rem; color: var(--soft-brown); }
+.persona-roi { background: linear-gradient(135deg, #FDF6EC, #FEF9F2); border-radius: 16px; padding: 2rem; border: 1px solid rgba(201,147,62,0.15); }
+.persona-roi h4 { font-family: 'Noto Serif KR', serif; font-size: 1.1rem; font-weight: 700; color: var(--warm-gold); margin-bottom: 1rem; }
+.roi-compare { margin-bottom: 1.2rem; }
+.roi-row { display: flex; justify-content: space-between; align-items: center; padding: 0.55rem 0; font-size: 0.88rem; border-bottom: 1px solid rgba(201,147,62,0.1); }
+.roi-row:last-child { border-bottom: none; }
+.roi-row .roi-label { color: var(--muted-taupe); }
+.roi-row .roi-val { font-weight: 700; color: var(--deep-charcoal); }
+.roi-row .roi-val.highlight { color: var(--warm-gold); font-size: 1rem; }
+.roi-bottom { text-align: center; padding: 1rem; background: var(--deep-charcoal); border-radius: 12px; color: #fff; font-size: 0.88rem; font-weight: 600; line-height: 1.6; }
+.roi-bottom em { color: var(--warm-gold-light); font-style: normal; }
+@media (max-width: 900px) { .persona-card { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+/* ── YOUTUBE EMBED SECTION ── */
+.yt-section { padding: 5rem 2rem 3rem; background: var(--warm-cream); }
+.yt-inner { max-width: 1100px; margin: 0 auto; }
+.yt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.yt-card { background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: all 0.4s; }
+.yt-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.06); }
+.yt-card iframe { width: 100%; aspect-ratio: 16/9; display: block; border: none; }
+.yt-card .yt-card-body { padding: 1.2rem 1.5rem; }
+.yt-card .yt-card-body h4 { font-family: 'Noto Serif KR', serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+.yt-card .yt-card-body p { font-size: 0.82rem; color: var(--muted-taupe); line-height: 1.5; }
+@media (max-width: 768px) { .yt-grid { grid-template-columns: 1fr; } }
+
+/* ── PROBLEM ── */
+.problem { padding: 7rem 2rem; background: var(--warm-cream); position: relative; }
+.problem::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--warm-gold-light), transparent); }
+.problem-inner { max-width: 1100px; margin: 0 auto; }
+.comparison-grid { display: grid; grid-template-columns: 1fr 80px 1fr; gap: 0; align-items: stretch; }
+.compare-card { border-radius: 20px; padding: 3rem 2.5rem; position: relative; transition: transform 0.4s; }
+.compare-card:hover { transform: translateY(-4px); }
+.compare-cold { background: linear-gradient(135deg, #E8EDF3, #F0F3F8); border: 1px solid rgba(74,111,165,0.15); }
+.compare-warm { background: linear-gradient(135deg, #FDF6EC, #FEF9F2); border: 1px solid rgba(201,147,62,0.2); box-shadow: 0 20px 60px rgba(201,147,62,0.08); }
+.compare-warm::after { content: '추천'; position: absolute; top: -12px; right: 24px; background: var(--warm-gold); color: #fff; padding: 0.3rem 1rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600; }
+.compare-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; font-size: 1.6rem; }
+.compare-cold .compare-icon { background: rgba(74,111,165,0.1); }
+.compare-warm .compare-icon { background: rgba(201,147,62,0.12); }
+.compare-card h3 { font-family: 'Noto Serif KR', serif; font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem; }
+.compare-cold h3 { color: var(--cold-blue); } .compare-warm h3 { color: var(--warm-gold); }
+.compare-card .subtitle { font-size: 0.88rem; color: var(--muted-taupe); margin-bottom: 1.8rem; }
+.compare-list { list-style: none; }
+.compare-list li { padding: 0.65rem 0; font-size: 0.95rem; display: flex; align-items: flex-start; gap: 0.7rem; border-bottom: 1px solid rgba(0,0,0,0.04); line-height: 1.5; }
+.compare-list li:last-child { border-bottom: none; }
+.compare-vs { display: flex; align-items: center; justify-content: center; }
+.vs-badge { width: 56px; height: 56px; border-radius: 50%; background: var(--deep-charcoal); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 0.9rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+ 
+/* ── SOLUTION ── */
+.solution { padding: 7rem 2rem; background: var(--deep-charcoal); color: #fff; position: relative; overflow: hidden; }
+.solution::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 80% 30%, rgba(201,147,62,0.08) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 10% 80%, rgba(212,114,92,0.05) 0%, transparent 60%); }
+.solution-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.solution .section-label { color: var(--warm-gold-light); } .solution .section-title { color: #fff; } .solution .section-desc { color: rgba(255,255,255,0.55); }
+.expert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 5rem; }
+.expert-photo-wrap { position: relative; }
+.expert-photo { width: 100%; aspect-ratio: 4/5; border-radius: 24px; overflow: hidden; position: relative; background: linear-gradient(135deg, #3D3028, #5A4A3A); display: flex; align-items: center; justify-content: center; }
+.expert-photo-placeholder { text-align: center; color: rgba(255,255,255,0.3); font-size: 0.85rem; }
+.expert-photo-placeholder .icon-ph { font-size: 4rem; display: block; margin-bottom: 1rem; opacity: 0.4; }
+.expert-photo::after { content: ''; position: absolute; inset: -2px; border-radius: 26px; border: 2px solid rgba(201,147,62,0.2); pointer-events: none; }
+.expert-float-card { position: absolute; bottom: -20px; right: -20px; background: rgba(250,245,239,0.95); backdrop-filter: blur(10px); border-radius: 16px; padding: 1.2rem 1.6rem; box-shadow: 0 12px 40px rgba(0,0,0,0.2); color: var(--deep-charcoal); }
+.expert-float-card .num { font-family: 'Noto Serif KR', serif; font-size: 2rem; font-weight: 900; color: var(--warm-gold); }
+.expert-float-card .label { font-size: 0.82rem; color: var(--muted-taupe); font-weight: 500; }
+.expert-info h3 { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; }
+.expert-info h3 em { color: var(--warm-gold-light); font-style: normal; }
+.expert-info p { color: rgba(255,255,255,0.6); line-height: 1.9; font-size: 1.02rem; margin-bottom: 2rem; }
+.expert-stats { display: flex; gap: 2rem; }
+.stat-item { text-align: center; } .stat-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 900; color: var(--warm-gold-light); } .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 0.2rem; }
+.magic-section { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+.donut-chart { width: 320px; height: 320px; margin: 0 auto; position: relative; }
+.donut-chart svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.donut-segment { fill: none; stroke-width: 32; stroke-linecap: butt; }
+.seg-visual { stroke: rgba(255,255,255,0.1); }
+.seg-audio { stroke: var(--warm-gold); filter: drop-shadow(0 0 12px rgba(201,147,62,0.5)); animation: glow-pulse 3s ease-in-out infinite; }
+@keyframes glow-pulse { 0%, 100% { filter: drop-shadow(0 0 8px rgba(201,147,62,0.3)); } 50% { filter: drop-shadow(0 0 20px rgba(201,147,62,0.7)); } }
+.seg-language { stroke: var(--accent-coral); filter: drop-shadow(0 0 10px rgba(212,114,92,0.4)); animation: glow-pulse 3s ease-in-out infinite 1.5s; }
+.donut-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+.donut-center .big { font-family: 'Noto Serif KR', serif; font-size: 3rem; font-weight: 900; color: var(--warm-gold-light); line-height: 1; }
+.donut-center .small { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 0.3rem; }
+.magic-info h3 { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #fff; }
+.magic-info p { color: rgba(255,255,255,0.55); line-height: 1.9; font-size: 0.98rem; margin-bottom: 1.5rem; }
+.legend-items { display: flex; flex-direction: column; gap: 0.8rem; }
+.legend-item { display: flex; align-items: center; gap: 0.8rem; font-size: 0.92rem; color: rgba(255,255,255,0.7); }
+.legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.legend-dot.visual { background: rgba(255,255,255,0.15); } .legend-dot.audio { background: var(--warm-gold); box-shadow: 0 0 8px rgba(201,147,62,0.5); } .legend-dot.language { background: var(--accent-coral); box-shadow: 0 0 8px rgba(212,114,92,0.4); }
+.legend-item strong { color: #fff; }
+ 
+/* ── CURRICULUM ── */
+.curriculum { padding: 7rem 2rem; background: var(--section-bg); }
+.curriculum-inner { max-width: 1200px; margin: 0 auto; }
+.course-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3.5rem; }
+.course-card { background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: all 0.4s; position: relative; display: flex; flex-direction: column; }
+.course-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,0.07); }
+.course-card.featured { border: 2px solid var(--warm-gold); box-shadow: 0 12px 40px rgba(201,147,62,0.1); }
+.course-card.featured::before { content: '인기'; position: absolute; top: 16px; right: 16px; z-index: 2; background: var(--warm-gold); color: #fff; padding: 0.25rem 0.8rem; border-radius: 100px; font-size: 0.72rem; font-weight: 700; }
+.course-header { padding: 2rem 2rem 1.5rem; }
+.duration-badge { display: inline-block; background: var(--section-bg); color: var(--muted-taupe); padding: 0.3rem 0.9rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem; }
+.course-header h3 { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.4rem; }
+.course-sub { font-size: 0.88rem; color: var(--muted-taupe); line-height: 1.6; }
+.course-body { padding: 0 2rem 1.5rem; flex: 1; }
+.course-features { list-style: none; }
+.course-features li { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.55rem 0; font-size: 0.88rem; color: var(--soft-brown); line-height: 1.5; border-bottom: 1px solid rgba(0,0,0,0.03); }
+.course-features li:last-child { border-bottom: none; }
+.feat-icon { width: 20px; height: 20px; border-radius: 50%; background: rgba(201,147,62,0.1); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; flex-shrink: 0; margin-top: 2px; color: var(--warm-gold); }
+.course-footer { padding: 1.5rem 2rem; border-top: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between; }
+.price-label { font-size: 0.72rem; color: var(--muted-taupe); } .price-val { font-family: 'Noto Serif KR', serif; font-size: 1.4rem; font-weight: 900; }
+.course-select-btn { padding: 0.6rem 1.4rem; border-radius: 100px; border: none; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.3s; background: var(--deep-charcoal); color: #fff; font-family: 'Noto Sans KR', sans-serif; }
+.course-select-btn:hover { background: var(--warm-gold); }
+.course-card.featured .course-select-btn { background: var(--warm-gold); }
+.course-card.featured .course-select-btn:hover { background: var(--accent-coral); }
+.curriculum-detail { background: #fff; border-radius: 20px; border: 1px solid rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 0.8rem; }
+.detail-header { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 2rem; cursor: pointer; transition: background 0.3s; user-select: none; }
+.detail-header:hover { background: rgba(201,147,62,0.03); }
+.detail-header h4 { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 0.8rem; }
+.step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--warm-gold); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; }
+.detail-chevron { width: 24px; height: 24px; transition: transform 0.3s; color: var(--muted-taupe); }
+.detail-header.open .detail-chevron { transform: rotate(180deg); }
+.detail-body { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1); }
+.detail-body-inner { padding: 0 2rem 2rem 4.2rem; }
+.detail-body-inner p { font-size: 0.92rem; color: var(--muted-taupe); line-height: 1.8; margin-bottom: 1rem; }
+.detail-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.detail-tag { display: inline-block; background: var(--section-bg); color: var(--soft-brown); padding: 0.3rem 0.8rem; border-radius: 100px; font-size: 0.78rem; font-weight: 500; }
+.includes-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 3rem; }
+.include-item { background: #fff; border-radius: 16px; padding: 1.8rem 1.5rem; text-align: center; border: 1px solid rgba(0,0,0,0.04); transition: all 0.4s; }
+.include-item:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.05); }
+.include-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 1rem; background: linear-gradient(135deg, rgba(201,147,62,0.1), rgba(201,147,62,0.05)); }
+.include-item h4 { font-family: 'Noto Serif KR', serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+.include-item p { font-size: 0.82rem; color: var(--muted-taupe); line-height: 1.6; }
+ 
+/* ── AS-IS → TO-BE Transform Cards ── */
+.transform-section { margin-top: 3.5rem; margin-bottom: 1rem; }
+.transform-section > h3 { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; font-weight: 700; text-align: center; margin-bottom: 0.4rem; }
+.transform-section > p { text-align: center; font-size: 0.88rem; color: var(--muted-taupe); margin-bottom: 2rem; }
+.transform-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.transform-card { background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: all 0.4s; }
+.transform-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.06); }
+.tf-header { padding: 1.5rem 1.8rem 1rem; }
+.tf-header .tf-course-name { font-family: 'Noto Serif KR', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.2rem; }
+.tf-header .tf-duration { font-size: 0.78rem; color: var(--muted-taupe); }
+.tf-body { padding: 0 1.8rem 1.8rem; }
+.tf-row { display: grid; grid-template-columns: 1fr 32px 1fr; gap: 0; align-items: start; margin-bottom: 1rem; }
+.tf-row:last-child { margin-bottom: 0; }
+.tf-col { padding: 0.8rem; border-radius: 12px; }
+.tf-asis { background: rgba(74,111,165,0.06); }
+.tf-tobe { background: rgba(201,147,62,0.08); }
+.tf-col-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+.tf-asis .tf-col-label { color: var(--cold-blue); }
+.tf-tobe .tf-col-label { color: var(--warm-gold); }
+.tf-col-text { font-size: 0.82rem; line-height: 1.5; color: var(--soft-brown); }
+.tf-arrow { display: flex; align-items: center; justify-content: center; color: var(--warm-gold); font-size: 1.1rem; padding-top: 0.8rem; }
+.tf-impact { display: flex; align-items: center; gap: 0.5rem; padding: 0.9rem 1.8rem; border-top: 1px solid rgba(0,0,0,0.04); background: linear-gradient(135deg, rgba(201,147,62,0.04), rgba(212,114,92,0.03)); }
+.tf-impact-icon { font-size: 1.2rem; }
+.tf-impact-text { font-size: 0.8rem; color: var(--soft-brown); font-weight: 600; line-height: 1.4; }
+.tf-impact-text em { font-style: normal; color: var(--warm-gold); }
+ 
+/* ══════════════════════════════════════════
+   SECTION 5: ENHANCED AIRBNB BOOKING
+   ══════════════════════════════════════════ */
+.booking { padding: 7rem 2rem; background: linear-gradient(170deg, #1A1714 0%, #2A2520 50%, #3D3028 100%); color: #fff; position: relative; overflow: hidden; }
+.booking::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 40% at 30% 60%, rgba(201,147,62,0.1) 0%, transparent 70%); }
+.booking-inner { max-width: 1160px; margin: 0 auto; position: relative; z-index: 1; }
+.booking .section-label { color: var(--warm-gold-light); padding-left: 0; }
+.booking .section-label::before { display: none; }
+.booking .section-title { color: #fff; margin-bottom: 0.6rem; }
+.booking .section-desc { color: rgba(255,255,255,0.5); max-width: 500px; margin-bottom: 3rem; }
+ 
+/* ── Course selector pills ── */
+.bk-course-pills { display: flex; gap: 0.6rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.bk-pill {
+  padding: 0.7rem 1.5rem; border-radius: 14px;
+  border: 1.5px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.6); font-size: 0.88rem; font-weight: 500;
+  cursor: pointer; transition: all 0.3s;
+  display: flex; flex-direction: column; gap: 0.15rem;
+}
+.bk-pill:hover { border-color: var(--warm-gold); color: #fff; }
+.bk-pill.active {
+  border-color: var(--warm-gold); background: var(--warm-gold);
+  color: #fff; font-weight: 600;
+}
+.bk-pill .pill-sub { font-size: 0.7rem; opacity: 0.7; }
+.bk-pill.active .pill-sub { opacity: 0.9; }
+ 
+/* ── Airbnb 2-col ── */
+.airbnb-layout { display: grid; grid-template-columns: 1.15fr 400px; gap: 2.5rem; align-items: start; }
+ 
+/* ── Calendar ── */
+.ab-calendar { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 2rem; margin-bottom: 1.5rem; }
+.ab-cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+.ab-cal-title { font-family: 'Noto Serif KR', serif; font-size: 1.15rem; font-weight: 700; }
+.ab-cal-hint { font-size: 0.78rem; color: rgba(255,255,255,0.35); margin-bottom: 1.2rem; }
+.ab-cal-nav { display: flex; gap: 0.4rem; }
+.ab-cal-nav button { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12); background: transparent; color: #fff; cursor: pointer; font-size: 0.95rem; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+.ab-cal-nav button:hover { background: var(--warm-gold); border-color: var(--warm-gold); }
+.ab-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; }
+.ab-day-name { font-size: 0.7rem; color: rgba(255,255,255,0.3); padding-bottom: 0.5rem; font-weight: 600; }
+.ab-date { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.85rem; color: rgba(255,255,255,0.2); cursor: default; transition: all 0.2s; position: relative; }
+.ab-date.avail { color: rgba(255,255,255,0.85); cursor: pointer; }
+.ab-date.avail:hover { background: rgba(201,147,62,0.18); }
+.ab-date.start-date { background: var(--warm-gold) !important; color: #fff !important; font-weight: 700; box-shadow: 0 2px 10px rgba(201,147,62,0.4); border-radius: 50%; z-index: 2; }
+.ab-date.sched { background: rgba(201,147,62,0.18); color: var(--warm-gold-light) !important; font-weight: 600; border-radius: 10px; }
+.ab-date.sched:hover { background: rgba(201,147,62,0.3); }
+.ab-date.today::after { content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--accent-coral); }
+ 
+/* ── Day Pattern Selector ── */
+.bk-day-pattern { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.bk-day-pattern h4 { font-family: 'Noto Serif KR', serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.8rem; color: rgba(255,255,255,0.8); }
+.pattern-options { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.pattern-btn { padding: 0.55rem 1.2rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: transparent; color: rgba(255,255,255,0.6); font-size: 0.82rem; cursor: pointer; transition: all 0.25s; font-family: 'Noto Sans KR', sans-serif; }
+.pattern-btn:hover { border-color: var(--warm-gold); color: #fff; }
+.pattern-btn.active { border-color: var(--warm-gold); background: var(--warm-gold); color: #fff; font-weight: 600; }
+ 
+/* ── Time Slots ── */
+.ab-timeslots { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.ab-timeslots h4 { font-family: 'Noto Serif KR', serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 1rem; color: rgba(255,255,255,0.8); }
+.time-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+.time-slot { padding: 0.6rem 0.5rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: rgba(255,255,255,0.6); font-size: 0.84rem; cursor: pointer; transition: all 0.25s; text-align: center; font-family: 'Noto Sans KR', sans-serif; }
+.time-slot:hover { border-color: var(--warm-gold); color: #fff; background: rgba(201,147,62,0.1); }
+.time-slot.sel { border-color: var(--warm-gold); background: var(--warm-gold); color: #fff; font-weight: 600; }
+.time-slot.off { opacity: 0.18; cursor: not-allowed; pointer-events: none; }
+ 
+/* ── Schedule Summary ── */
+.bk-schedule-summary { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 1.5rem; }
+.bk-schedule-summary h4 { font-family: 'Noto Serif KR', serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 1rem; color: rgba(255,255,255,0.8); display: flex; align-items: center; justify-content: space-between; }
+.bk-schedule-summary h4 .count-badge { font-family: 'Noto Sans KR', sans-serif; font-size: 0.72rem; background: var(--warm-gold); color: #fff; padding: 0.2rem 0.6rem; border-radius: 100px; }
+.session-list { max-height: 220px; overflow-y: auto; }
+.session-list::-webkit-scrollbar { width: 4px; }
+.session-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+.session-item { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.82rem; }
+.session-item:last-child { border-bottom: none; }
+.session-item .snum { font-weight: 700; color: var(--warm-gold-light); width: 32px; }
+.session-item .sdate { color: rgba(255,255,255,0.7); }
+.session-item .sday { color: rgba(255,255,255,0.35); font-size: 0.75rem; }
+ 
+/* ── Booking Card ── */
+.ab-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; backdrop-filter: blur(16px); position: sticky; top: 100px; }
+.ab-card-top { margin-bottom: 0.3rem; }
+.ab-card-top .course-name { font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 900; color: #fff; }
+.ab-card-top .course-meta { font-size: 0.82rem; color: rgba(255,255,255,0.4); margin-top: 0.2rem; }
+.ab-card-rating { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: rgba(255,255,255,0.5); margin: 0.8rem 0 1.3rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.ab-card-rating .stars { color: var(--warm-gold); letter-spacing: 1px; }
+ 
+/* Airbnb input group */
+.ab-input-group { border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; overflow: hidden; margin-bottom: 1rem; }
+.ab-input-row { display: grid; grid-template-columns: 1fr 1fr; }
+.ab-input-row.full { grid-template-columns: 1fr; }
+.ab-input-cell { padding: 0.8rem 1rem; border-right: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); transition: background 0.2s; }
+.ab-input-cell:last-child { border-right: none; }
+.ab-input-row:last-child .ab-input-cell { border-bottom: none; }
+.cell-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.5); margin-bottom: 0.15rem; }
+.cell-value { font-size: 0.88rem; color: #fff; font-weight: 500; }
+.cell-value.placeholder { color: rgba(255,255,255,0.3); }
+ 
+/* Guest counter */
+.guest-counter { display: flex; align-items: center; gap: 0.6rem; }
+.guest-btn { width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: #fff; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; line-height: 1; }
+.guest-btn:hover { border-color: var(--warm-gold); background: rgba(201,147,62,0.15); }
+.guest-btn:disabled { opacity: 0.2; cursor: not-allowed; pointer-events: none; }
+.guest-count { font-size: 1rem; font-weight: 700; min-width: 20px; text-align: center; }
+ 
+/* CTA */
+.ab-cta { display: block; width: 100%; padding: 1rem; border-radius: 14px; border: none; cursor: pointer; font-size: 1.02rem; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; background: linear-gradient(135deg, var(--warm-gold), #D4A045); color: #fff; transition: all 0.3s; box-shadow: 0 6px 24px rgba(201,147,62,0.3); margin-bottom: 0.8rem; }
+.ab-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(201,147,62,0.45); }
+.ab-card-note { text-align: center; font-size: 0.76rem; color: rgba(255,255,255,0.3); }
+.ab-breakdown { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08); }
+.ab-breakdown-row { display: flex; justify-content: space-between; padding: 0.35rem 0; font-size: 0.84rem; color: rgba(255,255,255,0.5); }
+.ab-breakdown-row.total { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.4rem; padding-top: 0.6rem; font-weight: 700; color: #fff; font-size: 0.96rem; }
+.ab-trust { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1rem; padding: 0.8rem; border-radius: 12px; background: rgba(255,255,255,0.03); font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+ 
+/* ── Guest Info Form ── */
+.ab-guest-form { margin-bottom: 1rem; }
+.ab-guest-form .form-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.5); margin-bottom: 0.6rem; }
+.ab-form-input { width: 100%; padding: 0.7rem 0.9rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: #fff; font-size: 0.88rem; font-family: 'Noto Sans KR', sans-serif; transition: all 0.25s; margin-bottom: 0.5rem; outline: none; }
+.ab-form-input::placeholder { color: rgba(255,255,255,0.25); }
+.ab-form-input:focus { border-color: var(--warm-gold); background: rgba(201,147,62,0.06); }
+.ab-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.booking-overlay { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); align-items: center; justify-content: center; }
+.booking-overlay.show { display: flex; }
+.booking-success-card { background: var(--warm-cream); border-radius: 24px; padding: 3rem; max-width: 520px; width: 90%; text-align: center; animation: fadeInUp 0.5s ease-out; color: var(--deep-charcoal); }
+.success-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+.booking-success-card h3 { font-family: 'Noto Serif KR', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem; }
+.booking-success-card p { font-size: 0.92rem; color: var(--muted-taupe); line-height: 1.7; margin-bottom: 1.5rem; }
+.success-details { text-align: left; background: var(--section-bg); border-radius: 14px; padding: 1.2rem 1.5rem; margin-bottom: 1.5rem; }
+.sd-row { display: flex; justify-content: space-between; padding: 0.35rem 0; font-size: 0.85rem; border-bottom: 1px solid rgba(0,0,0,0.04); }
+.sd-row:last-child { border-bottom: none; }
+.sd-label { color: var(--muted-taupe); }
+.sd-value { font-weight: 600; color: var(--deep-charcoal); }
+.success-close { padding: 0.8rem 2rem; border-radius: 100px; border: none; cursor: pointer; font-size: 0.95rem; font-weight: 600; background: var(--warm-gold); color: #fff; transition: all 0.3s; font-family: 'Noto Sans KR', sans-serif; }
+.success-close:hover { background: var(--accent-coral); }
+.booking-id-text { font-size: 0.75rem; color: var(--muted-taupe); margin-top: 1rem; word-break: break-all; }
+.ab-cta:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+ 
+/* ── FOOTER ── */
+footer { padding: 3rem 2rem; background: #111; text-align: center; color: rgba(255,255,255,0.3); font-size: 0.82rem; }
+footer a { color: var(--warm-gold); text-decoration: none; }
+ 
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.25,0.46,0.45,0.94); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+ 
+@media (max-width: 1024px) { .airbnb-layout { grid-template-columns: 1fr; } .ab-card { position: static; } .course-cards { grid-template-columns: repeat(2, 1fr); } .transform-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) { nav { padding: 1rem 1.5rem; } .nav-links { display: none; } .comparison-grid { grid-template-columns: 1fr; gap: 1rem; } .compare-vs { padding: 0.5rem 0; } .vs-badge { width: 40px; height: 40px; font-size: 0.75rem; } .expert-grid { grid-template-columns: 1fr; gap: 2rem; } .magic-section { grid-template-columns: 1fr; gap: 2rem; } .donut-chart { width: 260px; height: 260px; } .course-cards { grid-template-columns: 1fr; } .transform-cards { grid-template-columns: 1fr; } .includes-strip { grid-template-columns: repeat(2, 1fr); } .expert-float-card { right: 10px; bottom: -10px; } }
+@media (max-width: 600px) { .hero h1 { font-size: 1.7rem; } .section-title { font-size: 1.5rem; } .compare-card { padding: 2rem 1.5rem; } .time-grid { grid-template-columns: repeat(2, 1fr); } .includes-strip { grid-template-columns: 1fr; } .bk-course-pills { flex-direction: column; } }
+</style>
+</head>
+<body>
+ 
+<nav id="navbar">
+  <div class="nav-logo">손수오<span>.</span></div>
+  <div class="nav-links">
+    <a href="#media">미디어</a>
+    <a href="#problem">차별점</a>
+    <a href="#solution">전문가 소개</a>
+    <a href="#reviews">후기</a>
+    <a href="#curriculum">교육 과정</a>
+    <a href="#booking" class="nav-cta">예약하기</a>
+  </div>
+</nav>
+ 
+<!-- 1. HERO -->
+<section class="hero" id="hero">
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Voice Consulting</div>
+    <h1>인공지능과 경쟁하는 시대,<br>당신의 <span class="highlight">무기</span>는 무엇입니까?</h1>
+    <p class="hero-sub">기계가 정답을 내놓는 세상에서, 사람의 마음을 얻을 수 있는 것은 결국 '사람'뿐입니다.<br>당신의 진심을 완성하는 가장 강력한 도구, <strong style="color:rgba(255,255,255,0.85)">듣기 좋은 목소리</strong>입니다.</p>
+    <a href="#booking" class="hero-cta">나만의 목소리 무기 만들기 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+  <div class="hero-scroll-hint"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg><br>스크롤</div>
+</section>
+
+<!-- FREE TRIAL BANNER -->
+<section class="free-trial">
+  <div class="free-trial-inner reveal">
+    <div class="free-trial-text">
+      <h3><em>15분 무료</em> 목소리 진단<span class="free-trial-badge">NEW</span></h3>
+      <p>내 목소리의 7가지 핵심 문제점을 무료로 진단받으세요. 부담 없이 시작하고, 변화를 직접 느껴보세요.</p>
+    </div>
+    <a href="#booking" class="free-trial-cta">무료 진단 신청 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+</section>
+
+<!-- YOUTUBE SHOWCASE -->
+<section class="yt-section" id="media">
+  <div class="yt-inner">
+    <div class="reveal" style="text-align:center; margin-bottom:2rem;">
+      <span class="section-label" style="padding-left:0;">미디어</span>
+      <h2 class="section-title">직접 확인하세요</h2>
+      <p class="section-desc" style="max-width:560px; margin:0.5rem auto 0;">손수오 교수의 보이스 컨설팅, 영상으로 먼저 만나보세요.</p>
+    </div>
+    <div class="yt-grid reveal">
+      <div class="yt-card">
+        <iframe src="https://www.youtube.com/embed/_femUUDbrlY" title="손수오 교수 보이스 컨설팅 쇼츠" allowfullscreen loading="lazy"></iframe>
+        <div class="yt-card-body">
+          <h4>목소리 하나로 달라지는 첫인상</h4>
+          <p>짧은 영상으로 보이스 컨설팅의 핵심을 확인해 보세요.</p>
+        </div>
+      </div>
+      <div class="yt-card">
+        <iframe src="https://www.youtube.com/embed/dr89GWJVOdI" title="손수오 교수 보이스 컨설팅" allowfullscreen loading="lazy"></iframe>
+        <div class="yt-card-body">
+          <h4>손수오 교수의 보이스 컨설팅 이야기</h4>
+          <p>왜 목소리가 가장 강력한 무기인지, 직접 들어보세요.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- 2. PROBLEM -->
+<section class="problem" id="problem">
+  <div class="problem-inner">
+    <div class="reveal">
+      <span class="section-label">문제 제기</span>
+      <h2 class="section-title">단순한 말하기 강사로는<br>부족합니다</h2>
+      <p class="section-desc">가르치는 강사들 중에서도 정작 본인의 목소리가 좋지 못한 경우가 많다는 사실을 아십니까?<br>이제 근본적인 문제를 정확히 파악하고 개선해야 할 때입니다.</p>
+    </div>
+    <div class="comparison-grid reveal">
+      <div class="compare-card compare-cold"><div class="compare-icon">🎤</div><h3>일반 말하기 강사</h3><p class="subtitle">표면적인 기술 전달 중심</p><ul class="compare-list"><li><span class="icon">△</span> 일반적인 발음·발성 교정</li><li><span class="icon">△</span> 단체 수업 중심의 획일적 커리큘럼</li><li><span class="icon">△</span> 강사 본인의 목소리 검증 부재</li><li><span class="icon">△</span> 표면적 문제만 다루는 한계</li><li><span class="icon">△</span> 단기 효과 위주의 피드백</li></ul></div>
+      <div class="compare-vs"><div class="vs-badge">VS</div></div>
+      <div class="compare-card compare-warm"><div class="compare-icon">✦</div><h3>보이스 컨설턴트</h3><p class="subtitle">근본 원인 분석 및 맞춤 해결</p><ul class="compare-list"><li><span class="icon">◆</span> 고질적 목소리 문제의 근본 원인 진단</li><li><span class="icon">◆</span> 완벽한 1:1 맞춤형 교육 설계</li><li><span class="icon">◆</span> 검증된 전문가의 시범과 교정</li><li><span class="icon">◆</span> 한 문장으로 7가지 문제 동시 해결</li><li><span class="icon">◆</span> 장기적 변화를 위한 체계적 관리</li></ul></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- 3. SOLUTION -->
+<section class="solution" id="solution">
+  <div class="solution-inner">
+    <div class="reveal"><span class="section-label">해결책</span><h2 class="section-title">대한민국 1위 보이스 컨설턴트</h2><p class="section-desc">하루, 한 달, 그리고 더 긴 기간까지 포기하지 않고 끝까지 함께합니다.</p></div>
+    <div class="expert-grid reveal">
+      <div class="expert-photo-wrap"><div class="expert-photo" style="background: linear-gradient(135deg, #3D3028, #5A4A3A);"><div class="expert-photo-placeholder"><span class="icon-ph" style="font-size:5rem; opacity:0.5;">👤</span><br><span style="font-size:0.85rem; color:rgba(255,255,255,0.4);">손수오 교수 프로필 사진</span><br><span style="font-size:0.7rem; color:rgba(255,255,255,0.25); margin-top:0.3rem; display:inline-block;">실제 프로필 사진으로 교체 권장</span></div></div><div class="expert-float-card"><div class="num">No.1</div><div class="label">보이스 컨설턴트</div></div></div>
+      <div class="expert-info"><h3><em>손수오</em> 교수</h3><p>우리나라 최고의 보이스 컨설턴트, 손수오 교수가 여러분의 목소리를 책임집니다. 목소리는 당신이라는 사람을 가장 빠르고 정확하게 보여주는 창구입니다. 사람의 마음을 얻기 위한 가장 좋은 방법은 눈을 맞추고 대화하는 것이며, 그 진심을 완성하는 것은 바로 '듣기 좋은 목소리'입니다.</p><div class="expert-stats"><div class="stat-item"><div class="stat-num">1:1</div><div class="stat-label">맞춤형 코칭</div></div><div class="stat-item"><div class="stat-num">38</div><div class="stat-label">효과 기법</div></div><div class="stat-item"><div class="stat-num">45</div><div class="stat-label">마법 훈련</div></div></div>
+        <div class="cred-grid" style="margin-top:1.5rem;">
+          <div class="cred-item"><div class="cred-icon-wrap">🎓</div><div><div class="cred-label">학력</div><div class="cred-val">음성학 전공</div></div></div>
+          <div class="cred-item"><div class="cred-icon-wrap">📺</div><div><div class="cred-label">미디어</div><div class="cred-val">방송 다수 출연</div></div></div>
+          <div class="cred-item"><div class="cred-icon-wrap">📖</div><div><div class="cred-label">저서</div><div class="cred-val">보이스 전문 저자</div></div></div>
+          <div class="cred-item"><div class="cred-icon-wrap">🏆</div><div><div class="cred-label">경력</div><div class="cred-val">10년+ 전문 코칭</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="magic-section reveal">
+      <div class="donut-chart"><svg viewBox="0 0 200 200"><circle class="donut-segment seg-visual" cx="100" cy="100" r="82" stroke-dasharray="283.8 516.2" stroke-dashoffset="0"/><circle class="donut-segment seg-audio" cx="100" cy="100" r="82" stroke-dasharray="196.1 603.9" stroke-dashoffset="-283.8"/><circle class="donut-segment seg-language" cx="100" cy="100" r="82" stroke-dasharray="36.1 763.9" stroke-dashoffset="-479.9"/></svg><div class="donut-center"><div class="big">45</div><div class="small">의 마법</div></div></div>
+      <div class="magic-info"><h3>45의 마법과 38 효과</h3><p>사람의 소통은 시각 55%, 청각 38%, 언어 7%의 비율로 이루어집니다. 우리는 청각과 언어를 합친 <strong style="color:var(--warm-gold-light)">45의 마법</strong>을 완벽하게 훈련합니다.</p><p>단 한 문장으로 일곱 가지 문제점을 해결해 내는 <strong style="color:var(--accent-coral)">38 효과</strong>를 직접 경험해 보세요.</p><div class="legend-items"><div class="legend-item"><div class="legend-dot visual"></div> 시각 — <strong>55%</strong></div><div class="legend-item"><div class="legend-dot audio"></div> 청각 — <strong>38%</strong> ✦ 핵심 훈련 영역</div><div class="legend-item"><div class="legend-dot language"></div> 언어 — <strong>7%</strong> ✦ 핵심 훈련 영역</div></div></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- 4. CURRICULUM -->
+<section class="curriculum" id="curriculum">
+  <div class="curriculum-inner">
+    <div class="reveal" style="text-align:center; margin-bottom:2.5rem;"><span class="section-label" style="padding-left:0;">교육 과정</span><h2 class="section-title">오직 1인을 위한<br>완벽한 맞춤형 교육</h2><p class="section-desc" style="max-width:560px; margin:0.5rem auto 0;">목표와 상황에 따라 가장 적합한 과정을 선택하세요. 모든 과정은 1:1 개인 맞춤형으로 진행됩니다.</p></div>
+    <div class="course-cards reveal">
+      <div class="course-card"><div class="course-header"><span class="duration-badge">1일 · 3시간</span><h3>하루 집중 클리닉</h3><p class="course-sub">핵심 문제를 빠르게 진단하고 즉각적인 개선 포인트를 잡는 원데이 과정</p></div><div class="course-body"><ul class="course-features"><li><span class="feat-icon">✓</span> 목소리 정밀 진단 및 분석 리포트</li><li><span class="feat-icon">✓</span> 핵심 문제점 3가지 즉석 교정</li><li><span class="feat-icon">✓</span> 38 효과 체험 — 한 문장 훈련</li><li><span class="feat-icon">✓</span> 맞춤 자가 훈련 가이드 제공</li><li><span class="feat-icon">✓</span> 교육 전 과정 녹화본 제공</li></ul></div><div class="course-footer"><div class="course-price"><div class="price-label">1회 기준</div><div class="price-val">₩120,000</div></div><button class="course-select-btn" onclick="selectCourseAndScroll(0)">선택</button></div></div>
+      <div class="course-card featured"><div class="course-header"><span class="duration-badge">4주 · 주 2회 · 총 8회</span><h3>4주 정규 과정</h3><p class="course-sub">체계적인 훈련으로 목소리의 근본적 변화를 만들어 내는 대표 과정</p></div><div class="course-body"><ul class="course-features"><li><span class="feat-icon">✓</span> 정밀 진단 + 개인별 커리큘럼 설계</li><li><span class="feat-icon">✓</span> 45의 마법 완전 훈련 (호흡·발성·공명)</li><li><span class="feat-icon">✓</span> 38 효과 — 7가지 문제 동시 교정</li><li><span class="feat-icon">✓</span> 주간 과제 및 실전 피드백</li><li><span class="feat-icon">✓</span> 중간·최종 비포/애프터 비교 분석</li><li><span class="feat-icon">✓</span> 전 과정 녹화본 + 복습 자료</li></ul></div><div class="course-footer"><div class="course-price"><div class="price-label">4주 기준</div><div class="price-val">₩800,000</div></div><button class="course-select-btn" onclick="selectCourseAndScroll(1)">선택</button></div></div>
+      <div class="course-card"><div class="course-header"><span class="duration-badge">9주 · 주 2회 · 총 18회</span><h3>9주 심화 마스터</h3><p class="course-sub">완전한 목소리 변화와 습관 정착까지 끝까지 함께하는 프리미엄 과정</p></div><div class="course-body"><ul class="course-features"><li><span class="feat-icon">✓</span> 4주 정규 과정 전체 포함</li><li><span class="feat-icon">✓</span> 고급 프레젠테이션 보이스 트레이닝</li><li><span class="feat-icon">✓</span> 실전 발표 시뮬레이션 3회</li><li><span class="feat-icon">✓</span> 감정 전달력·설득력 강화 훈련</li><li><span class="feat-icon">✓</span> 수료 후 1개월 팔로업 코칭 1회</li><li><span class="feat-icon">✓</span> 전 과정 녹화본 + 프리미엄 복습 키트</li></ul></div><div class="course-footer"><div class="course-price"><div class="price-label">9주 기준</div><div class="price-val">₩1,600,000</div></div><button class="course-select-btn" onclick="selectCourseAndScroll(2)">선택</button></div></div>
+    </div>
+ 
+    <!-- AS-IS → TO-BE Transformation -->
+    <div class="transform-section reveal">
+      <h3>과정별 변화 미리보기</h3>
+      <p>수강 전과 후, 이렇게 달라집니다</p>
+      <div class="transform-cards">
+        <!-- 하루 집중 -->
+        <div class="transform-card">
+          <div class="tf-header">
+            <div class="tf-course-name">하루 집중 클리닉</div>
+            <div class="tf-duration">1일 · 3시간 · ₩120,000</div>
+          </div>
+          <div class="tf-body">
+            <div class="tf-row">
+              <div class="tf-col tf-asis">
+                <div class="tf-col-label">AS-IS 현재</div>
+                <div class="tf-col-text">내 목소리의 문제가 뭔지 모르겠다</div>
+              </div>
+              <div class="tf-arrow">→</div>
+              <div class="tf-col tf-tobe">
+                <div class="tf-col-label">TO-BE 변화</div>
+                <div class="tf-col-text">7가지 핵심 문제점을 정확히 파악</div>
+              </div>
+            </div>
+            <div class="tf-row">
+              <div class="tf-col tf-asis">
+                <div class="tf-col-label">AS-IS</div>
+                <div class="tf-col-text">어디서부터 고쳐야 할지 막막하다</div>
+              </div>
+              <div class="tf-arrow">→</div>
+              <div class="tf-col tf-tobe">
+                <div class="tf-col-label">TO-BE</div>
+                <div class="tf-col-text">맞춤 자가 훈련 로드맵 확보</div>
+              </div>
+            </div>
+            <div class="tf-row">
+              <div class="tf-col tf-asis">
+                <div class="tf-col-label">AS-IS</div>
+                <div class="tf-col-text">말할 때 자신감이 없다</div>
+              </div>
+              <div class="tf-arrow">→</div>
+              <div class="tf-col tf-tobe">
+                <div class="tf-col-label">TO-BE</div>
+                <div class="tf-col-text">즉석 교정으로 달라진 목소리를 체감</div>
+              </div>
+            </div>
+          </div>
+          <div class="tf-impact">
+            <span class="tf-impact-icon">⚡</span>
+            <span class="tf-impact-text"><em>단 3시간</em>으로 내 목소리의 정확한 현재 위치와 개선 방향을 알 수 있습니다</span>
+          </div>
+        </div>
+ 
+        <!-- 4주 정규 -->
+        <div class="transform-card" style="border: 2px solid var(--warm-gold);">
+          <div class="tf-header">
+            <div class="tf-course-name" style="color:var(--warm-gold);">4주 정규 과정</div>
+            <div class="tf-duration">주 2회 · 총 8회 · ₩800,000</div>
+          </div>
+          <div class="tf-body">
+            <div class="tf-row">
+              <div class="tf-col tf-asis">
+                <div class="tf-col-label">AS-IS 현재</div>
+                <div class="tf-col-text">발표할 때 목소리가 떨리고 작아진다</div>
+              </div>
+              <div class="tf-arrow">→</div>
+              <div class="tf-col tf-tobe">
+                <div class="tf-col-label">TO-BE 변화</div>
+                <div class="tf-col-text">안정적인 호흡으로 흔들림 없는 발성</div>
+              </div>
+            </div>
+            <div class="tf-row">
+              <div class="tf-col tf-asis">
+                <div class="tf-col-label">AS-IS</div>
+                <div class="tf-col-text">말을 오래 하면 목이 금방 쉰다</div>
+              </div>
+              <div class="tf-arrow">→</div>
+              <div class="tf-col tf-tobe">
+                <div class="tf-col-label">TO-BE</div>
+                <div class="tf-col-text">올바른 발성 위치로 피로 없는 목소리</div>
+              </div>
+            </div>
+            <div class="tf-row">
+              <div class="tf-col tf-asis">
+                <div class="tf-col-label">AS-IS</div>
+                <div class="tf-col-text">말투가 단조롭고 설득력이 약하다</div>
+              </div>
+              <div class="tf-arrow">→</div>
+              <div class="tf-col tf-tobe">
+                <div class="tf-col-label">TO-BE</div>
+                <div class="tf-col-text">톤 변화와 공명으로 신뢰감 있는 목소리</div>
+              </div>
+            </div>
+          </div>
+          <div class="tf-impact" style="background: linear-gradient(135deg, rgba(201,147,62,0.08), rgba(212,114,92,0.05));">
+            <span class="tf-impact-icon">🔥</span>
+            <span class="tf-impact-text"><em>4주 만에</em> 비포/애프터 비교로 눈에 보이는 변화를 직접 확인합니다</span>
+          </div>
+        </div>
+ 
+        <!-- 9주 심화 -->
+        <div class="transform-card">
+          <div class="tf-header">
+            <div class="tf-course-name">9주 심화 마스터</div>
+            <div class="tf-duration">주 2회 · 총 18회 · ₩1,600,000</div>
+          </div>
+          <div class="tf-body">
+            <div class="tf-row">
+              <div class="tf-col tf-asis">
+                <div class="tf-col-label">AS-IS 현재</div>
+                <div class="tf-col-text">중요한 자리에서 내 말이 먹히지 않는다</div>
+              </div>
+              <div class="tf-arrow">→</div>
+              <div class="tf-col tf-tobe">
+                <div class="tf-col-label">TO-BE 변화</div>
+                <div class="tf-col-text">한 문장으로 청중을 사로잡는 화술</div>
+              </div>
+            </div>
+            <div class="tf-row">
+              <div class="tf-col tf-asis">
+                <div class="tf-col-label">AS-IS</div>
+                <div class="tf-col-text">교육 후 다시 원래 습관으로 돌아간다</div>
+              </div>
+              <div class="tf-arrow">→</div>
+              <div class="tf-col tf-tobe">
+                <div class="tf-col-label">TO-BE</div>
+                <div class="tf-col-text">9주 반복 훈련으로 완전한 습관 정착</div>
+              </div>
+            </div>
+            <div class="tf-row">
+              <div class="tf-col tf-asis">
+                <div class="tf-col-label">AS-IS</div>
+                <div class="tf-col-text">감정 전달이 안 돼서 진심이 안 와닿는다</div>
+              </div>
+              <div class="tf-arrow">→</div>
+              <div class="tf-col tf-tobe">
+                <div class="tf-col-label">TO-BE</div>
+                <div class="tf-col-text">따뜻하고 힘 있는 목소리로 마음을 움직인다</div>
+              </div>
+            </div>
+          </div>
+          <div class="tf-impact">
+            <span class="tf-impact-icon">👑</span>
+            <span class="tf-impact-text"><em>9주 후</em> 목소리가 당신의 가장 강력한 무기로 완성됩니다. 수료 후 1개월 팔로업 포함</span>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="reveal">
+      <div style="text-align:center; margin-bottom:1.5rem;"><h3 style="font-family:'Noto Serif KR',serif; font-size:1.3rem; font-weight:700;">교육 과정 상세 로드맵</h3><p style="font-size:0.88rem; color:var(--muted-taupe); margin-top:0.3rem;">각 단계를 클릭하여 자세한 내용을 확인하세요</p></div>
+      <div class="curriculum-detail"><div class="detail-header" onclick="toggleDetail(this)"><h4><span class="step-num">1</span>정밀 진단 단계</h4><svg class="detail-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="detail-body"><div class="detail-body-inner"><p>첫 수업에서 당신의 목소리를 정밀하게 분석합니다. 호흡 패턴, 발성 위치, 공명 상태, 음역대, 말의 속도와 리듬까지 7가지 핵심 요소를 체계적으로 진단하여 개인별 맞춤 교정 로드맵을 설계합니다.</p><div class="detail-tags"><span class="detail-tag">호흡 분석</span><span class="detail-tag">발성 위치 진단</span><span class="detail-tag">공명 상태 측정</span><span class="detail-tag">음역대 테스트</span><span class="detail-tag">속도·리듬 분석</span></div></div></div></div>
+      <div class="curriculum-detail"><div class="detail-header" onclick="toggleDetail(this)"><h4><span class="step-num">2</span>기초 교정 — 호흡과 발성</h4><svg class="detail-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="detail-body"><div class="detail-body-inner"><p>목소리의 기본인 호흡과 발성을 바로잡습니다. 복식 호흡을 체계적으로 훈련하고, 목에 무리를 주지 않는 올바른 발성 위치를 찾아 안정적이고 자연스러운 목소리의 토대를 완성합니다.</p><div class="detail-tags"><span class="detail-tag">복식 호흡</span><span class="detail-tag">성대 이완</span><span class="detail-tag">발성 위치 교정</span><span class="detail-tag">음량 조절</span></div></div></div></div>
+      <div class="curriculum-detail"><div class="detail-header" onclick="toggleDetail(this)"><h4><span class="step-num">3</span>심화 훈련 — 공명과 톤</h4><svg class="detail-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="detail-body"><div class="detail-body-inner"><p>풍부하고 깊이 있는 목소리를 만드는 공명 훈련 단계입니다. 두성·흉성·비강 공명을 활용해 말의 울림을 극대화하고, 상황에 맞는 톤 변화와 억양 조절 기술을 익힙니다.</p><div class="detail-tags"><span class="detail-tag">두성·흉성 공명</span><span class="detail-tag">비강 공명</span><span class="detail-tag">톤 변화</span><span class="detail-tag">억양 조절</span></div></div></div></div>
+      <div class="curriculum-detail"><div class="detail-header" onclick="toggleDetail(this)"><h4><span class="step-num">4</span>실전 적용 — 38 효과 완성</h4><svg class="detail-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="detail-body"><div class="detail-body-inner"><p>배운 기술을 실전에 녹여내는 마무리 단계입니다. 단 한 문장으로 7가지 문제를 동시에 해결하는 '38 효과'를 완성하고, 발표·회의·면접 등 실제 상황별 시뮬레이션을 통해 체화합니다.</p><div class="detail-tags"><span class="detail-tag">38 효과 훈련</span><span class="detail-tag">실전 시뮬레이션</span><span class="detail-tag">발표 훈련</span><span class="detail-tag">비포/애프터 분석</span></div></div></div></div>
+      <div class="curriculum-detail"><div class="detail-header" onclick="toggleDetail(this)"><h4><span class="step-num">5</span>습관 정착 및 팔로업 <span style="font-size:0.78rem;color:var(--muted-taupe);font-weight:400;margin-left:0.5rem;">9주 심화 전용</span></h4><svg class="detail-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="detail-body"><div class="detail-body-inner"><p>9주 심화 마스터 과정에서만 제공되는 최종 단계입니다. 훈련한 목소리가 일상과 업무에서 자연스러운 습관으로 자리잡도록 반복 훈련하며, 수료 후에도 1개월 팔로업 코칭을 통해 지속적인 관리를 받습니다.</p><div class="detail-tags"><span class="detail-tag">습관 정착 훈련</span><span class="detail-tag">실무 적용 코칭</span><span class="detail-tag">1개월 팔로업</span><span class="detail-tag">최종 리포트</span></div></div></div></div>
+    </div>
+    <div class="includes-strip reveal">
+      <div class="include-item"><div class="include-icon">📋</div><h4>맞춤 설계</h4><p>개인의 목표·문제점에 맞춘 1:1 전용 커리큘럼</p></div>
+      <div class="include-item"><div class="include-icon">🎯</div><h4>1:1 화상 코칭</h4><p>교수님이 직접 실시간으로 교정하는 밀착 지도</p></div>
+      <div class="include-item"><div class="include-icon">🔄</div><h4>전 과정 녹화</h4><p>모든 수업 녹화본 제공으로 무한 복습 가능</p></div>
+      <div class="include-item"><div class="include-icon">📅</div><h4>유연한 일정</h4><p>원하는 날짜·시간을 자유롭게 선택 예약</p></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- TESTIMONIALS / SOCIAL PROOF -->
+<section class="testimonials" id="reviews">
+  <div class="testimonials-inner">
+    <div class="reveal" style="text-align:center; margin-bottom:3rem;">
+      <span class="section-label" style="padding-left:0;">수강생 후기</span>
+      <h2 class="section-title">목소리가 바뀌자<br>인생이 달라졌습니다</h2>
+      <p class="section-desc" style="max-width:560px; margin:0.5rem auto 0;">실제 수강생들의 변화를 직접 확인하세요.</p>
+    </div>
+    <div class="testi-grid reveal">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">발표할 때마다 목소리가 떨려서 자신감이 바닥이었는데, 4주 만에 회의에서 "목소리가 달라졌다"는 말을 들었습니다. 연봉 협상에서도 훨씬 당당해졌어요.</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background: linear-gradient(135deg, var(--cold-blue), #6B8FC5);">김</div>
+          <div class="testi-author-info">
+            <div class="testi-name">김○○</div>
+            <div class="testi-title">IT기업 부장 · 4주 정규 과정 수강</div>
+          </div>
+        </div>
+        <div class="testi-audio-badge" onclick="this.classList.toggle('playing')">
+          <div class="audio-wave"><span></span><span></span><span></span><span></span><span></span></div>
+          비포/애프터 음성 듣기
+        </div>
+      </div>
+      <div class="testi-card featured-testi">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">강의 평가가 매학기 3점대였는데, 손수오 교수님과 9주 과정을 마치고 나서 4.7점으로 뛰었습니다. 학생들이 "교수님 말씀이 귀에 쏙쏙 들어온다"고 해요.</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background: linear-gradient(135deg, var(--warm-gold), #D4A045);">이</div>
+          <div class="testi-author-info">
+            <div class="testi-name">이○○</div>
+            <div class="testi-title">대학교 교수 · 9주 심화 마스터 수강</div>
+          </div>
+        </div>
+        <div class="testi-audio-badge" onclick="this.classList.toggle('playing')">
+          <div class="audio-wave"><span></span><span></span><span></span><span></span><span></span></div>
+          비포/애프터 음성 듣기
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">면접 때 항상 긴장해서 목소리가 기어들어 갔는데, 하루 집중 클리닉 한 번으로 자신감이 생겼어요. 결국 1지망 회사에 합격했습니다!</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background: linear-gradient(135deg, var(--accent-coral), #E08B75);">박</div>
+          <div class="testi-author-info">
+            <div class="testi-name">박○○</div>
+            <div class="testi-title">취업 준비생 · 하루 집중 클리닉 수강</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONA-BASED SECTION + PRICE ANCHORING -->
+<section class="persona" id="who">
+  <div class="persona-inner">
+    <div class="reveal" style="text-align:center; margin-bottom:1.5rem;">
+      <span class="section-label" style="padding-left:0;">맞춤 추천</span>
+      <h2 class="section-title">나에게 맞는 과정은?</h2>
+      <p class="section-desc" style="max-width:560px; margin:0.5rem auto 0;">현재 상황에 가장 적합한 과정을 추천해 드립니다.</p>
+    </div>
+    <div class="persona-tabs reveal" id="personaTabs">
+      <button class="persona-tab active" onclick="switchPersona(0)">직장인 · 임원</button>
+      <button class="persona-tab" onclick="switchPersona(1)">강사 · 교수</button>
+      <button class="persona-tab" onclick="switchPersona(2)">취업 준비생</button>
+      <button class="persona-tab" onclick="switchPersona(3)">유튜버 · 크리에이터</button>
+    </div>
+    <div class="persona-content active reveal" id="pc0">
+      <div class="persona-card">
+        <div class="persona-pain">
+          <h3>중요한 회의에서<br><em>내 말이 먹히지 않는다면</em></h3>
+          <p>프레젠테이션, 보고, 협상의 자리에서 목소리는 곧 신뢰입니다. 떨림 없이 안정적이고, 설득력 있는 목소리 하나로 비즈니스 성과가 달라집니다.</p>
+          <ul class="persona-pain-list">
+            <li><span style="color:var(--warm-gold);">✦</span> "발표 때 목소리가 작아지고 떨린다"</li>
+            <li><span style="color:var(--warm-gold);">✦</span> "말을 오래 하면 목이 쉬어서 회의를 꺼린다"</li>
+            <li><span style="color:var(--warm-gold);">✦</span> "상대에게 신뢰감을 주는 목소리를 갖고 싶다"</li>
+          </ul>
+        </div>
+        <div class="persona-roi">
+          <h4>투자 대비 효과 비교</h4>
+          <div class="roi-compare">
+            <div class="roi-row"><span class="roi-label">일반 스피치 학원 (3개월)</span><span class="roi-val">약 150~300만 원</span></div>
+            <div class="roi-row"><span class="roi-label">손수오 4주 정규 과정</span><span class="roi-val highlight">80만 원</span></div>
+            <div class="roi-row"><span class="roi-label">1회당 교육비</span><span class="roi-val highlight">10만 원</span></div>
+            <div class="roi-row"><span class="roi-label">커피 3잔 값으로</span><span class="roi-val">평생 쓸 무기 장착</span></div>
+          </div>
+          <div class="roi-bottom">연봉 협상 1번 잘하면<br><em>교육비의 수십 배</em>로 돌아옵니다</div>
+        </div>
+      </div>
+    </div>
+    <div class="persona-content" id="pc1">
+      <div class="persona-card">
+        <div class="persona-pain">
+          <h3>강의 평가가<br><em>목소리 때문에 낮다면</em></h3>
+          <p>아무리 좋은 콘텐츠를 가르쳐도, 전달력이 부족하면 학생들의 집중을 잃습니다. 3시간 이상 말해도 피로 없는 목소리, 교수법의 핵심입니다.</p>
+          <ul class="persona-pain-list">
+            <li><span style="color:var(--warm-gold);">✦</span> "2시간 강의 후 목이 잠겨서 힘들다"</li>
+            <li><span style="color:var(--warm-gold);">✦</span> "단조로운 말투 때문에 학생들이 졸린다고 한다"</li>
+            <li><span style="color:var(--warm-gold);">✦</span> "온라인 강의에서 전달력이 현저히 떨어진다"</li>
+          </ul>
+        </div>
+        <div class="persona-roi">
+          <h4>투자 대비 효과 비교</h4>
+          <div class="roi-compare">
+            <div class="roi-row"><span class="roi-label">보이스 트레이닝 월정액</span><span class="roi-val">월 50~100만 원</span></div>
+            <div class="roi-row"><span class="roi-label">손수오 9주 심화 마스터</span><span class="roi-val highlight">160만 원 (총액)</span></div>
+            <div class="roi-row"><span class="roi-label">1회당 교육비</span><span class="roi-val highlight">약 8.9만 원</span></div>
+            <div class="roi-row"><span class="roi-label">수료 후 팔로업</span><span class="roi-val">1개월 무료 포함</span></div>
+          </div>
+          <div class="roi-bottom">강의 평가 <em>1점 상승</em>이<br>당신의 커리어 가치를 바꿉니다</div>
+        </div>
+      </div>
+    </div>
+    <div class="persona-content" id="pc2">
+      <div class="persona-card">
+        <div class="persona-pain">
+          <h3>면접에서<br><em>첫인상이 결정된다면</em></h3>
+          <p>면접관은 처음 10초 안에 인상을 결정합니다. 자기소개 한 마디의 톤, 속도, 자신감이 합격과 불합격을 가릅니다.</p>
+          <ul class="persona-pain-list">
+            <li><span style="color:var(--warm-gold);">✦</span> "긴장하면 목소리가 떨리고 빨라진다"</li>
+            <li><span style="color:var(--warm-gold);">✦</span> "준비한 답변이 있어도 전달이 안 된다"</li>
+            <li><span style="color:var(--warm-gold);">✦</span> "다른 지원자보다 확 차별화되고 싶다"</li>
+          </ul>
+        </div>
+        <div class="persona-roi">
+          <h4>투자 대비 효과 비교</h4>
+          <div class="roi-compare">
+            <div class="roi-row"><span class="roi-label">면접 학원 (4주)</span><span class="roi-val">약 60~120만 원</span></div>
+            <div class="roi-row"><span class="roi-label">손수오 하루 집중 클리닉</span><span class="roi-val highlight">12만 원</span></div>
+            <div class="roi-row"><span class="roi-label">소요 시간</span><span class="roi-val highlight">단 3시간</span></div>
+            <div class="roi-row"><span class="roi-label">포함 혜택</span><span class="roi-val">진단 리포트 + 자가훈련 가이드</span></div>
+          </div>
+          <div class="roi-bottom"><em>첫 직장 연봉 대비 0.3%</em> 투자로<br>평생 쓸 자신감을 얻으세요</div>
+        </div>
+      </div>
+    </div>
+    <div class="persona-content" id="pc3">
+      <div class="persona-card">
+        <div class="persona-pain">
+          <h3>영상 속 내 목소리가<br><em>마음에 들지 않는다면</em></h3>
+          <p>콘텐츠의 퀄리티는 결국 목소리로 결정됩니다. 시청자가 끝까지 보는 영상의 공통점은 "듣기 좋은 목소리"입니다.</p>
+          <ul class="persona-pain-list">
+            <li><span style="color:var(--warm-gold);">✦</span> "녹음하면 내 목소리가 너무 싫다"</li>
+            <li><span style="color:var(--warm-gold);">✦</span> "시청 지속 시간이 자꾸 떨어진다"</li>
+            <li><span style="color:var(--warm-gold);">✦</span> "AI TTS로 대체할까 고민 중이다"</li>
+          </ul>
+        </div>
+        <div class="persona-roi">
+          <h4>투자 대비 효과 비교</h4>
+          <div class="roi-compare">
+            <div class="roi-row"><span class="roi-label">성우 외주 (월)</span><span class="roi-val">월 30~80만 원</span></div>
+            <div class="roi-row"><span class="roi-label">손수오 4주 정규 과정</span><span class="roi-val highlight">80만 원 (1회 투자)</span></div>
+            <div class="roi-row"><span class="roi-label">효과 지속</span><span class="roi-val highlight">평생</span></div>
+            <div class="roi-row"><span class="roi-label">성우 3개월 비용 =</span><span class="roi-val">4주 과정 전액</span></div>
+          </div>
+          <div class="roi-bottom">AI가 대체할 수 없는<br><em>나만의 목소리</em>가 최고의 브랜딩입니다</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 5. ENHANCED AIRBNB BOOKING ═══ -->
+<section class="booking" id="booking">
+  <div class="booking-inner">
+    <div class="reveal">
+      <span class="section-label">예약</span>
+      <h2 class="section-title">지금 바로 시작하세요</h2>
+      <p class="section-desc">사람의 마음을 사는 따뜻하고 힘 있는 목소리, 지금 바로 완성하세요.</p>
+    </div>
+ 
+    <!-- Course Pills -->
+    <div class="bk-course-pills reveal" id="coursePills"></div>
+ 
+    <div class="airbnb-layout reveal">
+      <!-- LEFT -->
+      <div class="airbnb-left">
+        <!-- Day Pattern (for multi-week) -->
+        <div class="bk-day-pattern" id="dayPatternBox" style="display:none;">
+          <h4>수업 요일을 선택하세요 <span style="font-size:0.78rem;color:rgba(255,255,255,0.35);font-weight:400;">주 2회</span></h4>
+          <div class="pattern-options" id="patternOptions"></div>
+        </div>
+ 
+        <!-- Calendar -->
+        <div class="ab-calendar">
+          <div class="ab-cal-header">
+            <span class="ab-cal-title" id="calTitle"></span>
+            <div class="ab-cal-nav">
+              <button onclick="changeMonth(-1)">‹</button>
+              <button onclick="changeMonth(1)">›</button>
+            </div>
+          </div>
+          <div class="ab-cal-hint" id="calHint"></div>
+          <div class="ab-cal-grid" id="calGrid"></div>
+        </div>
+ 
+        <!-- Time -->
+        <div class="ab-timeslots">
+          <h4>희망 시간을 선택하세요</h4>
+          <div class="time-grid" id="timeGrid">
+            <div class="time-slot" onclick="pickTime(this)">09:00</div>
+            <div class="time-slot" onclick="pickTime(this)">10:00</div>
+            <div class="time-slot" onclick="pickTime(this)">11:00</div>
+            <div class="time-slot off">12:00</div>
+            <div class="time-slot" onclick="pickTime(this)">13:00</div>
+            <div class="time-slot" onclick="pickTime(this)">14:00</div>
+            <div class="time-slot" onclick="pickTime(this)">15:00</div>
+            <div class="time-slot" onclick="pickTime(this)">16:00</div>
+            <div class="time-slot off">17:00</div>
+          </div>
+        </div>
+ 
+        <!-- Schedule Summary (multi-week) -->
+        <div class="bk-schedule-summary" id="scheduleSummary" style="display:none;">
+          <h4>예약 일정 요약 <span class="count-badge" id="sessionCount">0회</span></h4>
+          <div class="session-list" id="sessionList"></div>
+        </div>
+      </div>
+ 
+      <!-- RIGHT: Booking Card -->
+      <div class="airbnb-right">
+        <div class="ab-card">
+          <div class="ab-card-top">
+            <div class="course-name" id="cardCourseName">4주 정규 과정</div>
+            <div class="course-meta" id="cardCourseMeta">주 2회 · 총 8회 · 1회 60분</div>
+          </div>
+          <div class="ab-card-rating"><span class="stars">★★★★★</span><span>수강생 만족도 최상위</span></div>
+ 
+          <div class="ab-input-group">
+            <div class="ab-input-row">
+              <div class="ab-input-cell">
+                <div class="cell-label">시작일</div>
+                <div class="cell-value placeholder" id="dispDate">날짜 선택</div>
+              </div>
+              <div class="ab-input-cell">
+                <div class="cell-label">시간</div>
+                <div class="cell-value placeholder" id="dispTime">시간 선택</div>
+              </div>
+            </div>
+            <div class="ab-input-row">
+              <div class="ab-input-cell">
+                <div class="cell-label">수업 요일</div>
+                <div class="cell-value placeholder" id="dispPattern">요일 선택</div>
+              </div>
+              <div class="ab-input-cell">
+                <div class="cell-label">인원</div>
+                <div class="guest-counter">
+                  <button class="guest-btn" onclick="changeGuest(-1)" id="guestMinus" disabled>−</button>
+                  <span class="guest-count" id="guestCount">1</span>
+                  <button class="guest-btn" onclick="changeGuest(1)" id="guestPlus">+</button>
+                  <span style="font-size:0.8rem;color:rgba(255,255,255,0.4);">명</span>
+                </div>
+              </div>
+            </div>
+          </div>
+ 
+          <div class="ab-guest-form">
+            <div class="form-title">예약자 정보</div>
+            <div class="ab-form-row">
+              <input type="text" class="ab-form-input" id="guestName" placeholder="이름 (필수)">
+              <input type="tel" class="ab-form-input" id="guestPhone" placeholder="연락처 (필수)">
+            </div>
+            <input type="email" class="ab-form-input" id="guestEmail" placeholder="이메일 (선택)">
+          </div>
+ 
+          <button class="ab-cta" id="bookBtn" onclick="handleBook()">예약 요청하기</button>
+          <p class="ab-card-note">예약 확정 전에는 요금이 청구되지 않습니다</p>
+ 
+          <div class="ab-breakdown" id="priceBreakdown">
+            <div class="ab-breakdown-row"><span id="bkLabel1">교육비 (1인)</span><span id="bkVal1">₩800,000</span></div>
+            <div class="ab-breakdown-row" id="bkMultiRow" style="display:none;"><span id="bkLabel2">추가 인원 (0명)</span><span id="bkVal2">₩0</span></div>
+            <div class="ab-breakdown-row"><span>녹화본 · 복습자료</span><span>포함</span></div>
+            <div class="ab-breakdown-row total"><span>총 교육비</span><span id="bkTotal">₩800,000</span></div>
+          </div>
+ 
+          <div class="ab-trust">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            무료 상담 · 간편 예약 · 100% 맞춤형 교육
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<div class="booking-overlay" id="bookingOverlay">
+  <div class="booking-success-card" id="successCard"></div>
+</div>
+ 
+<footer>
+  <p>© 2026 손수오 교수 보이스 컨설팅. All Rights Reserved.</p>
+  <p style="margin-top:0.5rem;">문의: <a href="/cdn-cgi/l/email-protection#80e3efeef4e1e3f4c0f3efeef3f5efaee3efed"><span class="__cf_email__" data-cfemail="3655595842575542764559584543591855595b">[email&#160;protected]</span></a></p>
+</footer>
+ 
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── Nav / Reveal / Particles / Scroll / Accordion ──
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+const pEl = document.getElementById('particles');
+for (let i = 0; i < 18; i++) { const p = document.createElement('div'); p.className = 'particle'; const s = Math.random()*4+2; p.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-delay:${Math.random()*8}s;animation-duration:${Math.random()*6+6}s`; pEl.appendChild(p); }
+document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'}); }); });
+function toggleDetail(h) { const b = h.nextElementSibling; const open = h.classList.contains('open'); document.querySelectorAll('.detail-header.open').forEach(x => { x.classList.remove('open'); x.nextElementSibling.style.maxHeight = '0'; }); if (!open) { h.classList.add('open'); b.style.maxHeight = b.scrollHeight + 'px'; } }
+ 
+// ══════════════════════════════════════════
+// ENHANCED BOOKING SYSTEM
+// ══════════════════════════════════════════
+ 
+const COURSES = [
+  { id: 0, name: '하루 집중 클리닉', meta: '1일 · 3시간', weeks: 0, sessions: 1, perWeek: 0, price: 120000, extra: 80000 },
+  { id: 1, name: '4주 정규 과정', meta: '주 2회 · 총 8회 · 1회 60분', weeks: 4, sessions: 8, perWeek: 2, price: 800000, extra: 600000 },
+  { id: 2, name: '9주 심화 마스터', meta: '주 2회 · 총 18회 · 1회 60분', weeks: 9, sessions: 18, perWeek: 2, price: 1600000, extra: 1200000 },
+];
+ 
+const DAY_PATTERNS = [
+  { days: [1, 3], label: '월 · 수' },
+  { days: [2, 4], label: '화 · 목' },
+  { days: [3, 5], label: '수 · 금' },
+  { days: [1, 4], label: '월 · 목' },
+  { days: [2, 5], label: '화 · 금' },
+];
+ 
+const DN = ['일','월','화','수','목','금','토'];
+const MN = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+ 
+let currentCourse = 1;
+let currentPattern = null; // index into DAY_PATTERNS
+let startDate = null;
+let scheduledDates = [];
+let selectedTime = null;
+let guestNum = 1;
+let cY = 2026, cM = 3; // April 2026
+ 
+// ── Init ──
+function init() {
+  renderPills();
+  renderPatterns();
+  setCourse(1);
+  renderCal();
+}
+ 
+// ── Course Pills ──
+function renderPills() {
+  const box = document.getElementById('coursePills');
+  box.innerHTML = COURSES.map((c, i) =>
+    `<div class="bk-pill ${i===currentCourse?'active':''}" onclick="setCourse(${i})">
+      <span>${c.name}</span>
+      <span class="pill-sub">${c.meta}</span>
+    </div>`
+  ).join('');
+}
+ 
+function selectCourseAndScroll(idx) {
+  setCourse(idx);
+  document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+}
+ 
+function setCourse(idx) {
+  currentCourse = idx;
+  startDate = null;
+  scheduledDates = [];
+  currentPattern = null;
+  renderPills();
+  renderPatterns();
+  updateCard();
+  updateCalHint();
+  renderCal();
+  renderScheduleSummary();
+  updateDispDate();
+  updateDispPattern();
+ 
+  const c = COURSES[idx];
+  const patBox = document.getElementById('dayPatternBox');
+  patBox.style.display = c.weeks > 0 ? 'block' : 'none';
+}
+ 
+// ── Day Pattern ──
+function renderPatterns() {
+  const box = document.getElementById('patternOptions');
+  box.innerHTML = DAY_PATTERNS.map((p, i) =>
+    `<button class="pattern-btn ${i===currentPattern?'active':''}" onclick="setPattern(${i})">${p.label}</button>`
+  ).join('');
+}
+ 
+function setPattern(idx) {
+  currentPattern = idx;
+  renderPatterns();
+  if (startDate) computeSchedule();
+  updateDispPattern();
+  renderCal();
+  renderScheduleSummary();
+  updateCard();
+}
+ 
+// ── Calendar ──
+function updateCalHint() {
+  const hint = document.getElementById('calHint');
+  const c = COURSES[currentCourse];
+  if (c.weeks === 0) {
+    hint.textContent = '원하는 날짜를 선택하세요';
+  } else {
+    hint.textContent = `시작일을 선택하면 ${c.weeks}주간(${c.sessions}회) 일정이 자동 생성됩니다`;
+  }
+}
+ 
+function renderCal() {
+  const g = document.getElementById('calGrid');
+  document.getElementById('calTitle').textContent = `${cY}년 ${MN[cM]}`;
+  let h = '';
+  DN.forEach(d => h += `<div class="ab-day-name">${d}</div>`);
+  const fd = new Date(cY, cM, 1).getDay();
+  const dim = new Date(cY, cM + 1, 0).getDate();
+  const today = new Date();
+  const todayFlat = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const c = COURSES[currentCourse];
+ 
+  for (let i = 0; i < fd; i++) h += '<div class="ab-date"></div>';
+ 
+  for (let d = 1; d <= dim; d++) {
+    const dt = new Date(cY, cM, d);
+    const past = dt < todayFlat;
+    const dow = dt.getDay();
+    const isToday = dt.toDateString() === today.toDateString();
+ 
+    let avail = false;
+    if (c.weeks === 0) {
+      avail = !past && dow >= 1 && dow <= 5;
+    } else {
+      avail = !past && dow >= 1 && dow <= 5;
+    }
+ 
+    const isStart = startDate && dt.toDateString() === startDate.toDateString();
+    const isSched = scheduledDates.some(sd => sd.toDateString() === dt.toDateString()) && !isStart;
+ 
+    let cls = 'ab-date';
+    if (avail) cls += ' avail';
+    if (isToday) cls += ' today';
+    if (isStart) cls += ' start-date';
+    if (isSched) cls += ' sched';
+ 
+    const oc = avail ? `onclick="pickDate(${cY},${cM},${d})"` : '';
+    h += `<div class="${cls}" ${oc}>${d}</div>`;
+  }
+  g.innerHTML = h;
+}
+ 
+function changeMonth(dir) {
+  cM += dir;
+  if (cM > 11) { cM = 0; cY++; }
+  if (cM < 0) { cM = 11; cY--; }
+  renderCal();
+}
+ 
+function pickDate(y, m, d) {
+  const c = COURSES[currentCourse];
+  startDate = new Date(y, m, d);
+  scheduledDates = [];
+ 
+  if (c.weeks === 0) {
+    // single day
+    scheduledDates = [startDate];
+  } else {
+    if (currentPattern === null) {
+      // auto-select first matching pattern
+      setPattern(0);
+      startDate = new Date(y, m, d);
+    }
+    computeSchedule();
+  }
+ 
+  renderCal();
+  renderScheduleSummary();
+  updateDispDate();
+  updateCard();
+}
+ 
+function computeSchedule() {
+  const c = COURSES[currentCourse];
+  const pat = DAY_PATTERNS[currentPattern];
+  if (!startDate || !pat) return;
+ 
+  scheduledDates = [];
+  let current = new Date(startDate);
+  let totalNeeded = c.sessions;
+ 
+  // Find sessions: walk day by day from start, collect days matching pattern
+  let safetyLimit = 200;
+  while (scheduledDates.length < totalNeeded && safetyLimit-- > 0) {
+    const dow = current.getDay();
+    if (pat.days.includes(dow)) {
+      scheduledDates.push(new Date(current));
+    }
+    current.setDate(current.getDate() + 1);
+  }
+}
+ 
+// ── Time ──
+function pickTime(el) {
+  document.querySelectorAll('.time-slot.sel').forEach(s => s.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedTime = el.textContent;
+  document.getElementById('dispTime').textContent = selectedTime;
+  document.getElementById('dispTime').classList.remove('placeholder');
+}
+ 
+// ── Guest ──
+function changeGuest(dir) {
+  guestNum = Math.max(1, Math.min(10, guestNum + dir));
+  document.getElementById('guestCount').textContent = guestNum;
+  document.getElementById('guestMinus').disabled = guestNum <= 1;
+  document.getElementById('guestPlus').disabled = guestNum >= 10;
+  updateCard();
+}
+ 
+// ── Display Updates ──
+function updateDispDate() {
+  const el = document.getElementById('dispDate');
+  if (!startDate) { el.textContent = '날짜 선택'; el.className = 'cell-value placeholder'; return; }
+  const y = startDate.getFullYear(), m = startDate.getMonth(), d = startDate.getDate();
+  el.textContent = `${y}.${String(m+1).padStart(2,'0')}.${String(d).padStart(2,'0')} (${DN[startDate.getDay()]})`;
+  el.className = 'cell-value';
+}
+ 
+function updateDispPattern() {
+  const el = document.getElementById('dispPattern');
+  const c = COURSES[currentCourse];
+  if (c.weeks === 0) { el.textContent = '해당 없음'; el.className = 'cell-value'; return; }
+  if (currentPattern === null) { el.textContent = '요일 선택'; el.className = 'cell-value placeholder'; return; }
+  el.textContent = DAY_PATTERNS[currentPattern].label;
+  el.className = 'cell-value';
+}
+ 
+function renderScheduleSummary() {
+  const box = document.getElementById('scheduleSummary');
+  const c = COURSES[currentCourse];
+  if (c.weeks === 0 || scheduledDates.length === 0) { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  document.getElementById('sessionCount').textContent = `${scheduledDates.length}회`;
+ 
+  const list = document.getElementById('sessionList');
+  list.innerHTML = scheduledDates.map((dt, i) => {
+    const y = dt.getFullYear(), m = dt.getMonth()+1, d = dt.getDate();
+    const weekNum = Math.floor(i / COURSES[currentCourse].perWeek) + 1;
+    return `<div class="session-item">
+      <span class="snum">${i+1}회</span>
+      <span class="sdate">${y}.${String(m).padStart(2,'0')}.${String(d).padStart(2,'0')}</span>
+      <span class="sday">${DN[dt.getDay()]}요일 · ${weekNum}주차</span>
+    </div>`;
+  }).join('');
+}
+ 
+function updateCard() {
+  const c = COURSES[currentCourse];
+  document.getElementById('cardCourseName').textContent = c.name;
+  document.getElementById('cardCourseMeta').textContent = c.meta;
+ 
+  // Price
+  const basePrice = c.price;
+  const extraTotal = (guestNum - 1) * c.extra;
+  const total = basePrice + extraTotal;
+ 
+  document.getElementById('bkLabel1').textContent = `교육비 (1인 기본)`;
+  document.getElementById('bkVal1').textContent = formatPrice(basePrice);
+ 
+  const multiRow = document.getElementById('bkMultiRow');
+  if (guestNum > 1) {
+    multiRow.style.display = 'flex';
+    document.getElementById('bkLabel2').textContent = `추가 인원 (${guestNum - 1}명 × ${formatPrice(c.extra)})`;
+    document.getElementById('bkVal2').textContent = formatPrice(extraTotal);
+  } else {
+    multiRow.style.display = 'none';
+  }
+ 
+  document.getElementById('bkTotal').textContent = formatPrice(total);
+}
+ 
+function formatPrice(n) {
+  return '₩' + n.toLocaleString('ko-KR');
+}
+ 
+// ── API ──
+const API_URL = 'http://localhost:3000/api';
+ 
+async function handleBook() {
+  const c = COURSES[currentCourse];
+  const name = document.getElementById('guestName').value.trim();
+  const phone = document.getElementById('guestPhone').value.trim();
+  const email = document.getElementById('guestEmail').value.trim();
+ 
+  if (!name) { alert('이름을 입력해 주세요.'); document.getElementById('guestName').focus(); return; }
+  if (!phone) { alert('연락처를 입력해 주세요.'); document.getElementById('guestPhone').focus(); return; }
+  if (!startDate) { alert('날짜를 선택해 주세요.'); return; }
+  if (!selectedTime) { alert('시간을 선택해 주세요.'); return; }
+  if (c.weeks > 0 && currentPattern === null) { alert('수업 요일을 선택해 주세요.'); return; }
+ 
+  const startStr = `${startDate.getFullYear()}-${String(startDate.getMonth()+1).padStart(2,'0')}-${String(startDate.getDate()).padStart(2,'0')}`;
+ 
+  const body = {
+    course_id: c.id,
+    guest_name: name,
+    guest_phone: phone,
+    guest_email: email || undefined,
+    guest_count: guestNum,
+    start_date: startStr,
+    time_slot: selectedTime,
+    day_pattern: currentPattern !== null ? DAY_PATTERNS[currentPattern].label : undefined,
+  };
+ 
+  const btn = document.getElementById('bookBtn');
+  btn.disabled = true;
+  btn.textContent = '예약 처리 중...';
+ 
+  try {
+    const res = await fetch(`${API_URL}/bookings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+ 
+    const data = await res.json();
+ 
+    if (!res.ok || !data.success) {
+      alert(data.error || '예약 처리 중 오류가 발생했습니다.');
+      btn.disabled = false;
+      btn.textContent = '예약 요청하기';
+      return;
+    }
+ 
+    // 성공 오버레이 표시
+    const bk = data.data.booking;
+    const sess = data.data.sessions;
+    const total = bk.total_price;
+ 
+    let sessHtml = '';
+    if (sess.length > 1) {
+      sessHtml = `<div style="margin-top:0.8rem;max-height:120px;overflow-y:auto;">` +
+        sess.slice(0, 6).map(s =>
+          `<div class="sd-row"><span class="sd-label">${s.session_number}회차</span><span class="sd-value">${s.session_date} (${s.day_name})</span></div>`
+        ).join('') +
+        (sess.length > 6 ? `<div class="sd-row"><span class="sd-label">...</span><span class="sd-value">외 ${sess.length - 6}회</span></div>` : '') +
+        `</div>`;
+    }
+ 
+    document.getElementById('successCard').innerHTML = `
+      <div class="success-icon">✅</div>
+      <h3>예약이 접수되었습니다!</h3>
+      <p>확정 안내는 입력하신 연락처로 개별 연락 드리겠습니다.</p>
+      <div class="success-details">
+        <div class="sd-row"><span class="sd-label">과정</span><span class="sd-value">${c.name}</span></div>
+        <div class="sd-row"><span class="sd-label">예약자</span><span class="sd-value">${name}</span></div>
+        <div class="sd-row"><span class="sd-label">연락처</span><span class="sd-value">${phone}</span></div>
+        <div class="sd-row"><span class="sd-label">인원</span><span class="sd-value">${guestNum}명</span></div>
+        <div class="sd-row"><span class="sd-label">시작일</span><span class="sd-value">${bk.start_date}</span></div>
+        <div class="sd-row"><span class="sd-label">시간</span><span class="sd-value">${bk.time_slot}</span></div>
+        ${bk.day_pattern ? `<div class="sd-row"><span class="sd-label">요일</span><span class="sd-value">${bk.day_pattern}</span></div>` : ''}
+        <div class="sd-row"><span class="sd-label">총 교육비</span><span class="sd-value" style="color:var(--warm-gold);font-size:1.05rem;">${formatPrice(total)}</span></div>
+        ${sessHtml}
+      </div>
+      <button class="success-close" onclick="closeOverlay()">확인</button>
+      <div class="booking-id-text">예약번호: ${bk.id}</div>
+    `;
+    document.getElementById('bookingOverlay').classList.add('show');
+ 
+  } catch (err) {
+    console.error(err);
+    alert('서버 연결에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+  }
+ 
+  btn.disabled = false;
+  btn.textContent = '예약 요청하기';
+}
+ 
+function closeOverlay() {
+  document.getElementById('bookingOverlay').classList.remove('show');
+}
+ 
+// ── Persona Tabs ──
+function switchPersona(idx) {
+  document.querySelectorAll('.persona-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+  document.querySelectorAll('.persona-content').forEach((c, i) => c.classList.toggle('active', i === idx));
+}
+
+// ── Init ──
+init();
+</script>
+</body>
+</html>
