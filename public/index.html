@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>손수오 보이스 컨설팅 | 대한민국 No.1 보이스 컨설턴트</title>
+<meta name="description" content="AI 시대, 당신의 목소리가 무기입니다. 대한민국 최고 보이스 컨설턴트 손수오 교수의 1:1 맞춤형 보이스 트레이닝.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0f;--bg2:#111118;--bg3:#1a1a25;
+  --accent:#ff6b35;--accent2:#ff8c5a;--accent-glow:rgba(255,107,53,.25);
+  --gold:#d4a853;--gold2:#e8c675;
+  --text:#f0f0f5;--text2:#a0a0b0;--text3:#707080;
+  --gradient:linear-gradient(135deg,#ff6b35,#ff3366);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.7}
+a{color:inherit;text-decoration:none}
+
+/* ===== SECTION 1: HERO ===== */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;text-align:center}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(255,107,53,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 70%,rgba(255,51,102,.05) 0%,transparent 50%)}
+.hero-particles{position:absolute;inset:0;overflow:hidden}
+.hero-particles span{position:absolute;width:2px;height:2px;background:var(--accent);border-radius:50%;animation:float 8s infinite}
+@keyframes float{0%,100%{opacity:0;transform:translateY(100vh)}50%{opacity:.6}100%{transform:translateY(-10vh)}}
+.hero-content{position:relative;z-index:2;max-width:900px;padding:2rem}
+.hero-badge{display:inline-block;padding:.5rem 1.5rem;border:1px solid rgba(255,107,53,.3);border-radius:50px;color:var(--accent);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:2rem;backdrop-filter:blur(10px);background:rgba(255,107,53,.05)}
+.hero h1{font-size:clamp(2rem,5vw,3.8rem);font-weight:900;line-height:1.3;margin-bottom:1.5rem;background:linear-gradient(to right,#fff,#ddd);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:clamp(1rem,2vw,1.3rem);color:var(--text2);max-width:700px;margin:0 auto 3rem;line-height:1.8}
+.cta-btn{display:inline-block;padding:1.1rem 3rem;background:var(--gradient);color:#fff;font-size:1.1rem;font-weight:700;border-radius:60px;border:none;cursor:pointer;transition:all .3s;box-shadow:0 4px 30px var(--accent-glow);position:relative;overflow:hidden}
+.cta-btn:hover{transform:translateY(-3px);box-shadow:0 8px 40px var(--accent-glow)}
+.cta-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,.1) 50%,transparent 70%);transform:translateX(-100%);transition:transform .5s}
+.cta-btn:hover::after{transform:translateX(100%)}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
+.scroll-hint span{display:block;width:24px;height:38px;border:2px solid var(--text3);border-radius:12px;position:relative}
+.scroll-hint span::after{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);width:4px;height:8px;background:var(--accent);border-radius:2px;animation:scroll-dot 2s infinite}
+@keyframes scroll-dot{0%{opacity:1;top:6px}100%{opacity:0;top:20px}}
+
+/* ===== SECTION 2: PROBLEM ===== */
+.problem{padding:8rem 2rem;background:var(--bg2);position:relative}
+.problem::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--accent),transparent)}
+.section-tag{display:inline-block;color:var(--accent);font-size:.8rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:1rem}
+.section-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;margin-bottom:1rem}
+.section-sub{color:var(--text2);font-size:1.1rem;max-width:700px;margin-bottom:4rem;line-height:1.8}
+.container{max-width:1100px;margin:0 auto}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+@media(max-width:768px){.compare-grid{grid-template-columns:1fr;gap:2rem}}
+.compare-card{padding:2.5rem;border-radius:20px;position:relative;overflow:hidden}
+.compare-card.old{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.compare-card.new{background:linear-gradient(135deg,rgba(255,107,53,.08),rgba(255,51,102,.05));border:1px solid rgba(255,107,53,.2);box-shadow:0 0 60px rgba(255,107,53,.05)}
+.compare-label{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:1.5rem;padding:.4rem 1rem;border-radius:20px;display:inline-block}
+.compare-card.old .compare-label{color:var(--text3);background:rgba(255,255,255,.05)}
+.compare-card.new .compare-label{color:var(--accent);background:rgba(255,107,53,.1)}
+.compare-card h3{font-size:1.4rem;margin-bottom:1rem}
+.compare-item{padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text2);font-size:.95rem;display:flex;align-items:flex-start;gap:.8rem}
+.compare-item .icon{flex-shrink:0;width:20px;text-align:center;font-size:1rem;line-height:1.5}
+.compare-card.old .icon{color:var(--text3)}
+.compare-card.new .icon{color:var(--accent)}
+
+/* ===== SECTION 3: EXPERT ===== */
+.expert{padding:8rem 2rem;background:var(--bg);position:relative}
+.expert-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+@media(max-width:768px){.expert-grid{grid-template-columns:1fr}}
+.expert-visual{position:relative}
+.expert-img-placeholder{width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,var(--bg3),var(--bg2));border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:5rem;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.05)}
+.expert-img-placeholder::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 60%,rgba(255,107,53,.1))}
+.effect-badge{position:absolute;bottom:-1rem;right:-1rem;width:140px;height:140px;border-radius:50%;background:var(--gradient);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 40px var(--accent-glow)}
+.effect-badge .num{font-size:2.5rem;font-weight:900;color:#fff;line-height:1}
+.effect-badge .label{font-size:.7rem;color:rgba(255,255,255,.8);letter-spacing:1px}
+.expert-info h2{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:900;margin-bottom:1.5rem}
+.expert-info .highlight{color:var(--accent)}
+.expert-info p{color:var(--text2);line-height:1.9;margin-bottom:1.5rem}
+.effect-chart{margin-top:2rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+.effect-item{flex:1;min-width:100px;text-align:center;padding:1.5rem 1rem;background:var(--bg2);border-radius:16px;border:1px solid rgba(255,255,255,.05)}
+.effect-item .value{font-size:1.8rem;font-weight:900;margin-bottom:.3rem}
+.effect-item .value.lit{color:var(--accent)}
+.effect-item .value.dim{color:var(--text3)}
+.effect-item .name{font-size:.75rem;color:var(--text2);letter-spacing:1px}
+
+/* ===== SECTION 4: COURSES ===== */
+.courses{padding:8rem 2rem;background:var(--bg2);position:relative}
+.courses::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--accent),transparent)}
+.course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-top:3rem}
+.course-card{background:var(--bg);border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:2.5rem;transition:all .4s;position:relative;overflow:hidden}
+.course-card:hover{border-color:rgba(255,107,53,.3);transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.course-card.featured{border-color:rgba(255,107,53,.3)}
+.course-card.featured::before{content:'BEST';position:absolute;top:1.5rem;right:1.5rem;padding:.3rem .8rem;background:var(--gradient);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:2px;border-radius:20px}
+.course-name{font-size:1.3rem;font-weight:700;margin-bottom:.5rem}
+.course-duration{color:var(--text3);font-size:.85rem;margin-bottom:1.5rem}
+.course-price{font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:.3rem}
+.course-price span{font-size:.9rem;font-weight:400;color:var(--text3)}
+.course-desc{color:var(--text2);font-size:.9rem;margin-bottom:1.5rem;line-height:1.7}
+.course-features{list-style:none;margin-bottom:2rem}
+.course-features li{padding:.4rem 0;color:var(--text2);font-size:.85rem;display:flex;align-items:center;gap:.5rem}
+.course-features li::before{content:'✦';color:var(--accent);font-size:.6rem}
+.course-cta{display:block;text-align:center;padding:.9rem;border:1px solid rgba(255,107,53,.3);border-radius:12px;color:var(--accent);font-weight:600;transition:all .3s}
+.course-cta:hover{background:var(--accent);color:#fff}
+.course-card.featured .course-cta{background:var(--gradient);color:#fff;border:none}
+
+/* ===== SECTION 5: BOOKING ===== */
+.booking{padding:8rem 2rem;background:var(--bg);position:relative;text-align:center}
+.booking::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,107,53,.06) 0%,transparent 60%)}
+.booking-content{position:relative;z-index:2;max-width:700px;margin:0 auto}
+.booking h2{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;margin-bottom:1.5rem}
+.booking p{color:var(--text2);font-size:1.1rem;margin-bottom:3rem;line-height:1.8}
+.booking-cta{display:inline-block;padding:1.3rem 4rem;background:var(--gradient);color:#fff;font-size:1.2rem;font-weight:700;border-radius:60px;cursor:pointer;transition:all .3s;box-shadow:0 4px 40px var(--accent-glow);border:none;text-decoration:none}
+.booking-cta:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 8px 50px rgba(255,107,53,.35)}
+.trust-badges{display:flex;justify-content:center;gap:3rem;margin-top:4rem;flex-wrap:wrap}
+.trust-badge{text-align:center}
+.trust-badge .num{font-size:2rem;font-weight:900;color:var(--accent)}
+.trust-badge .label{font-size:.8rem;color:var(--text3);margin-top:.3rem}
+
+/* ===== TESTIMONIALS (between courses & booking) ===== */
+.testimonials{padding:6rem 2rem;background:var(--bg)}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;margin-top:3rem}
+.testi-card{background:var(--bg2);border:1px solid rgba(255,255,255,.05);border-radius:16px;padding:2rem;position:relative}
+.testi-card::before{content:'"';position:absolute;top:1rem;right:1.5rem;font-size:4rem;color:rgba(255,107,53,.15);font-family:Georgia,serif;line-height:1}
+.testi-stars{color:var(--gold);margin-bottom:1rem;font-size:.9rem;letter-spacing:2px}
+.testi-text{color:var(--text2);font-size:.95rem;line-height:1.8;margin-bottom:1.5rem}
+.testi-author{font-weight:700;font-size:.9rem}
+.testi-role{color:var(--text3);font-size:.8rem}
+
+/* ===== FOOTER ===== */
+footer{padding:3rem 2rem;background:var(--bg2);text-align:center;color:var(--text3);font-size:.85rem;border-top:1px solid rgba(255,255,255,.05)}
+
+/* ===== NAV ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;transition:all .3s}
+.nav.scrolled{background:rgba(10,10,15,.95);backdrop-filter:blur(20px);box-shadow:0 2px 20px rgba(0,0,0,.3)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-weight:900;font-size:1.2rem;letter-spacing:1px}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-size:.85rem;color:var(--text2);transition:color .3s;font-weight:500}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{padding:.6rem 1.5rem;background:var(--gradient);border-radius:30px;color:#fff!important;font-weight:600;font-size:.85rem}
+@media(max-width:768px){.nav-links{display:none}}
+
+/* ===== ANIMATIONS ===== */
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.25,.46,.45,.94)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">VOICE<span>.</span>LAB</div>
+    <div class="nav-links">
+      <a href="#problem">왜 다른가</a>
+      <a href="#expert">전문가</a>
+      <a href="#courses">과정 안내</a>
+      <a href="#booking" class="nav-cta">예약하기</a>
+    </div>
+  </div>
+</nav>
+
+<!-- SECTION 1: HERO -->
+<section class="hero" id="hero">
+  <div class="hero-particles">
+    <span style="left:10%;animation-delay:0s"></span>
+    <span style="left:20%;animation-delay:1s"></span>
+    <span style="left:35%;animation-delay:2s"></span>
+    <span style="left:50%;animation-delay:.5s"></span>
+    <span style="left:65%;animation-delay:3s"></span>
+    <span style="left:78%;animation-delay:1.5s"></span>
+    <span style="left:90%;animation-delay:2.5s"></span>
+  </div>
+  <div class="hero-content reveal">
+    <div class="hero-badge">Voice Consulting</div>
+    <h1>인공지능과 경쟁하는 시대,<br>당신의 무기는 무엇입니까?</h1>
+    <p>기계가 정답을 내놓는 세상,<br>사람의 마음을 얻는 유일한 열쇠는 <strong>'사람'</strong>입니다.</p>
+    <a href="#booking" class="cta-btn">나만의 목소리 무기 만들기</a>
+  </div>
+  <div class="scroll-hint"><span></span></div>
+</section>
+
+<!-- SECTION 2: PROBLEM -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="section-tag reveal">Why Different</div>
+    <h2 class="section-title reveal">단순한 말하기 강사로는<br>부족합니다.</h2>
+    <p class="section-sub reveal">가르치는 강사의 목소리, 정말 신뢰할 수 있었습니까?<br>이제 고질적인 문제를 정확히 파악하고 개선해야 할 때입니다.</p>
+    <div class="compare-grid">
+      <div class="compare-card old reveal">
+        <div class="compare-label">일반 말하기 강사</div>
+        <h3>표면적인 교정</h3>
+        <div class="compare-item"><span class="icon">△</span> 발성·발음 위주의 반복 훈련</div>
+        <div class="compare-item"><span class="icon">△</span> 강사 본인의 목소리가 검증되지 않음</div>
+        <div class="compare-item"><span class="icon">△</span> 천편일률적 커리큘럼</div>
+        <div class="compare-item"><span class="icon">△</span> 단기 효과, 원래 습관으로 회귀</div>
+        <div class="compare-item"><span class="icon">△</span> 그룹 수업 중심</div>
+      </div>
+      <div class="compare-card new reveal">
+        <div class="compare-label">보이스 컨설턴트</div>
+        <h3>근본적인 변화</h3>
+        <div class="compare-item"><span class="icon">◆</span> 음성 분석 기반 정밀 진단</div>
+        <div class="compare-item"><span class="icon">◆</span> 20년 방송 경력의 검증된 전문가</div>
+        <div class="compare-item"><span class="icon">◆</span> 1인 완전 맞춤형 프로그램</div>
+        <div class="compare-item"><span class="icon">◆</span> 습관 교정으로 영구적 변화</div>
+        <div class="compare-item"><span class="icon">◆</span> 밀착 1:1 화상 지도</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: EXPERT -->
+<section class="expert" id="expert">
+  <div class="container">
+    <div class="expert-grid">
+      <div class="expert-visual reveal">
+        <div class="expert-img-placeholder">
+          🎙️
+          <div class="effect-badge">
+            <div class="num">38</div>
+            <div class="label">EFFECT</div>
+          </div>
+        </div>
+      </div>
+      <div class="expert-info reveal">
+        <div class="section-tag">Expert</div>
+        <h2>대한민국 <span class="highlight">No.1</span><br>보이스 컨설턴트, 손수오 교수</h2>
+        <p>메라비언 법칙에 따르면 소통에서 시각이 55%, 청각이 38%, 언어가 7%를 차지합니다. 손수오 교수는 이 중 <strong>청각 38%와 언어 7%를 극대화</strong>하는 독자적인 '45의 마법'을 개발했습니다.</p>
+        <p>단 한 문장의 자기소개로 7가지 음성 문제점을 진단하고, 즉각적인 변화를 이끌어내는 <strong>'38 효과'</strong>를 직접 경험해 보십시오.</p>
+        <div class="effect-chart">
+          <div class="effect-item">
+            <div class="value dim">55%</div>
+            <div class="name">시각</div>
+          </div>
+          <div class="effect-item">
+            <div class="value lit">38%</div>
+            <div class="name">청각</div>
+          </div>
+          <div class="effect-item">
+            <div class="value lit">7%</div>
+            <div class="name">언어</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: COURSES -->
+<section class="courses" id="courses">
+  <div class="container">
+    <div class="section-tag reveal">Programs</div>
+    <h2 class="section-title reveal">맞춤형 교육 과정</h2>
+    <p class="section-sub reveal">하루 집중 과정부터 9주 심화 과정까지,<br>완벽한 1인 맞춤형 프로그램을 만나보세요.</p>
+    <div class="course-grid" id="courseGrid">
+      <!-- Courses loaded dynamically or fallback -->
+    </div>
+    <div style="text-align:center;margin-top:3rem" class="reveal">
+      <div style="display:inline-flex;gap:2rem;flex-wrap:wrap;justify-content:center">
+        <div style="display:flex;align-items:center;gap:.5rem;color:var(--text2);font-size:.9rem">
+          <span style="color:var(--accent);font-size:1.2rem">📹</span> 1:1 화상 회의 방식
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem;color:var(--text2);font-size:.9rem">
+          <span style="color:var(--accent);font-size:1.2rem">🎬</span> 전 과정 녹화본 제공
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem;color:var(--text2);font-size:.9rem">
+          <span style="color:var(--accent);font-size:1.2rem">📊</span> 음성 분석 리포트
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-tag reveal">Reviews</div>
+    <h2 class="section-title reveal">수강생 후기</h2>
+    <div class="testi-grid" id="testiGrid">
+      <!-- Loaded dynamically or fallback -->
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: BOOKING -->
+<section class="booking" id="booking">
+  <div class="booking-content reveal">
+    <div class="section-tag">Book Now</div>
+    <h2>사람의 마음을 사는<br>따뜻하고 힘 있는 목소리,<br>지금 바로 완성하세요.</h2>
+    <p>1:1 맞춤형 보이스 컨설팅으로<br>당신만의 목소리 무기를 만들어 드립니다.</p>
+    <a href="https://calendly.com" target="_blank" rel="noopener" class="booking-cta" id="bookingBtn">
+      1:1 맞춤형 과정 예약하기
+    </a>
+    <p style="margin-top:1rem;font-size:.85rem;color:var(--text3)">* 예약 페이지로 이동합니다</p>
+    <div class="trust-badges">
+      <div class="trust-badge"><div class="num">500+</div><div class="label">수강생</div></div>
+      <div class="trust-badge"><div class="num">98%</div><div class="label">만족도</div></div>
+      <div class="trust-badge"><div class="num">20년</div><div class="label">경력</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>&copy; 2024 손수오 보이스 컨설팅. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Load courses
+const defaultCourses = [
+  { name: '1일 집중 과정', duration: '1일 (3시간)', price: 300000, description: '핵심 문제 진단 및 즉각 개선. 바쁜 분들을 위한 압축 코스.', features: '음성 진단,핵심 교정,녹화본 제공' },
+  { name: '4주 기본 과정', duration: '4주 (주 1회)', price: 800000, description: '체계적인 목소리 변화의 시작. 기본기부터 탄탄하게.', features: '주간 1:1 화상,맞춤 커리큘럼,매회 녹화본,중간 평가' },
+  { name: '9주 심화 과정', duration: '9주 (주 1회)', price: 1500000, description: '완벽한 보이스 브랜딩. 프로페셔널 스피커로 거듭나기.', features: '주간 1:1 화상,완전 맞춤형,전 과정 녹화본,수시 피드백,수료 인증' }
+];
+
+function renderCourses(courses) {
+  const grid = document.getElementById('courseGrid');
+  grid.innerHTML = courses.map((c, i) => `
+    <div class="course-card ${i === 2 ? 'featured' : ''} reveal">
+      <div class="course-name">${c.name}</div>
+      <div class="course-duration">${c.duration}</div>
+      <div class="course-price">${(c.price).toLocaleString()}<span>원</span></div>
+      <div class="course-desc">${c.description}</div>
+      <ul class="course-features">
+        ${c.features.split(',').map(f => `<li>${f.trim()}</li>`).join('')}
+      </ul>
+      <a href="#booking" class="course-cta">예약하기</a>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// Load testimonials
+const defaultTestimonials = [
+  { name: '김○○ 대표', role: 'IT 스타트업 CEO', content: '투자 발표 때마다 떨렸는데, 9주 과정 후 투자자들이 먼저 연락해왔습니다. 목소리가 달라지니 자신감이 완전히 바뀌었어요.', rating: 5 },
+  { name: '이○○ 팀장', role: '대기업 마케팅', content: '프레젠테이션 공포증이 있었는데, 4주만에 팀 발표를 자원하게 되었습니다. 동료들이 놀라더군요.', rating: 5 },
+  { name: '박○○ 아나운서', role: '방송인', content: '현업에서 10년 했지만 손수오 교수님께 배운 38 효과는 정말 혁신적이었습니다. 시청자 반응이 확 달라졌어요.', rating: 5 }
+];
+
+function renderTestimonials(data) {
+  const grid = document.getElementById('testiGrid');
+  grid.innerHTML = data.map(t => `
+    <div class="testi-card reveal">
+      <div class="testi-stars">${'★'.repeat(t.rating)}${'☆'.repeat(5-t.rating)}</div>
+      <div class="testi-text">${t.content}</div>
+      <div class="testi-author">${t.name}</div>
+      <div class="testi-role">${t.role}</div>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// Try API first, fallback to defaults
+async function init() {
+  try {
+    const [coursesRes, testiRes] = await Promise.all([
+      fetch('/api/courses').then(r => r.ok ? r.json() : null).catch(() => null),
+      fetch('/api/testimonials').then(r => r.ok ? r.json() : null).catch(() => null)
+    ]);
+    renderCourses(coursesRes && coursesRes.length ? coursesRes : defaultCourses);
+    renderTestimonials(testiRes && testiRes.length ? testiRes : defaultTestimonials);
+  } catch {
+    renderCourses(defaultCourses);
+    renderTestimonials(defaultTestimonials);
+  }
+}
+init();
+</script>
+</body>
+</html>
