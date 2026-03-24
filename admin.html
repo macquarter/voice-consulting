@@ -222,6 +222,19 @@ tr:hover td{background:rgba(255,107,53,.02)}
     </div>
   </div>
 
+  <!-- YouTube / Media Section -->
+  <div class="edit-block">
+    <div class="edit-block-header" onclick="toggleBlock(this)">
+      <h3>🎬 유튜브 / 미디어</h3>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="edit-block-body">
+      <div class="field"><label>유튜브 영상 URL</label><input id="c_youtube_url" placeholder="https://www.youtube.com/watch?v=..." oninput="markDirty()"><div class="hint">메인 페이지에 삽입될 유튜브 영상 링크. 비워두면 유튜브 섹션이 숨겨집니다.</div></div>
+      <div class="field"><label>영상 제목</label><input id="c_youtube_title" placeholder="손수오 교수의 보이스 컨설팅" oninput="markDirty()"></div>
+      <div class="field"><label>영상 설명</label><textarea id="c_youtube_desc" rows="2" placeholder="영상에 대한 간단한 설명" oninput="markDirty()"></textarea></div>
+    </div>
+  </div>
+
   <!-- Problem Section -->
   <div class="edit-block">
     <div class="edit-block-header" onclick="toggleBlock(this)">
@@ -398,6 +411,7 @@ let isDirty = false;
 // ── Content key mapping ──
 const CONTENT_KEYS = [
   'hero_title','hero_subtitle','hero_cta','hero_cta_url',
+  'youtube_url','youtube_title','youtube_desc',
   'problem_title','problem_desc','problem_left','problem_right',
   'expert_name','expert_title','expert_intro','expert_credentials',
   'booking_title','booking_cta','booking_url',

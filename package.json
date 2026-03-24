@@ -1,13 +1,12 @@
 {
   "name": "voice-booking",
-  "version": "1.0.0",
-  "description": "손수오 보이스 컨설팅 예약 시스템",
+  "version": "2.0.0",
+  "description": "손수오 보이스 컨설팅 예약 시스템 (Edge Config)",
   "private": true,
   "engines": {
     "node": "20.x"
   },
   "dependencies": {
-    "@vercel/postgres": "^0.10.0",
     "uuid": "^9.0.0"
   }
 }

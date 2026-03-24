@@ -1,20 +1,21 @@
-const { sql } = require('./_db');
-
 module.exports = async function handler(req, res) {
+  const ecUrl = process.env.EDGE_CONFIG;
+
+  res.setHeader('Access-Control-Allow-Origin', '*');
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const total = await sql`SELECT COUNT(*) as cnt FROM bookings`;
-    const pending = await sql`SELECT COUNT(*) as cnt FROM bookings WHERE status='pending'`;
-    const confirmed = await sql`SELECT COUNT(*) as cnt FROM bookings WHERE status='confirmed'`;
-    const byCourse = await sql`SELECT course, COUNT(*) as cnt FROM bookings GROUP BY course`;
+    let bookings = [];
+    try {
+      const resp = await fetch(`${ecUrl.split('?')[0]}/item/bookings?${ecUrl.split('?')[1]}`);
+      if (resp.ok) bookings = await resp.json();
+    } catch {}
 
-    res.status(200).json({
-      total: parseInt(total.rows[0].cnt),
-      pending: parseInt(pending.rows[0].cnt),
-      confirmed: parseInt(confirmed.rows[0].cnt),
-      byCourse: byCourse.rows
-    });
+    const total = bookings.length;
+    const pending = bookings.filter(b => b.status === 'pending').length;
+    const confirmed = bookings.filter(b => b.status === 'confirmed').length;
+
+    return res.status(200).json({ total, pending, confirmed });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

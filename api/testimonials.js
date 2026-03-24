@@ -1,27 +1,55 @@
-const { sql } = require('./_db');
-
 module.exports = async function handler(req, res) {
+  const EC_ID = process.env.EDGE_CONFIG_ID;
+  const API_TOKEN = process.env.VERCEL_API_TOKEN;
+  const TEAM_ID = process.env.VERCEL_TEAM_ID;
+  const ecUrl = process.env.EDGE_CONFIG;
+
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+
   try {
+    async function getTestimonials() {
+      try {
+        const resp = await fetch(`${ecUrl.split('?')[0]}/item/testimonials?${ecUrl.split('?')[1]}`);
+        if (resp.ok) return await resp.json();
+      } catch {}
+      return [];
+    }
+
+    async function saveTestimonials(data) {
+      const teamParam = TEAM_ID ? `?teamId=${TEAM_ID}` : '';
+      await fetch(`https://api.vercel.com/v1/edge-config/${EC_ID}/items${teamParam}`, {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${API_TOKEN}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: [{ operation: 'upsert', key: 'testimonials', value: data }] })
+      });
+    }
+
     if (req.method === 'GET') {
-      const result = await sql`SELECT * FROM testimonials WHERE active = true ORDER BY id DESC`;
-      return res.status(200).json(result.rows);
+      return res.status(200).json(await getTestimonials());
     }
 
-    if (req.method === 'POST') {
-      const { name, role, content, rating } = req.body;
-      const result = await sql`INSERT INTO testimonials (name, role, content, rating) VALUES (${name}, ${role}, ${content}, ${rating || 5}) RETURNING *`;
-      return res.status(201).json(result.rows[0]);
-    }
-
-    if (req.method === 'PUT') {
-      const { id, name, role, content, rating } = req.body;
-      await sql`UPDATE testimonials SET name=${name}, role=${role}, content=${content}, rating=${rating} WHERE id=${id}`;
+    if (req.method === 'PUT' || req.method === 'POST') {
+      const list = await getTestimonials();
+      const body = req.body;
+      if (body.id) {
+        const idx = list.findIndex(t => t.id === body.id);
+        if (idx >= 0) list[idx] = { ...list[idx], ...body };
+      } else {
+        body.id = list.length > 0 ? Math.max(...list.map(t => t.id)) + 1 : 1;
+        list.push(body);
+      }
+      await saveTestimonials(list);
       return res.status(200).json({ success: true });
     }
 
     if (req.method === 'DELETE') {
-      const { id } = req.body;
-      await sql`UPDATE testimonials SET active=false WHERE id=${id}`;
+      const id = parseInt(req.query.id);
+      let list = await getTestimonials();
+      list = list.filter(t => t.id !== id);
+      await saveTestimonials(list);
       return res.status(200).json({ success: true });
     }
 
