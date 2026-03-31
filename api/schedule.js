@@ -14,9 +14,23 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   try {
+    // CDN 읽기 (GET용 - 빠르지만 약간의 지연 가능)
     async function getEdgeItem(key) {
       try {
         const resp = await fetch(`${ecUrl.split('?')[0]}/item/${key}?${ecUrl.split('?')[1]}`);
+        if (resp.ok) return await resp.json();
+      } catch {}
+      return [];
+    }
+
+    // API 직접 읽기 (POST/DELETE용 - 항상 최신 데이터)
+    async function getEdgeItemConsistent(key) {
+      try {
+        const teamParam = TEAM_ID ? `&teamId=${TEAM_ID}` : '';
+        const resp = await fetch(
+          `https://api.vercel.com/v1/edge-config/${EC_ID}/item/${key}?${teamParam}`,
+          { headers: { 'Authorization': `Bearer ${API_TOKEN}` } }
+        );
         if (resp.ok) return await resp.json();
       } catch {}
       return [];
@@ -98,7 +112,8 @@ module.exports = async function handler(req, res) {
     // === POST: 슬롯 차단 추가 ===
     if (req.method === 'POST') {
       const { date, time, slots } = req.body || {};
-      let blockedSlots = await getEdgeItem('blocked_slots');
+      // 일관된 읽기 (Vercel API 직접) — CDN 전파 지연 방지
+      let blockedSlots = await getEdgeItemConsistent('blocked_slots');
       let arr = Array.isArray(blockedSlots) ? [...blockedSlots] : [];
 
       if (slots && Array.isArray(slots)) {
@@ -132,7 +147,8 @@ module.exports = async function handler(req, res) {
     // === DELETE: 슬롯 차단 해제 ===
     if (req.method === 'DELETE') {
       const { date, time } = req.body || {};
-      let blockedSlots = await getEdgeItem('blocked_slots');
+      // 일관된 읽기 (Vercel API 직접) — CDN 전파 지연 방지
+      let blockedSlots = await getEdgeItemConsistent('blocked_slots');
       let arr = Array.isArray(blockedSlots) ? [...blockedSlots] : [];
 
       if (date && time) {
