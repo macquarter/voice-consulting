@@ -43,11 +43,16 @@ module.exports = async function handler(req, res) {
 
     async function saveEdgeItem(key, data) {
       const teamParam = TEAM_ID ? `?teamId=${TEAM_ID}` : '';
-      await fetch(`https://api.vercel.com/v1/edge-config/${EC_ID}/items${teamParam}`, {
+      const saveResp = await fetch(`https://api.vercel.com/v1/edge-config/${EC_ID}/items${teamParam}`, {
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${API_TOKEN}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ items: [{ operation: 'upsert', key, value: data }] })
       });
+      if (!saveResp.ok) {
+        const errText = await saveResp.text().catch(() => '');
+        console.error(`saveEdgeItem FAILED: ${saveResp.status} ${errText}`);
+        throw new Error(`Edge Config save failed: ${saveResp.status}`);
+      }
     }
 
     // === GET: 스케줄 현황 ===
