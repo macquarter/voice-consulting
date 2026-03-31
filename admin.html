@@ -177,6 +177,7 @@ tr:hover td{background:rgba(255,107,53,.02)}
 .sch-slot-item.type-block:hover{background:#fee2e2}
 .sch-del-btn{background:none;border:none;cursor:pointer;font-size:.85rem;padding:.15rem .35rem;border-radius:6px;transition:all .15s;opacity:.5}
 .sch-del-btn:hover{opacity:1;background:rgba(0,0,0,.06)}
+#schSlotsList{max-height:400px;overflow-y:auto}
 @media(max-width:768px){#schLayout{grid-template-columns:1fr !important}}
 </style>
 </head>
@@ -1390,9 +1391,20 @@ async function submitScheduleEntry() {
   const label = reason ? '내 일정' : '차단';
   showSchToast(`✅ ${label} ${slots.length}건 등록 완료 (${dates.length}일 × ${times.length}슬롯)`, 'success');
 
+  // 시간 선택 초기화 → 다음 등록 준비 (날짜는 유지)
+  schSelectedTimes = ['ALL'];
+  document.querySelectorAll('.sch-time-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.time === 'ALL');
+  });
   document.getElementById('schReasonInput').value = '';
+
   renderSchCal();
   renderSchSlots();
+
+  // 등록 목록으로 스크롤하여 추가된 항목 보여주기
+  const slotsList = document.getElementById('schSlotsList');
+  if (slotsList) slotsList.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
   if (document.getElementById('schDayDetail').style.display !== 'none') {
     const openDate = document.getElementById('schDayTitle').dataset.date;
     if (openDate) showSchDay(openDate);
