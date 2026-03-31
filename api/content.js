@@ -30,6 +30,7 @@ async function writeContent(data) {
     access: 'public',
     contentType: 'application/json',
     addRandomSuffix: false,
+    allowOverwrite: true,
   });
   return blob;
 }
