@@ -31,7 +31,11 @@ module.exports = async function handler(req, res) {
         const resp = await fetch(url, {
           headers: { 'Authorization': `Bearer ${API_TOKEN}` }
         });
-        if (resp.ok) return await resp.json();
+        if (resp.ok) {
+          const data = await resp.json();
+          // Vercel API returns {key, value, createdAt, ...} — extract value
+          return data && data.value !== undefined ? data.value : data;
+        }
         // 실패 시 CDN 폴백
         return await getEdgeItem(key);
       } catch (e) {
