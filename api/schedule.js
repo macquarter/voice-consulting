@@ -26,13 +26,18 @@ module.exports = async function handler(req, res) {
     // API 직접 읽기 (POST/DELETE용 - 항상 최신 데이터)
     async function getEdgeItemConsistent(key) {
       try {
-        const teamParam = TEAM_ID ? `&teamId=${TEAM_ID}` : '';
-        const resp = await fetch(
-          `https://api.vercel.com/v1/edge-config/${EC_ID}/item/${key}?${teamParam}`,
-          { headers: { 'Authorization': `Bearer ${API_TOKEN}` } }
-        );
+        const teamParam = TEAM_ID ? `?teamId=${TEAM_ID}` : '';
+        const url = `https://api.vercel.com/v1/edge-config/${EC_ID}/item/${key}${teamParam}`;
+        const resp = await fetch(url, {
+          headers: { 'Authorization': `Bearer ${API_TOKEN}` }
+        });
         if (resp.ok) return await resp.json();
-      } catch {}
+        // 실패 시 CDN 폴백
+        return await getEdgeItem(key);
+      } catch (e) {
+        // API 실패 시 CDN 폴백
+        try { return await getEdgeItem(key); } catch {}
+      }
       return [];
     }
 
