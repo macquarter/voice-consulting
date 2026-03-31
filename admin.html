@@ -581,7 +581,7 @@ tr:hover td{background:rgba(255,107,53,.02)}
 <div class="toast" id="toast"></div>
 
 <script>
-const API = '/api';
+const API = window.location.hostname.includes('voice-admin') ? 'https://voice-final.vercel.app/api' : '/api';
 let allBookings = [];
 let isDirty = false;
 
@@ -1011,8 +1011,8 @@ function schMonth(dir) {
 async function loadScheduler() {
   try {
     const [schedRes, bookRes] = await Promise.all([
-      fetch('/api/schedule'),
-      fetch('/api/bookings')
+      fetch(API+'/schedule'),
+      fetch(API+'/bookings')
     ]);
     if (schedRes.ok) {
       const d = await schedRes.json();
@@ -1132,7 +1132,7 @@ async function addBlockSlot(dateArg, timeArg) {
   if (!date) { alert('날짜를 선택해주세요'); return; }
 
   try {
-    const res = await fetch('/api/schedule', {
+    const res = await fetch(API+'/schedule', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ date, time })
@@ -1155,7 +1155,7 @@ async function addBlockSlot(dateArg, timeArg) {
 
 async function removeBlockSlot(date, time) {
   try {
-    const res = await fetch('/api/schedule', {
+    const res = await fetch(API+'/schedule', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ date, time })
