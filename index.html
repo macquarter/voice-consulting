@@ -379,6 +379,9 @@ nav.scrolled { background: rgba(250,245,239,0.92); backdrop-filter: blur(20px); 
 .time-slot.sel { border-color: var(--warm-gold); background: var(--warm-gold); color: #fff; font-weight: 600; }
 .time-slot.off { opacity: 0.18; cursor: not-allowed; pointer-events: none; }
 .time-slot.blocked-slot { background: rgba(220,38,38,0.08) !important; border-color: rgba(220,38,38,0.2) !important; text-decoration: line-through; }
+.time-slot.admin-sched { background: rgba(59,130,246,0.08) !important; border-color: rgba(59,130,246,0.25) !important; text-decoration: line-through; color: rgba(59,130,246,0.5) !important; }
+.ab-date.admin-day { position: relative; }
+.ab-date.admin-day::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: #3b82f6; }
 
 /* ── Schedule Summary ── */
 .bk-schedule-summary { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 1.5rem; }
@@ -1085,30 +1088,37 @@ function updateTimeSlots() {
   if (!startDate) return;
   const dateStr = `${startDate.getFullYear()}-${String(startDate.getMonth()+1).padStart(2,'0')}-${String(startDate.getDate()).padStart(2,'0')}`;
   const bookedTimes = bookedSchedule[dateStr] || [];
-  // Check if this date is fully blocked
-  const isFullBlock = blockedSlots.some(s => s.date === dateStr && s.time === 'ALL');
-  const blockedTimes = blockedSlots.filter(s => s.date === dateStr && s.time !== 'ALL').map(s => s.time);
+  // 관리자 일정 (reason 있는 항목)
+  const isAdminFullDay = blockedSlots.some(s => s.date === dateStr && s.time === 'ALL' && s.reason);
+  const adminTimes = new Set(blockedSlots.filter(s => s.date === dateStr && s.time !== 'ALL' && s.reason).map(s => s.time));
+  // 일반 차단 (reason 없는 항목)
+  const isFullBlock = blockedSlots.some(s => s.date === dateStr && s.time === 'ALL' && !s.reason);
+  const blockedTimes = blockedSlots.filter(s => s.date === dateStr && s.time !== 'ALL' && !s.reason).map(s => s.time);
 
   document.querySelectorAll('.time-slot').forEach(slot => {
     const time = slot.textContent.trim();
-    // 12:00, 17:00은 원래 off
     if (time === '12:00' || time === '17:00') return;
+
+    // 초기화
+    slot.classList.remove('off', 'blocked-slot', 'admin-sched');
+    slot.title = '';
 
     if (isFullBlock || blockedTimes.includes(time)) {
       slot.classList.add('off', 'blocked-slot');
       slot.removeAttribute('onclick');
-      slot.title = '예약 불가 (차단됨)';
+      slot.title = '예약 불가';
+    } else if (isAdminFullDay || adminTimes.has(time)) {
+      slot.classList.add('off', 'admin-sched');
+      slot.removeAttribute('onclick');
+      slot.title = '선생님 일정으로 예약 불가';
     } else if (bookedTimes.includes(time)) {
       slot.classList.add('off');
-      slot.classList.remove('blocked-slot');
       slot.removeAttribute('onclick');
       slot.title = '이미 예약된 시간입니다';
     } else {
-      slot.classList.remove('off', 'blocked-slot');
       if (!slot.getAttribute('onclick')) {
         slot.setAttribute('onclick', 'pickTime(this)');
       }
-      slot.title = '';
     }
   });
 }
@@ -1219,13 +1229,17 @@ function renderCal() {
 
     // 차단된 날짜 확인 (슬롯 기반)
     const dateStr = `${cY}-${String(cM+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const isFullBlock = blockedSlots.some(s => s.date === dateStr && s.time === 'ALL');
+    const isFullBlock = blockedSlots.some(s => s.date === dateStr && s.time === 'ALL' && !s.reason);
+    const isAdminFullDay = blockedSlots.some(s => s.date === dateStr && s.time === 'ALL' && s.reason);
+    const hasAdminSched = blockedSlots.some(s => s.date === dateStr && s.reason);
     const dateBlockedCount = blockedSlots.filter(s => s.date === dateStr && s.time !== 'ALL').length;
     // 모든 시간이 예약된 날짜 확인 (가용 시간: 09~11, 13~16 = 7슬롯)
     const bookedTimes = bookedSchedule[dateStr] || [];
-    const allBooked = bookedTimes.length >= 7;
+    const adminTimeCount = blockedSlots.filter(s => s.date === dateStr && s.time !== 'ALL' && s.reason).length;
+    const blockTimeCount = blockedSlots.filter(s => s.date === dateStr && s.time !== 'ALL' && !s.reason).length;
+    const allBooked = (bookedTimes.length + adminTimeCount + blockTimeCount) >= 7;
 
-    if (isFullBlock || allBooked) avail = false;
+    if (isFullBlock || isAdminFullDay || allBooked) avail = false;
 
     const isStart = startDate && dt.toDateString() === startDate.toDateString();
     const isSched = scheduledDates.some(sd => sd.toDateString() === dt.toDateString()) && !isStart;
@@ -1235,11 +1249,17 @@ function renderCal() {
     if (isToday) cls += ' today';
     if (isStart) cls += ' start-date';
     if (isSched) cls += ' sched';
-    if (isFullBlock) cls += ' blocked';
-    if (allBooked && !isFullBlock) cls += ' fully-booked';
+    if (isFullBlock || isAdminFullDay) cls += ' blocked';
+    if (hasAdminSched && !isFullBlock && !isAdminFullDay) cls += ' admin-day';
+    if (allBooked && !isFullBlock && !isAdminFullDay) cls += ' fully-booked';
 
     const oc = avail ? `onclick="pickDate(${cY},${cM},${d})"` : '';
-    h += `<div class="${cls}" ${oc}${isFullBlock ? ' title="예약 불가"' : (allBooked ? ' title="마감"' : '')}>${d}</div>`;
+    let titleAttr = '';
+    if (isAdminFullDay) titleAttr = ' title="선생님 일정"';
+    else if (isFullBlock) titleAttr = ' title="예약 불가"';
+    else if (allBooked) titleAttr = ' title="마감"';
+    else if (hasAdminSched) titleAttr = ' title="일부 시간 선생님 일정"';
+    h += `<div class="${cls}" ${oc}${titleAttr}>${d}</div>`;
   }
   g.innerHTML = h;
 }
@@ -1303,10 +1323,13 @@ function computeSchedule() {
   let totalNeeded = c.sessions;
 
   // Find sessions: walk day by day from start, collect days matching pattern
+  // 관리자 일정(전일) 또는 전체 차단된 날은 건너뛰기
   let safetyLimit = 200;
   while (scheduledDates.length < totalNeeded && safetyLimit-- > 0) {
     const dow = current.getDay();
-    if (pat.days.includes(dow)) {
+    const ds = `${current.getFullYear()}-${String(current.getMonth()+1).padStart(2,'0')}-${String(current.getDate()).padStart(2,'0')}`;
+    const dayFullBlock = blockedSlots.some(s => s.date === ds && s.time === 'ALL');
+    if (pat.days.includes(dow) && !dayFullBlock) {
       scheduledDates.push(new Date(current));
     }
     current.setDate(current.getDate() + 1);
