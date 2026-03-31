@@ -564,14 +564,17 @@ tr:hover td{background:rgba(255,107,53,.02)}
         </div>
       </div>
 
-      <!-- 사유 -->
+      <!-- 사유 (내 일정용) -->
       <div style="margin-bottom:.8rem">
-        <label style="font-size:.72rem;color:var(--text2);margin-bottom:4px;display:block">사유 (선택)</label>
-        <input type="text" id="schReasonInput" class="input" placeholder="미입력 시 '차단' 처리" style="font-size:.85rem">
+        <label style="font-size:.72rem;color:var(--text2);margin-bottom:4px;display:block">사유 (내 일정 등록 시)</label>
+        <input type="text" id="schReasonInput" class="input" placeholder="예: 병원, 회의, 출장 등" style="font-size:.85rem">
       </div>
 
-      <!-- 등록 버튼 -->
-      <button class="btn btn-primary" onclick="submitScheduleEntry()" style="width:100%;padding:.65rem;font-size:.9rem">등록</button>
+      <!-- 등록 버튼 2개 -->
+      <div style="display:flex;gap:.5rem">
+        <button class="btn" onclick="submitAsSchedule()" style="flex:1;padding:.65rem;font-size:.88rem;background:#3b82f6;color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer">📌 내 일정 등록</button>
+        <button class="btn" onclick="submitAsBlock()" style="flex:1;padding:.65rem;font-size:.88rem;background:#ef4444;color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer">🚫 차단 등록</button>
+      </div>
     </div>
   </div>
 
@@ -1361,11 +1364,28 @@ function collectDates() {
   return dates;
 }
 
-async function submitScheduleEntry() {
+// 📌 내 일정 등록
+function submitAsSchedule() {
+  const reason = document.getElementById('schReasonInput').value.trim();
+  if (!reason) {
+    showSchToast('내 일정은 사유를 입력해주세요 (예: 병원, 회의)', 'error');
+    document.getElementById('schReasonInput').focus();
+    return;
+  }
+  doSubmitSlots(reason, '내 일정');
+}
+
+// 🚫 차단 등록
+function submitAsBlock() {
+  doSubmitSlots('', '차단');
+}
+
+// 공통 등록 처리
+async function doSubmitSlots(reason, label) {
   const dates = collectDates();
   if (dates.length === 0) { showSchToast('날짜를 선택해주세요', 'error'); return; }
-  const reason = document.getElementById('schReasonInput').value.trim();
   const times = schSelectedTimes.includes('ALL') ? ['ALL'] : [...schSelectedTimes];
+  if (times.length === 0) { showSchToast('시간을 선택해주세요', 'error'); return; }
 
   const slots = [];
   dates.forEach(date => {
@@ -1385,10 +1405,11 @@ async function submitScheduleEntry() {
     if (res.ok) {
       const d = await res.json();
       schBlockedSlots = d.blockedSlots || [];
+    } else {
+      showSchToast('서버 오류가 발생했습니다', 'error'); return;
     }
   } catch (e) { showSchToast('등록 실패: ' + e.message, 'error'); return; }
 
-  const label = reason ? '내 일정' : '차단';
   showSchToast(`✅ ${label} ${slots.length}건 등록 완료 (${dates.length}일 × ${times.length}슬롯)`, 'success');
 
   // 시간 선택 초기화 → 다음 등록 준비 (날짜는 유지)
@@ -1402,14 +1423,19 @@ async function submitScheduleEntry() {
   renderSchSlots();
 
   // 등록 목록으로 스크롤하여 추가된 항목 보여주기
-  const slotsList = document.getElementById('schSlotsList');
-  if (slotsList) slotsList.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  setTimeout(() => {
+    const slotsList = document.getElementById('schSlotsList');
+    if (slotsList) slotsList.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 100);
 
   if (document.getElementById('schDayDetail').style.display !== 'none') {
     const openDate = document.getElementById('schDayTitle').dataset.date;
     if (openDate) showSchDay(openDate);
   }
 }
+
+// 하위 호환용
+async function submitScheduleEntry() { submitAsSchedule(); }
 
 function filterSchList(filter, btn) {
   schListFilter = filter;
@@ -1422,9 +1448,11 @@ function renderSchSlots() {
   const box = document.getElementById('schSlotsList');
   const countEl = document.getElementById('schTotalCount');
   let items = schBlockedSlots;
+  const schedCount = schBlockedSlots.filter(s => s.reason).length;
+  const blockCount = schBlockedSlots.filter(s => !s.reason).length;
   if (schListFilter === 'schedule') items = items.filter(s => s.reason);
   else if (schListFilter === 'block') items = items.filter(s => !s.reason);
-  if (countEl) countEl.textContent = `총 ${items.length}건`;
+  if (countEl) countEl.textContent = `총 ${items.length}건 (📌${schedCount} 🚫${blockCount})`;
   if (items.length === 0) {
     box.innerHTML = '<p style="color:var(--text2);font-size:.82rem;text-align:center;padding:1rem 0">등록된 항목이 없습니다</p>';
     return;
