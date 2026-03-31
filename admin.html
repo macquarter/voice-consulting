@@ -1250,7 +1250,7 @@ async function addBlockSlot(date, time) {
     const res = await fetch(API+'/schedule', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ date, time })
+      body: JSON.stringify({ date, time, existing: schBlockedSlots })
     });
     if (res.ok) {
       const d = await res.json();
@@ -1270,7 +1270,7 @@ async function removeBlockSlot(date, time) {
     const res = await fetch(API+'/schedule', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ date, time })
+      body: JSON.stringify({ date, time, existing: schBlockedSlots })
     });
     if (res.ok) {
       const d = await res.json();
@@ -1400,7 +1400,7 @@ async function doSubmitSlots(reason, label) {
     const res = await fetch(API+'/schedule', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ slots })
+      body: JSON.stringify({ slots, existing: schBlockedSlots })
     });
     if (res.ok) {
       const d = await res.json();

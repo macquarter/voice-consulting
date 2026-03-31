@@ -111,10 +111,17 @@ module.exports = async function handler(req, res) {
 
     // === POST: 슬롯 차단 추가 ===
     if (req.method === 'POST') {
-      const { date, time, slots } = req.body || {};
-      // 일관된 읽기 (Vercel API 직접) — CDN 전파 지연 방지
-      let blockedSlots = await getEdgeItemConsistent('blocked_slots');
-      let arr = Array.isArray(blockedSlots) ? [...blockedSlots] : [];
+      const { date, time, slots, existing } = req.body || {};
+
+      // 클라이언트가 보낸 existing(현재 상태)을 기반으로 사용
+      // existing이 없으면 서버에서 읽기 (최초 또는 외부 호출)
+      let arr;
+      if (Array.isArray(existing)) {
+        arr = [...existing];
+      } else {
+        let blockedSlots = await getEdgeItemConsistent('blocked_slots');
+        arr = Array.isArray(blockedSlots) ? [...blockedSlots] : [];
+      }
 
       if (slots && Array.isArray(slots)) {
         // Bulk add
@@ -146,10 +153,15 @@ module.exports = async function handler(req, res) {
 
     // === DELETE: 슬롯 차단 해제 ===
     if (req.method === 'DELETE') {
-      const { date, time } = req.body || {};
-      // 일관된 읽기 (Vercel API 직접) — CDN 전파 지연 방지
-      let blockedSlots = await getEdgeItemConsistent('blocked_slots');
-      let arr = Array.isArray(blockedSlots) ? [...blockedSlots] : [];
+      const { date, time, existing } = req.body || {};
+
+      let arr;
+      if (Array.isArray(existing)) {
+        arr = [...existing];
+      } else {
+        let blockedSlots = await getEdgeItemConsistent('blocked_slots');
+        arr = Array.isArray(blockedSlots) ? [...blockedSlots] : [];
+      }
 
       if (date && time) {
         // Remove specific slot
