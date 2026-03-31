@@ -33,6 +33,10 @@ module.exports = async function handler(req, res) {
       } catch {}
 
       const merged = { ...existing, ...req.body };
+      // Remove empty values to stay within Edge Config size limits
+      for (const k of Object.keys(merged)) {
+        if (merged[k] === '' || merged[k] === null || merged[k] === undefined) delete merged[k];
+      }
       const teamParam = TEAM_ID ? `?teamId=${TEAM_ID}` : '';
       const writeResp = await fetch(`https://api.vercel.com/v1/edge-config/${EC_ID}/items${teamParam}`, {
         method: 'PATCH',
