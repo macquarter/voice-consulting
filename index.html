@@ -469,7 +469,7 @@ footer a { color: var(--warm-gold); text-decoration: none; }
 <body>
 
 <nav id="navbar">
-  <div class="nav-logo">손수오<span>.</span></div>
+  <div class="nav-logo" id="dyn-logo">손수오<span>.</span></div>
   <div class="nav-links">
     <a href="#media">미디어</a>
     <a href="#problem">차별점</a>
@@ -995,18 +995,18 @@ footer a { color: var(--warm-gold); text-decoration: none; }
           </div>
 
           <button class="ab-cta" id="bookBtn" onclick="handleBook()">결제하고 예약 확정하기</button>
-          <p class="ab-card-note">토스페이먼츠 안전결제 · 카드 / 계좌이체 / 간편결제</p>
+          <p class="ab-card-note" id="dyn-payment-note">토스페이먼츠 안전결제 · 카드 / 계좌이체 / 간편결제</p>
 
           <div class="ab-breakdown" id="priceBreakdown">
             <div class="ab-breakdown-row"><span id="bkLabel1">교육비 (1인)</span><span id="bkVal1">₩800,000</span></div>
             <div class="ab-breakdown-row" id="bkMultiRow" style="display:none;"><span id="bkLabel2">추가 인원 (0명)</span><span id="bkVal2">₩0</span></div>
-            <div class="ab-breakdown-row"><span>녹화본 · 복습자료</span><span>포함</span></div>
+            <div class="ab-breakdown-row"><span id="dyn-included-note">녹화본 · 복습자료</span><span>포함</span></div>
             <div class="ab-breakdown-row total"><span>총 교육비</span><span id="bkTotal">₩800,000</span></div>
           </div>
 
           <div class="ab-trust">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            무료 상담 · 간편 예약 · 100% 맞춤형 교육
+            <span id="dyn-trust-banner">무료 상담 · 간편 예약 · 100% 맞춤형 교육</span>
           </div>
         </div>
       </div>
@@ -1020,7 +1020,8 @@ footer a { color: var(--warm-gold); text-decoration: none; }
 
 <footer>
   <p id="dyn-footer">© 2026 손수오 교수 보이스 컨설팅. All Rights Reserved.</p>
-  <p style="margin-top:0.5rem;">문의: <a href="/cdn-cgi/l/email-protection#80e3efeef4e1e3f4c0f3efeef3f5efaee3efed"><span class="__cf_email__" data-cfemail="3655595842575542764559584543591855595b">[email&#160;protected]</span></a></p>
+  <p id="dyn-footer-contact" style="margin-top:0.5rem;"></p>
+  <div id="dyn-footer-sns" style="display:flex;gap:1rem;justify-content:center;margin-top:0.6rem;"></div>
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -1746,6 +1747,56 @@ function loadServerImage(key, contentValue, callback) {
     if (d.footer_text) {
       const el = document.getElementById('dyn-footer');
       if (el) el.textContent = d.footer_text;
+    }
+
+    // ── Contact / SNS ──
+    const footerContact = document.getElementById('dyn-footer-contact');
+    if (footerContact) {
+      let contactHtml = '';
+      if (d.contact_email) contactHtml += '문의: <a href="mailto:' + d.contact_email + '">' + d.contact_email + '</a>';
+      if (d.contact_phone) contactHtml += (contactHtml ? ' · ' : '') + '<a href="tel:' + d.contact_phone.replace(/-/g,'') + '">' + d.contact_phone + '</a>';
+      if (contactHtml) footerContact.innerHTML = contactHtml;
+    }
+    // SNS icons in footer
+    const snsWrap = document.getElementById('dyn-footer-sns');
+    if (snsWrap) {
+      let snsHtml = '';
+      if (d.contact_kakao) snsHtml += '<a href="'+d.contact_kakao+'" target="_blank" rel="noopener" title="카카오톡" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:1.1rem">💬</a>';
+      if (d.contact_instagram) snsHtml += '<a href="'+d.contact_instagram+'" target="_blank" rel="noopener" title="인스타그램" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:1.1rem">📸</a>';
+      if (d.contact_youtube) snsHtml += '<a href="'+d.contact_youtube+'" target="_blank" rel="noopener" title="유튜브" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:1.1rem">▶️</a>';
+      if (d.contact_blog) snsHtml += '<a href="'+d.contact_blog+'" target="_blank" rel="noopener" title="블로그" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:1.1rem">📝</a>';
+      if (snsHtml) snsWrap.innerHTML = snsHtml;
+    }
+
+    // ── Booking Guide Text ──
+    if (d.payment_note) {
+      const el = document.getElementById('dyn-payment-note');
+      if (el) el.textContent = d.payment_note;
+    }
+    if (d.trust_banner) {
+      const el = document.getElementById('dyn-trust-banner');
+      if (el) el.textContent = d.trust_banner;
+    }
+    if (d.included_note) {
+      const el = document.getElementById('dyn-included-note');
+      if (el) el.textContent = d.included_note;
+    }
+    if (d.booking_success_msg) {
+      window.__bookingSuccessMsg = d.booking_success_msg;
+    }
+
+    // ── SEO / Branding ──
+    if (d.logo_text) {
+      const el = document.getElementById('dyn-logo');
+      if (el) el.innerHTML = d.logo_text + '<span>.</span>';
+    }
+    if (d.seo_title) {
+      document.title = d.seo_title;
+    }
+    if (d.seo_desc) {
+      let meta = document.querySelector('meta[name="description"]');
+      if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta); }
+      meta.content = d.seo_desc;
     }
 
   } catch(e) { console.log('Dynamic content load skipped:', e.message); }

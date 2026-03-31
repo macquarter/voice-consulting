@@ -415,6 +415,55 @@ tr:hover td{background:rgba(255,107,53,.02)}
     </div>
   </div>
 
+  <!-- Contact / SNS -->
+  <div class="edit-block">
+    <div class="edit-block-header" onclick="toggleBlock(this)">
+      <h3>📞 연락처 / SNS</h3>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="edit-block-body">
+      <div class="field-row">
+        <div class="field"><label>대표 이메일</label><input id="c_contact_email" placeholder="professor@example.com" oninput="markDirty()"><div class="hint">푸터 및 문의 영역에 표시됩니다</div></div>
+        <div class="field"><label>전화번호</label><input id="c_contact_phone" placeholder="010-1234-5678" oninput="markDirty()"><div class="hint">빈칸이면 표시되지 않습니다</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>카카오톡 채널 URL</label><input id="c_contact_kakao" placeholder="https://pf.kakao.com/..." oninput="markDirty()"><div class="hint">카카오톡 상담 채널 링크</div></div>
+        <div class="field"><label>인스타그램 URL</label><input id="c_contact_instagram" placeholder="https://instagram.com/..." oninput="markDirty()"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>유튜브 채널 URL</label><input id="c_contact_youtube" placeholder="https://youtube.com/@..." oninput="markDirty()"></div>
+        <div class="field"><label>블로그 / 기타 URL</label><input id="c_contact_blog" placeholder="https://blog.naver.com/..." oninput="markDirty()"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Guide Text -->
+  <div class="edit-block">
+    <div class="edit-block-header" onclick="toggleBlock(this)">
+      <h3>🛒 예약 안내 문구</h3>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="edit-block-body">
+      <div class="field"><label>결제 안내 텍스트</label><input id="c_payment_note" placeholder="토스페이먼츠 안전결제 · 카드 / 계좌이체 / 간편결제" oninput="markDirty()"><div class="hint">예약 카드 하단의 결제 방법 안내</div></div>
+      <div class="field"><label>신뢰 배너 텍스트</label><input id="c_trust_banner" placeholder="무료 상담 · 간편 예약 · 100% 맞춤형 교육" oninput="markDirty()"><div class="hint">예약 영역 하단의 안심 문구</div></div>
+      <div class="field"><label>녹화본/복습자료 포함 텍스트</label><input id="c_included_note" placeholder="녹화본 · 복습자료" oninput="markDirty()"><div class="hint">가격표 아래 '포함' 항목</div></div>
+      <div class="field"><label>예약 성공 메시지</label><textarea id="c_booking_success_msg" rows="2" placeholder="예약이 완료되었습니다! 확인 문자가 발송됩니다." oninput="markDirty()"></textarea><div class="hint">결제 완료 후 표시되는 메시지</div></div>
+    </div>
+  </div>
+
+  <!-- SEO / Logo -->
+  <div class="edit-block">
+    <div class="edit-block-header" onclick="toggleBlock(this)">
+      <h3>🔍 SEO / 브랜딩</h3>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="edit-block-body">
+      <div class="field"><label>네비게이션 로고 텍스트</label><input id="c_logo_text" placeholder="손수오" oninput="markDirty()"><div class="hint">상단 내비게이션에 표시되는 브랜드명</div></div>
+      <div class="field"><label>페이지 타이틀 (SEO)</label><input id="c_seo_title" placeholder="손수오 교수 | 대한민국 1위 보이스 컨설턴트" oninput="markDirty()"><div class="hint">브라우저 탭에 표시되는 제목 · 검색엔진 노출용</div></div>
+      <div class="field"><label>메타 설명 (SEO)</label><textarea id="c_seo_desc" rows="2" placeholder="30년 성악 경력의 손수오 교수가 직접 진행하는 1:1 맞춤형 보이스 컨설팅" oninput="markDirty()"></textarea><div class="hint">구글/네이버 검색결과에 표시되는 설명문</div></div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <div class="edit-block">
     <div class="edit-block-header" onclick="toggleBlock(this)">
@@ -688,6 +737,9 @@ const CONTENT_KEYS = [
   'testimonial_title','testimonial_desc',
   'persona_title',
   'booking_title','booking_desc','booking_cta','booking_url',
+  'contact_email','contact_phone','contact_kakao','contact_instagram','contact_youtube','contact_blog',
+  'payment_note','trust_banner','included_note','booking_success_msg',
+  'logo_text','seo_title','seo_desc',
   'footer_text','trust_1','trust_2','trust_3'
 ];
 
