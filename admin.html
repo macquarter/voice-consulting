@@ -476,9 +476,41 @@ tr:hover td{background:rgba(255,107,53,.02)}
     </div>
     <div style="margin-top:1rem;display:flex;gap:1rem;flex-wrap:wrap;font-size:.78rem;color:var(--text2)">
       <span>🟡 예약 있음</span>
+      <span>📌 내 일정</span>
       <span>🔴 차단됨</span>
       <span>⬜ 비어 있음</span>
     </div>
+  </div>
+
+  <!-- 내 일정 등록 -->
+  <div class="card">
+    <div class="card-header"><h2>🗓️ 내 일정 등록</h2></div>
+    <p style="color:var(--text2);font-size:.85rem;margin-bottom:1rem">관리자 일정을 등록하면 해당 시간이 자동으로 예약 불가 처리됩니다.</p>
+    <div style="display:flex;gap:.5rem;align-items:end;margin-bottom:1rem;flex-wrap:wrap">
+      <div style="flex:1;min-width:140px">
+        <label style="font-size:.75rem;color:var(--text2);margin-bottom:4px;display:block">날짜</label>
+        <input type="date" id="mySchedDate" class="input">
+      </div>
+      <div style="flex:1;min-width:100px">
+        <label style="font-size:.75rem;color:var(--text2);margin-bottom:4px;display:block">시작 시간</label>
+        <select id="mySchedTime" class="input" style="padding:.55rem .7rem">
+          <option value="ALL">하루 종일</option>
+          <option value="09:00">09:00</option>
+          <option value="10:00">10:00</option>
+          <option value="11:00">11:00</option>
+          <option value="13:00">13:00</option>
+          <option value="14:00">14:00</option>
+          <option value="15:00">15:00</option>
+          <option value="16:00">16:00</option>
+        </select>
+      </div>
+      <div style="flex:2;min-width:180px">
+        <label style="font-size:.75rem;color:var(--text2);margin-bottom:4px;display:block">사유 (메모)</label>
+        <input type="text" id="mySchedReason" class="input" placeholder="예: 외부 미팅, 개인 일정 등">
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="addMySchedule()" style="height:38px">일정 등록</button>
+    </div>
+    <div id="myScheduleList"></div>
   </div>
 
   <!-- 슬롯 차단 -->
@@ -1028,6 +1060,7 @@ async function loadScheduler() {
   } catch (e) { console.log('스케줄러 로드 실패:', e); }
   renderSchCal();
   renderBlockedSlots();
+  renderMySchedule();
 }
 
 function renderSchCal() {
@@ -1044,20 +1077,28 @@ function renderSchCal() {
   for (let d = 1; d <= dim; d++) {
     const ds = `${schY}-${String(schM+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const hasBooking = schSchedule[ds] && schSchedule[ds].length > 0;
-    const isFullBlock = schBlockedSlots.some(s => s.date === ds && s.time === 'ALL');
-    const dateBlockedCount = schBlockedSlots.filter(s => s.date === ds && s.time !== 'ALL').length;
+    const isFullBlock = schBlockedSlots.some(s => s.date === ds && s.time === 'ALL' && !s.reason);
+    const hasMySchedule = schBlockedSlots.some(s => s.date === ds && s.reason);
+    const mySchedCount = schBlockedSlots.filter(s => s.date === ds && s.reason).length;
+    const isMyFullDay = schBlockedSlots.some(s => s.date === ds && s.time === 'ALL' && s.reason);
+    const dateBlockedCount = schBlockedSlots.filter(s => s.date === ds && s.time !== 'ALL' && !s.reason).length;
     const dt = new Date(schY, schM, d);
     const isToday = dt.toDateString() === today.toDateString();
     let bg = '#f8f9fa'; let clr = 'var(--text1)'; let bdr = '2px solid transparent';
     if (isFullBlock) { bg = '#fee2e2'; clr = '#dc2626'; }
+    else if (isMyFullDay) { bg = '#dbeafe'; clr = '#1d4ed8'; }
+    else if (hasMySchedule && hasBooking) { bg = '#e0e7ff'; clr = '#4338ca'; }
+    else if (hasMySchedule) { bg = '#dbeafe'; clr = '#1d4ed8'; }
     else if (dateBlockedCount > 0) { bg = '#fef3c7'; clr = '#b45309'; }
     else if (hasBooking) { bg = '#fef3c7'; clr = '#b45309'; }
     if (isToday) bdr = '2px solid var(--primary)';
     const cnt = hasBooking ? schSchedule[ds].length : 0;
+    const myIcon = hasMySchedule ? `📌${mySchedCount > 1 ? mySchedCount : ''}` : '';
     const blockIndicator = isFullBlock ? '🚫' : (dateBlockedCount > 0 ? `🚫${dateBlockedCount}` : '');
     h += `<div style="padding:6px 2px;border-radius:8px;background:${bg};color:${clr};cursor:pointer;border:${bdr};position:relative" onclick="showSchDay('${ds}')">
       <div style="font-weight:600">${d}</div>
       ${cnt > 0 ? `<div style="font-size:.6rem;margin-top:1px">${cnt}건</div>` : ''}
+      ${myIcon ? `<div style="font-size:.6rem">${myIcon}</div>` : ''}
       ${blockIndicator ? `<div style="font-size:.6rem">${blockIndicator}</div>` : ''}
     </div>`;
   }
@@ -1071,10 +1112,14 @@ function showSchDay(dateStr) {
   const DN = ['일','월','화','수','목','금','토'];
   const dt = new Date(+y, +m-1, +d);
   document.getElementById('schDayTitle').textContent = `${y}년 ${+m}월 ${+d}일 (${DN[dt.getDay()]})`;
+  document.getElementById('schDayTitle').dataset.date = dateStr;
 
   const times = schSchedule[dateStr] || [];
-  const isFullBlock = schBlockedSlots.some(s => s.date === dateStr && s.time === 'ALL');
-  const blockedTimes = schBlockedSlots.filter(s => s.date === dateStr && s.time !== 'ALL').map(s => s.time);
+  const isFullBlock = schBlockedSlots.some(s => s.date === dateStr && s.time === 'ALL' && !s.reason);
+  const isMyFullDay = schBlockedSlots.some(s => s.date === dateStr && s.time === 'ALL' && s.reason);
+  const blockedTimes = schBlockedSlots.filter(s => s.date === dateStr && s.time !== 'ALL' && !s.reason).map(s => s.time);
+  const mySchedTimes = schBlockedSlots.filter(s => s.date === dateStr && s.reason);
+  const mySchedTimeSet = new Set(mySchedTimes.filter(s => s.time !== 'ALL').map(s => s.time));
   const allTimes = ['09:00','10:00','11:00','13:00','14:00','15:00','16:00'];
 
   // 이 날짜의 예약 찾기
@@ -1085,17 +1130,37 @@ function showSchDay(dateStr) {
 
   let html = '';
   if (isFullBlock) html += '<div style="padding:.75rem;background:#fee2e2;border-radius:8px;margin-bottom:1rem;color:#dc2626;font-weight:600">🚫 이 날짜는 차단되어 있습니다</div>';
+  if (isMyFullDay) {
+    const r = schBlockedSlots.find(s => s.date === dateStr && s.time === 'ALL' && s.reason);
+    html += `<div style="padding:.75rem;background:#dbeafe;border-radius:8px;margin-bottom:1rem;color:#1d4ed8;font-weight:600">📌 내 일정: ${r.reason} (하루 종일)
+      <button class="btn btn-sm" style="margin-left:.5rem;font-size:.65rem;padding:.2rem .4rem" onclick="removeBlockSlot('${dateStr}','ALL')">삭제</button></div>`;
+  }
+
+  // 내 일정 목록 (시간대별)
+  const myTimeSlots = mySchedTimes.filter(s => s.time !== 'ALL');
+  if (myTimeSlots.length > 0) {
+    html += '<div style="margin-bottom:1rem">';
+    myTimeSlots.forEach(s => {
+      html += `<div style="display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .7rem;background:#dbeafe;border-radius:20px;font-size:.78rem;color:#1d4ed8;margin:0 .3rem .3rem 0">
+        📌 ${s.time} — ${s.reason}
+        <span style="cursor:pointer;font-weight:700" onclick="removeBlockSlot('${dateStr}','${s.time}')" title="일정 삭제">✕</span>
+      </div>`;
+    });
+    html += '</div>';
+  }
 
   html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.5rem">';
   allTimes.forEach(t => {
     const booked = times.includes(t);
     const blocked = blockedTimes.includes(t);
+    const myScheduled = mySchedTimeSet.has(t) || isMyFullDay;
     let bg, icon;
-    if (blocked) { bg = '#fee2e2'; icon = '🔴 차단됨'; }
+    if (myScheduled && !blocked) { bg = '#dbeafe'; icon = '📌 내 일정'; }
+    else if (blocked) { bg = '#fee2e2'; icon = '🔴 차단됨'; }
     else if (booked) { bg = '#fef3c7'; icon = '🟡 예약됨'; }
     else { bg = '#f0fdf4'; icon = '⬜ 가능'; }
     const unblockBtn = blocked ? `<button class="btn btn-sm" style="margin-top:.3rem;font-size:.65rem;padding:.2rem .3rem" onclick="removeBlockSlot('${dateStr}','${t}')">차단 해제</button>` : '';
-    const blockBtn = !blocked && !booked ? `<button class="btn btn-sm" style="margin-top:.3rem;font-size:.65rem;padding:.2rem .3rem" onclick="addBlockSlot('${dateStr}','${t}')">차단</button>` : '';
+    const blockBtn = !blocked && !booked && !myScheduled ? `<button class="btn btn-sm" style="margin-top:.3rem;font-size:.65rem;padding:.2rem .3rem" onclick="addBlockSlot('${dateStr}','${t}')">차단</button>` : '';
     html += `<div style="padding:.6rem;border-radius:8px;background:${bg};text-align:center;font-size:.82rem">
       <div style="font-weight:700">${t}</div>
       <div style="font-size:.7rem;margin-top:2px">${icon}</div>
@@ -1165,11 +1230,62 @@ async function removeBlockSlot(date, time) {
       schBlockedSlots = d.blockedSlots || [];
       renderSchCal();
       renderBlockedSlots();
+      renderMySchedule();
       if (document.getElementById('schDayDetail').style.display !== 'none') {
         showSchDay(date);
       }
     }
   } catch (e) { alert('차단 해제 실패: ' + e.message); }
+}
+
+// ── 내 일정 등록 ──
+async function addMySchedule() {
+  const date = document.getElementById('mySchedDate').value;
+  const time = document.getElementById('mySchedTime').value;
+  const reason = document.getElementById('mySchedReason').value.trim();
+  if (!date) { alert('날짜를 선택해주세요'); return; }
+  if (!reason) { alert('사유를 입력해주세요'); return; }
+  try {
+    const res = await fetch(API+'/schedule', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date, time, reason })
+    });
+    if (res.ok) {
+      const d = await res.json();
+      schBlockedSlots = d.blockedSlots || [];
+      document.getElementById('mySchedDate').value = '';
+      document.getElementById('mySchedReason').value = '';
+      document.getElementById('mySchedTime').value = 'ALL';
+      renderSchCal();
+      renderMySchedule();
+      renderBlockedSlots();
+      if (document.getElementById('schDayDetail').style.display !== 'none') {
+        const openDate = document.getElementById('schDayTitle').dataset.date;
+        if (openDate) showSchDay(openDate);
+      }
+    }
+  } catch (e) { alert('일정 등록 실패: ' + e.message); }
+}
+
+function renderMySchedule() {
+  const box = document.getElementById('myScheduleList');
+  const mySlots = schBlockedSlots.filter(s => s.reason);
+  if (mySlots.length === 0) {
+    box.innerHTML = '<span style="color:var(--text2);font-size:.82rem">등록된 일정이 없습니다</span>';
+    return;
+  }
+  const sorted = mySlots.slice().sort((a, b) => {
+    if (a.date !== b.date) return a.date.localeCompare(b.date);
+    return (a.time === 'ALL' ? '99:99' : a.time).localeCompare(b.time === 'ALL' ? '99:99' : b.time);
+  });
+  box.innerHTML = sorted.map(s => {
+    const timeLabel = s.time === 'ALL' ? '하루 종일' : s.time;
+    return `<div style="display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .8rem;background:#dbeafe;border-radius:20px;font-size:.8rem;color:#1d4ed8;margin:0 .3rem .3rem 0">
+      📌 ${s.date} ${timeLabel} — ${s.reason}
+      <span style="cursor:pointer;font-weight:700" onclick="removeBlockSlot('${s.date}','${s.time}')" title="일정 삭제">✕</span>
+    </div>`;
+  }).join('');
 }
 
 function renderBlockedSlots() {

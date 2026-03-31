@@ -111,7 +111,9 @@ module.exports = async function handler(req, res) {
       } else if (date && time) {
         // Single add
         if (!arr.find(x => x.date === date && x.time === time)) {
-          arr.push({ date, time });
+          const entry = { date, time };
+          if (req.body.reason) entry.reason = req.body.reason;
+          arr.push(entry);
         }
       }
 
