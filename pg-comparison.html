@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국 PG사 비교 - 보이스 컨설팅 사업 기준</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background:#0f0f13; color:#e0e0e0; padding:2rem; }
+h1 { text-align:center; font-size:1.6rem; margin-bottom:.3rem; color:#fff; }
+.subtitle { text-align:center; color:#888; font-size:.85rem; margin-bottom:2rem; }
+
+/* Legend */
+.legend { display:flex; gap:1.2rem; justify-content:center; margin-bottom:1.5rem; flex-wrap:wrap; }
+.legend-item { display:flex; align-items:center; gap:.4rem; font-size:.78rem; color:#aaa; }
+.dot { width:10px; height:10px; border-radius:50%; }
+.dot.green { background:#22c55e; }
+.dot.yellow { background:#eab308; }
+.dot.red { background:#ef4444; }
+.dot.gray { background:#666; }
+
+/* Cards grid */
+.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.2rem; max-width:1400px; margin:0 auto; }
+
+.card { background:#1a1a22; border-radius:14px; border:1px solid #2a2a35; overflow:hidden; transition: transform .2s; }
+.card:hover { transform:translateY(-3px); }
+.card.recommended { border-color:#C9933E; }
+
+.card-header { padding:1rem 1.2rem; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #2a2a35; }
+.card-header h2 { font-size:1.1rem; color:#fff; }
+.badge { font-size:.65rem; padding:.2rem .6rem; border-radius:20px; font-weight:600; }
+.badge.rec { background:#C9933E22; color:#C9933E; border:1px solid #C9933E44; }
+.badge.alt { background:#3b82f622; color:#60a5fa; border:1px solid #3b82f644; }
+.badge.hard { background:#ef444422; color:#f87171; border:1px solid #ef444444; }
+.badge.nope { background:#66666622; color:#888; border:1px solid #66666644; }
+
+.card-body { padding:1rem 1.2rem; }
+
+.row { display:flex; justify-content:space-between; padding:.55rem 0; border-bottom:1px solid #ffffff08; font-size:.82rem; }
+.row:last-child { border-bottom:none; }
+.row-label { color:#888; min-width:100px; }
+.row-value { text-align:right; font-weight:500; }
+
+.status { display:inline-flex; align-items:center; gap:.3rem; }
+.status .dot { width:7px; height:7px; }
+
+.pros-cons { padding:.8rem 1.2rem; border-top:1px solid #2a2a35; }
+.pros-cons h4 { font-size:.75rem; color:#888; margin-bottom:.4rem; text-transform:uppercase; letter-spacing:1px; }
+.tag { display:inline-block; font-size:.72rem; padding:.15rem .5rem; border-radius:8px; margin:.15rem .15rem; }
+.tag.pro { background:#22c55e18; color:#4ade80; border:1px solid #22c55e30; }
+.tag.con { background:#ef444418; color:#f87171; border:1px solid #ef444430; }
+.tag.neutral { background:#eab30818; color:#fbbf24; border:1px solid #eab30830; }
+
+/* Summary section */
+.summary { max-width:1400px; margin:2rem auto 0; background:#1a1a22; border-radius:14px; border:1px solid #2a2a35; padding:1.5rem; }
+.summary h3 { color:#C9933E; font-size:1rem; margin-bottom:.8rem; }
+.summary p { font-size:.85rem; line-height:1.7; color:#bbb; margin-bottom:.6rem; }
+.summary strong { color:#e0e0e0; }
+
+.highlight { background:#C9933E15; border:1px solid #C9933E33; border-radius:10px; padding:1rem 1.2rem; margin-top:1rem; }
+.highlight h4 { color:#C9933E; font-size:.88rem; margin-bottom:.5rem; }
+.highlight p { font-size:.82rem; color:#bbb; line-height:1.6; }
+
+.risk-box { background:#ef444412; border:1px solid #ef444433; border-radius:10px; padding:1rem 1.2rem; margin-top:1rem; }
+.risk-box h4 { color:#f87171; font-size:.88rem; margin-bottom:.5rem; }
+.risk-box p, .risk-box li { font-size:.82rem; color:#bbb; line-height:1.6; }
+.risk-box ul { list-style:none; padding:0; }
+.risk-box ul li::before { content:"⚠️ "; }
+
+@media (max-width:700px) {
+  body { padding:1rem; }
+  .grid { grid-template-columns:1fr; }
+  h1 { font-size:1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<h1>🏦 한국 PG사 비교 도표</h1>
+<p class="subtitle">손수오 보이스 컨설팅 사업 기준 · 1:1 교육/컨설팅 · 개인사업자</p>
+
+<div class="legend">
+  <div class="legend-item"><div class="dot green"></div> 유리함</div>
+  <div class="legend-item"><div class="dot yellow"></div> 보통/조건부</div>
+  <div class="legend-item"><div class="dot red"></div> 불리함/어려움</div>
+  <div class="legend-item"><div class="dot gray"></div> 해당없음</div>
+</div>
+
+<div class="grid">
+
+  <!-- 포트원 -->
+  <div class="card recommended">
+    <div class="card-header">
+      <h2>🌐 포트원 (PortOne)</h2>
+      <span class="badge rec">★ 추천</span>
+    </div>
+    <div class="card-body">
+      <div class="row"><span class="row-label">유형</span><span class="row-value">PG 통합 플랫폼 (중간 허브)</span></div>
+      <div class="row"><span class="row-label">카드 수수료</span><span class="row-value">PG사에 따름 (3.0~3.4%)</span></div>
+      <div class="row"><span class="row-label">가입비</span><span class="row-value status"><span class="dot green"></span> 무료 (제휴 혜택)</span></div>
+      <div class="row"><span class="row-label">연 관리비</span><span class="row-value status"><span class="dot green"></span> 없음</span></div>
+      <div class="row"><span class="row-label">정산 주기</span><span class="row-value">D+3~D+5 (PG사별)</span></div>
+      <div class="row"><span class="row-label">심사 난이도</span><span class="row-value status"><span class="dot green"></span> 쉬움 (테스트 즉시)</span></div>
+      <div class="row"><span class="row-label">교육업 심사</span><span class="row-value status"><span class="dot green"></span> PG사 선택 가능</span></div>
+      <div class="row"><span class="row-label">개발 난이도</span><span class="row-value status"><span class="dot green"></span> 쉬움 (통합 SDK)</span></div>
+      <div class="row"><span class="row-label">사업자 필수</span><span class="row-value status"><span class="dot green"></span> 테스트는 불필요</span></div>
+      <div class="row"><span class="row-label">PG사 변경</span><span class="row-value status"><span class="dot green"></span> 코드 변경 없이</span></div>
+    </div>
+    <div class="pros-cons">
+      <h4>장점</h4>
+      <span class="tag pro">PG 종속 없음</span>
+      <span class="tag pro">30+ PG 연동</span>
+      <span class="tag pro">가입비 면제</span>
+      <span class="tag pro">나중에 PG 교체 쉬움</span>
+      <span class="tag pro">테스트 즉시 가능</span>
+      <h4 style="margin-top:.5rem">단점</h4>
+      <span class="tag con">결국 PG사 심사 필요</span>
+      <span class="tag neutral">중간 레이어 추가</span>
+    </div>
+  </div>
+
+  <!-- 토스페이먼츠 -->
+  <div class="card">
+    <div class="card-header">
+      <h2>💙 토스페이먼츠</h2>
+      <span class="badge alt">개발 편의 최고</span>
+    </div>
+    <div class="card-body">
+      <div class="row"><span class="row-label">유형</span><span class="row-value">PG사 (직접 연동)</span></div>
+      <div class="row"><span class="row-label">카드 수수료</span><span class="row-value status"><span class="dot yellow"></span> 3.4% (소폭 높음)</span></div>
+      <div class="row"><span class="row-label">가입비</span><span class="row-value status"><span class="dot yellow"></span> ~22만원</span></div>
+      <div class="row"><span class="row-label">연 관리비</span><span class="row-value status"><span class="dot red"></span> 11만원/년</span></div>
+      <div class="row"><span class="row-label">정산 주기</span><span class="row-value">D+2 (빠름)</span></div>
+      <div class="row"><span class="row-label">심사 난이도</span><span class="row-value status"><span class="dot yellow"></span> 보통 (슈퍼패스)</span></div>
+      <div class="row"><span class="row-label">교육업 심사</span><span class="row-value status"><span class="dot yellow"></span> 환불정책 필수</span></div>
+      <div class="row"><span class="row-label">개발 난이도</span><span class="row-value status"><span class="dot green"></span> 매우 쉬움</span></div>
+      <div class="row"><span class="row-label">사업자 필수</span><span class="row-value status"><span class="dot red"></span> 필수</span></div>
+      <div class="row"><span class="row-label">PG사 변경</span><span class="row-value status"><span class="dot red"></span> 코드 재작성</span></div>
+    </div>
+    <div class="pros-cons">
+      <h4>장점</h4>
+      <span class="tag pro">최고의 개발 문서</span>
+      <span class="tag pro">깔끔한 결제 UI</span>
+      <span class="tag pro">빠른 정산 D+2</span>
+      <span class="tag pro">토스 연동 생태계</span>
+      <h4 style="margin-top:.5rem">단점</h4>
+      <span class="tag con">연 관리비 11만원</span>
+      <span class="tag con">수수료 소폭 높음</span>
+      <span class="tag con">사업자+통판신고 필수</span>
+      <span class="tag con">교육 업종 환불정책 요구</span>
+    </div>
+  </div>
+
+  <!-- NHN KCP -->
+  <div class="card">
+    <div class="card-header">
+      <h2>🟠 NHN KCP</h2>
+      <span class="badge alt">안정성 + 가성비</span>
+    </div>
+    <div class="card-body">
+      <div class="row"><span class="row-label">유형</span><span class="row-value">PG사 (직접 연동)</span></div>
+      <div class="row"><span class="row-label">카드 수수료</span><span class="row-value status"><span class="dot green"></span> 3.2%</span></div>
+      <div class="row"><span class="row-label">가입비</span><span class="row-value status"><span class="dot yellow"></span> ~22만원</span></div>
+      <div class="row"><span class="row-label">연 관리비</span><span class="row-value status"><span class="dot green"></span> 없음</span></div>
+      <div class="row"><span class="row-label">정산 주기</span><span class="row-value">D+5</span></div>
+      <div class="row"><span class="row-label">심사 난이도</span><span class="row-value status"><span class="dot yellow"></span> 보통 (~2주)</span></div>
+      <div class="row"><span class="row-label">교육업 심사</span><span class="row-value status"><span class="dot yellow"></span> 조건부 가능</span></div>
+      <div class="row"><span class="row-label">개발 난이도</span><span class="row-value status"><span class="dot yellow"></span> 보통</span></div>
+      <div class="row"><span class="row-label">사업자 필수</span><span class="row-value status"><span class="dot red"></span> 필수</span></div>
+      <div class="row"><span class="row-label">PG사 변경</span><span class="row-value status"><span class="dot red"></span> 코드 재작성</span></div>
+    </div>
+    <div class="pros-cons">
+      <h4>장점</h4>
+      <span class="tag pro">낮은 수수료</span>
+      <span class="tag pro">연 관리비 없음</span>
+      <span class="tag pro">오랜 안정성</span>
+      <span class="tag pro">다양한 결제수단</span>
+      <h4 style="margin-top:.5rem">단점</h4>
+      <span class="tag con">개발 문서 복잡</span>
+      <span class="tag con">레거시 느낌 UI</span>
+      <span class="tag con">정산 D+5로 느림</span>
+    </div>
+  </div>
+
+  <!-- 나이스페이먼츠 -->
+  <div class="card">
+    <div class="card-header">
+      <h2>🔵 나이스페이먼츠</h2>
+      <span class="badge alt">다양한 결제수단</span>
+    </div>
+    <div class="card-body">
+      <div class="row"><span class="row-label">유형</span><span class="row-value">PG사 (직접 연동)</span></div>
+      <div class="row"><span class="row-label">카드 수수료</span><span class="row-value status"><span class="dot green"></span> 3.0~3.2%</span></div>
+      <div class="row"><span class="row-label">가입비</span><span class="row-value status"><span class="dot yellow"></span> 면제~22만원</span></div>
+      <div class="row"><span class="row-label">연 관리비</span><span class="row-value status"><span class="dot green"></span> 없음</span></div>
+      <div class="row"><span class="row-label">정산 주기</span><span class="row-value">D+5 (프리미엄 D+3)</span></div>
+      <div class="row"><span class="row-label">심사 난이도</span><span class="row-value status"><span class="dot yellow"></span> 보통 (~2주)</span></div>
+      <div class="row"><span class="row-label">교육업 심사</span><span class="row-value status"><span class="dot yellow"></span> 조건부 가능</span></div>
+      <div class="row"><span class="row-label">개발 난이도</span><span class="row-value status"><span class="dot yellow"></span> 보통</span></div>
+      <div class="row"><span class="row-label">사업자 필수</span><span class="row-value status"><span class="dot red"></span> 필수</span></div>
+      <div class="row"><span class="row-label">PG사 변경</span><span class="row-value status"><span class="dot red"></span> 코드 재작성</span></div>
+    </div>
+    <div class="pros-cons">
+      <h4>장점</h4>
+      <span class="tag pro">최저 수수료</span>
+      <span class="tag pro">휴대폰 소액결제</span>
+      <span class="tag pro">상품권 결제</span>
+      <span class="tag pro">프로모션 가입비 면제</span>
+      <h4 style="margin-top:.5rem">단점</h4>
+      <span class="tag con">프리미엄 55만원</span>
+      <span class="tag con">개발 문서 보통</span>
+      <span class="tag con">UI 다소 올드</span>
+    </div>
+  </div>
+
+  <!-- KG이니시스 -->
+  <div class="card">
+    <div class="card-header">
+      <h2>🟢 KG이니시스</h2>
+      <span class="badge hard">대기업용</span>
+    </div>
+    <div class="card-body">
+      <div class="row"><span class="row-label">유형</span><span class="row-value">PG사 (직접 연동)</span></div>
+      <div class="row"><span class="row-label">카드 수수료</span><span class="row-value status"><span class="dot green"></span> 3.0~3.3%</span></div>
+      <div class="row"><span class="row-label">가입비</span><span class="row-value status"><span class="dot yellow"></span> ~22만원</span></div>
+      <div class="row"><span class="row-label">연 관리비</span><span class="row-value status"><span class="dot green"></span> 없음</span></div>
+      <div class="row"><span class="row-label">정산 주기</span><span class="row-value">D+5~D+7</span></div>
+      <div class="row"><span class="row-label">심사 난이도</span><span class="row-value status"><span class="dot red"></span> 까다로움</span></div>
+      <div class="row"><span class="row-label">교육업 심사</span><span class="row-value status"><span class="dot red"></span> 서류 많음</span></div>
+      <div class="row"><span class="row-label">개발 난이도</span><span class="row-value status"><span class="dot red"></span> 복잡함</span></div>
+      <div class="row"><span class="row-label">사업자 필수</span><span class="row-value status"><span class="dot red"></span> 필수</span></div>
+      <div class="row"><span class="row-label">PG사 변경</span><span class="row-value status"><span class="dot red"></span> 코드 재작성</span></div>
+    </div>
+    <div class="pros-cons">
+      <h4>장점</h4>
+      <span class="tag pro">업계 1위 안정성</span>
+      <span class="tag pro">바로오픈 서비스</span>
+      <span class="tag pro">대규모 트래픽 강함</span>
+      <h4 style="margin-top:.5rem">단점</h4>
+      <span class="tag con">심사 매우 까다로움</span>
+      <span class="tag con">개발 문서 복잡</span>
+      <span class="tag con">소규모 사업자 비추</span>
+      <span class="tag con">정산 느림</span>
+    </div>
+  </div>
+
+  <!-- 스트라이프 -->
+  <div class="card">
+    <div class="card-header">
+      <h2>💜 Stripe</h2>
+      <span class="badge nope">한국 미지원</span>
+    </div>
+    <div class="card-body">
+      <div class="row"><span class="row-label">유형</span><span class="row-value">글로벌 PG</span></div>
+      <div class="row"><span class="row-label">카드 수수료</span><span class="row-value status"><span class="dot gray"></span> 2.9% + 30¢</span></div>
+      <div class="row"><span class="row-label">가입비</span><span class="row-value status"><span class="dot gray"></span> 없음</span></div>
+      <div class="row"><span class="row-label">연 관리비</span><span class="row-value status"><span class="dot gray"></span> 없음</span></div>
+      <div class="row"><span class="row-label">정산 주기</span><span class="row-value status"><span class="dot gray"></span> D+2</span></div>
+      <div class="row"><span class="row-label">심사 난이도</span><span class="row-value status"><span class="dot gray"></span> 해당없음</span></div>
+      <div class="row"><span class="row-label">교육업 심사</span><span class="row-value status"><span class="dot gray"></span> 해당없음</span></div>
+      <div class="row"><span class="row-label">개발 난이도</span><span class="row-value status"><span class="dot gray"></span> 매우 쉬움</span></div>
+      <div class="row"><span class="row-label">한국 사업자</span><span class="row-value status"><span class="dot red"></span> 가입 불가</span></div>
+      <div class="row"><span class="row-label">상태</span><span class="row-value status"><span class="dot red"></span> 베타 (해외사업자만)</span></div>
+    </div>
+    <div class="pros-cons">
+      <h4>참고</h4>
+      <span class="tag con">한국 법인 가입 불가</span>
+      <span class="tag con">해외법인 필요</span>
+      <span class="tag neutral">2025 한국결제 베타</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Summary -->
+<div class="summary">
+  <h3>📋 교육/컨설팅 업종 심사 핵심 포인트</h3>
+  <p>교육·컨설팅 업종은 PG사 입장에서 <strong>"선불 서비스"</strong>로 분류됩니다. 수강료를 먼저 받고 서비스(교육)를 나중에 제공하는 구조이기 때문에, 환불 분쟁 리스크가 높다고 판단합니다.</p>
+  <p>특히 <strong>고액 상품(100만원 이상)</strong> 과정은 심사가 더 까다롭습니다. 손수오 교수님의 4주 과정(80만원), 9주 과정(160만원)은 이 기준에 해당될 수 있습니다.</p>
+
+  <div class="risk-box">
+    <h4>PG 심사 반려 TOP 3 사유 (교육업 기준)</h4>
+    <ul>
+      <li>홈페이지에 환불 정책이 명확하지 않음</li>
+      <li>사업자등록증 업종코드와 실제 판매 서비스 불일치</li>
+      <li>결제~서비스 제공 간 시간 차이가 큼 (9주 과정 = 장기)</li>
+    </ul>
+  </div>
+
+  <div class="highlight">
+    <h4>✨ 권장 전략: 포트원 → 토스페이먼츠 조합</h4>
+    <p><strong>포트원</strong>을 중간 허브로 쓰면 나중에 토스페이먼츠 심사가 안 되더라도, 코드 수정 없이 NHN KCP나 나이스페이먼츠로 즉시 전환할 수 있습니다. 개발은 한 번만 하고, PG사는 상황에 맞게 바꾸는 구조입니다.</p>
+    <p style="margin-top:.5rem">심사 대비 체크리스트:</p>
+    <p>① 사업자등록증 (교육서비스업) ② 통신판매업 신고 ③ 홈페이지에 명확한 환불 정책 페이지 ④ 에스크로 서비스 또는 보증보험 가입 고려 ⑤ 100만원 이상 과정은 분할결제 옵션 검토</p>
+  </div>
+</div>
+
+</body>
+</html>

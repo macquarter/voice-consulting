@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>결제 실패 | 손수오 보이스 컨설팅</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans KR',sans-serif;background:#FAF5EF;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.card{background:#fff;border-radius:24px;padding:3rem 2.5rem;max-width:520px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.08)}
+.icon{font-size:3.5rem;margin-bottom:1rem}
+h1{font-family:'Noto Serif KR',serif;font-size:1.5rem;font-weight:700;color:#ef4444;margin-bottom:0.5rem}
+.desc{font-size:0.92rem;color:#8C8279;line-height:1.7;margin-bottom:1.5rem}
+.error-box{background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:1rem;margin-bottom:1.5rem;text-align:left}
+.error-box .label{font-size:0.78rem;color:#ef4444;font-weight:600;margin-bottom:0.3rem}
+.error-box .msg{font-size:0.85rem;color:#1A1714}
+.btn{display:inline-block;background:linear-gradient(135deg,#C9933E,#B07D2F);color:#fff;padding:0.85rem 2.5rem;border-radius:50px;font-size:0.95rem;font-weight:600;text-decoration:none;transition:all 0.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(201,147,62,0.3)}
+.home-link{display:block;margin-top:1rem;font-size:0.85rem;color:#8C8279;text-decoration:none}
+.home-link:hover{color:#C9933E}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="icon">😔</div>
+  <h1>결제가 완료되지 않았습니다</h1>
+  <p class="desc">결제가 취소되었거나 처리 중 문제가 발생했습니다.</p>
+  <div class="error-box" id="errorBox" style="display:none">
+    <div class="label">오류 상세</div>
+    <div class="msg" id="errorMsg"></div>
+  </div>
+  <a href="/#booking" class="btn">다시 예약하기</a>
+  <a href="/" class="home-link">메인으로 돌아가기</a>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const code = params.get('code');
+const message = params.get('message');
+if (code || message) {
+  document.getElementById('errorBox').style.display = 'block';
+  document.getElementById('errorMsg').textContent = `[${code || ''}] ${message || '알 수 없는 오류'}`;
+}
+</script>
+</body>
+</html>

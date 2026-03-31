@@ -34,6 +34,7 @@ module.exports = async function handler(req, res) {
     if (req.method === 'PUT' || req.method === 'POST') {
       const list = await getTestimonials();
       const body = req.body;
+      // Supports fields: name, role, content, rating, audio_before, audio_after, audio_label, featured
       if (body.id) {
         const idx = list.findIndex(t => t.id === body.id);
         if (idx >= 0) list[idx] = { ...list[idx], ...body };

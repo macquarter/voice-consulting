@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>결제 완료 | 손수오 보이스 컨설팅</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans KR',sans-serif;background:#FAF5EF;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.card{background:#fff;border-radius:24px;padding:3rem 2.5rem;max-width:520px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.08)}
+.icon{font-size:3.5rem;margin-bottom:1rem}
+h1{font-family:'Noto Serif KR',serif;font-size:1.5rem;font-weight:700;color:#1A1714;margin-bottom:0.5rem}
+.desc{font-size:0.92rem;color:#8C8279;line-height:1.7;margin-bottom:2rem}
+.details{background:#FAF5EF;border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;text-align:left}
+.row{display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid rgba(0,0,0,0.05)}
+.row:last-child{border-bottom:none}
+.row .label{font-size:0.85rem;color:#8C8279}
+.row .value{font-size:0.85rem;font-weight:600;color:#1A1714}
+.row .value.gold{color:#C9933E;font-size:1rem}
+.receipt-link{display:inline-block;margin-bottom:1rem;font-size:0.82rem;color:#C9933E;text-decoration:none}
+.receipt-link:hover{text-decoration:underline}
+.btn{display:inline-block;background:linear-gradient(135deg,#C9933E,#B07D2F);color:#fff;padding:0.85rem 2.5rem;border-radius:50px;font-size:0.95rem;font-weight:600;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+.btn:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(201,147,62,0.3)}
+.booking-id{font-size:0.72rem;color:#B8AFA7;margin-top:1rem;word-break:break-all}
+.error-card h1{color:#ef4444}
+.error-card .btn{background:linear-gradient(135deg,#666,#444)}
+.loading{color:#8C8279;font-size:0.9rem}
+.spinner{width:40px;height:40px;border:3px solid #e2e4e9;border-top-color:#C9933E;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div class="card" id="resultCard">
+  <div class="spinner"></div>
+  <p class="loading">결제를 확인하고 있습니다...</p>
+</div>
+
+<script>
+(async function() {
+  const params = new URLSearchParams(window.location.search);
+  const paymentKey = params.get('paymentKey');
+  const orderId = params.get('orderId');
+  const amount = params.get('amount');
+
+  const card = document.getElementById('resultCard');
+
+  if (!paymentKey || !orderId || !amount) {
+    card.innerHTML = `
+      <div class="icon">⚠️</div>
+      <h1>잘못된 접근입니다</h1>
+      <p class="desc">결제 정보가 없습니다.</p>
+      <a href="/" class="btn">메인으로 돌아가기</a>
+    `;
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/payments/confirm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ paymentKey, orderId, amount: Number(amount) }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      const p = data.payment;
+      const methodLabel = p.method === '카드' ? '카드결제' : p.method === '계좌이체' ? '계좌이체' : p.method || '결제';
+
+      card.innerHTML = `
+        <div class="icon">✅</div>
+        <h1>결제가 완료되었습니다!</h1>
+        <p class="desc">예약이 확정되었습니다. 입력하신 연락처로 상세 안내를 보내드리겠습니다.</p>
+        <div class="details">
+          <div class="row"><span class="label">주문번호</span><span class="value">${p.orderId}</span></div>
+          <div class="row"><span class="label">결제 방법</span><span class="value">${methodLabel}</span></div>
+          <div class="row"><span class="label">결제 금액</span><span class="value gold">₩${Number(p.totalAmount).toLocaleString()}</span></div>
+          <div class="row"><span class="label">결제 일시</span><span class="value">${new Date(p.approvedAt).toLocaleString('ko-KR')}</span></div>
+        </div>
+        ${p.receipt ? `<a href="${p.receipt}" target="_blank" class="receipt-link">🧾 영수증 보기</a><br>` : ''}
+        <a href="/" class="btn">메인으로 돌아가기</a>
+        <div class="booking-id">예약번호: ${data.bookingId || ''}</div>
+      `;
+    } else {
+      card.className = 'card error-card';
+      card.innerHTML = `
+        <div class="icon">❌</div>
+        <h1>결제에 실패했습니다</h1>
+        <p class="desc">${data.error || '결제 처리 중 오류가 발생했습니다.'}<br>다시 시도해 주세요.</p>
+        <a href="/#booking" class="btn">다시 예약하기</a>
+      `;
+    }
+  } catch (err) {
+    card.className = 'card error-card';
+    card.innerHTML = `
+      <div class="icon">⚠️</div>
+      <h1>연결 오류</h1>
+      <p class="desc">서버와 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.</p>
+      <a href="/#booking" class="btn">다시 시도</a>
+    `;
+  }
+})();
+</script>
+</body>
+</html>

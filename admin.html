@@ -138,6 +138,18 @@ tr:hover td{background:rgba(255,107,53,.02)}
 .save-bar .status .dot{width:6px;height:6px;border-radius:50%;background:var(--yellow)}
 .save-bar.saved .status .dot{background:var(--green)}
 
+/* ── Image Upload Drop Zone ── */
+.img-upload{border:2px dashed var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg-input);position:relative}
+.img-upload:hover,.img-upload.dragover{border-color:var(--accent);background:var(--accent-light)}
+.img-upload .drop-text{font-size:.85rem;color:var(--text3);pointer-events:none}
+.img-upload .drop-text strong{color:var(--accent);font-weight:600}
+.img-upload .drop-icon{font-size:2rem;margin-bottom:.5rem;opacity:.5}
+.img-upload input[type=file]{display:none}
+.img-upload .preview-wrap{position:relative;display:inline-block}
+.img-upload .preview-wrap img{max-width:100%;max-height:200px;border-radius:var(--radius-sm);box-shadow:var(--shadow)}
+.img-upload .remove-btn{position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;border:none;cursor:pointer;font-size:.75rem;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:transform .15s}
+.img-upload .remove-btn:hover{transform:scale(1.15)}
+
 /* ── Responsive ── */
 @media(max-width:768px){
   .topnav{padding:0 1rem;flex-wrap:wrap;height:auto;padding:.75rem 1rem}
@@ -160,6 +172,7 @@ tr:hover td{background:rgba(255,107,53,.02)}
     <a onclick="nav('courses',this)">교육 과정</a>
     <a onclick="nav('testimonials',this)">수강 후기</a>
     <a onclick="nav('bookings',this)">예약 관리</a>
+    <a onclick="nav('scheduler',this)">📅 스케줄러</a>
     <a onclick="nav('settings',this)">설정</a>
   </div>
   <div class="topnav-right">
@@ -219,6 +232,20 @@ tr:hover td{background:rgba(255,107,53,.02)}
         <div class="field"><label>CTA 버튼 텍스트</label><input id="c_hero_cta" oninput="markDirty()"></div>
         <div class="field"><label>CTA 링크 URL</label><input id="c_hero_cta_url" placeholder="https://calendly.com/..." oninput="markDirty()"><div class="hint">예약 페이지 또는 외부 링크</div></div>
       </div>
+      <div class="field"><label>상단 뱃지 텍스트</label><input id="c_hero_badge" placeholder="30년 성악 경력 · 단국대학교 교수" oninput="markDirty()"><div class="hint">히어로 상단의 작은 뱃지 텍스트</div></div>
+    </div>
+  </div>
+
+  <!-- Free Trial Banner -->
+  <div class="edit-block">
+    <div class="edit-block-header" onclick="toggleBlock(this)">
+      <h3>🎁 무료 체험 배너</h3>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="edit-block-body">
+      <div class="field"><label>배너 타이틀</label><input id="c_free_trial_title" oninput="markDirty()"></div>
+      <div class="field"><label>배너 설명</label><textarea id="c_free_trial_desc" rows="2" oninput="markDirty()"></textarea></div>
+      <div class="field"><label>배너 CTA 버튼</label><input id="c_free_trial_cta" oninput="markDirty()"></div>
     </div>
   </div>
 
@@ -229,9 +256,24 @@ tr:hover td{background:rgba(255,107,53,.02)}
       <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
     </div>
     <div class="edit-block-body">
-      <div class="field"><label>유튜브 영상 URL</label><input id="c_youtube_url" placeholder="https://www.youtube.com/watch?v=..." oninput="markDirty()"><div class="hint">메인 페이지에 삽입될 유튜브 영상 링크. 비워두면 유튜브 섹션이 숨겨집니다.</div></div>
-      <div class="field"><label>영상 제목</label><input id="c_youtube_title" placeholder="손수오 교수의 보이스 컨설팅" oninput="markDirty()"></div>
-      <div class="field"><label>영상 설명</label><textarea id="c_youtube_desc" rows="2" placeholder="영상에 대한 간단한 설명" oninput="markDirty()"></textarea></div>
+      <p style="font-size:.8rem;color:var(--text2);margin-bottom:1rem;">메인 페이지에 표시되는 유튜브 영상 2개를 관리합니다.</p>
+      <div class="field"><label>미디어 섹션 타이틀</label><input id="c_media_title" placeholder="직접 확인하세요" oninput="markDirty()"></div>
+      <div style="border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1rem;background:var(--bg)">
+        <div style="font-size:.82rem;font-weight:600;color:var(--accent);margin-bottom:.75rem">📹 영상 1 (좌측)</div>
+        <div class="field"><label>유튜브 URL</label><input id="c_youtube_url" placeholder="https://www.youtube.com/watch?v=..." oninput="markDirty()"></div>
+        <div class="field-row">
+          <div class="field"><label>영상 제목</label><input id="c_youtube_title" oninput="markDirty()"></div>
+          <div class="field"><label>영상 설명</label><input id="c_youtube_desc" oninput="markDirty()"></div>
+        </div>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;background:var(--bg)">
+        <div style="font-size:.82rem;font-weight:600;color:var(--accent);margin-bottom:.75rem">📹 영상 2 (우측)</div>
+        <div class="field"><label>유튜브 URL</label><input id="c_youtube_url_2" placeholder="https://www.youtube.com/watch?v=..." oninput="markDirty()"></div>
+        <div class="field-row">
+          <div class="field"><label>영상 제목</label><input id="c_youtube_title_2" oninput="markDirty()"></div>
+          <div class="field"><label>영상 설명</label><input id="c_youtube_desc_2" oninput="markDirty()"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -263,7 +305,79 @@ tr:hover td{background:rgba(255,107,53,.02)}
         <div class="field"><label>직함</label><input id="c_expert_title" oninput="markDirty()"></div>
       </div>
       <div class="field"><label>소개 문구</label><textarea id="c_expert_intro" rows="2" oninput="markDirty()"></textarea></div>
+      <div class="field"><label>소개 이미지</label>
+        <div class="img-upload" id="drop_expert_intro_image" onclick="document.getElementById('file_expert_intro_image').click()" ondragover="handleDragOver(event,this)" ondragleave="handleDragLeave(event,this)" ondrop="handleDrop(event,this,'expert_intro_image')">
+          <input type="file" id="file_expert_intro_image" accept="image/*" onchange="handleFileSelect(event,'expert_intro_image')">
+          <div id="placeholder_expert_intro_image"><div class="drop-icon">🖼️</div><div class="drop-text">이미지를 여기에 드래그하거나 <strong>클릭하여 선택</strong></div></div>
+          <div id="preview_expert_intro_image" style="display:none"></div>
+        </div>
+        <input type="hidden" id="c_expert_intro_image">
+        <div class="hint">전문가 소개 영역에 표시할 이미지. 드래그앤드롭 또는 클릭하여 파일 선택</div>
+      </div>
       <div class="field"><label>경력 및 약력 (쉼표 구분)</label><textarea id="c_expert_credentials" rows="2" oninput="markDirty()"></textarea><div class="hint">예: 20년 보이스 트레이닝,500+ 수강생,방송·기업 출강</div></div>
+      <div class="field"><label>교수 프로필 사진</label>
+        <div class="img-upload" id="drop_expert_photo_url" onclick="document.getElementById('file_expert_photo_url').click()" ondragover="handleDragOver(event,this)" ondragleave="handleDragLeave(event,this)" ondrop="handleDrop(event,this,'expert_photo_url')">
+          <input type="file" id="file_expert_photo_url" accept="image/*" onchange="handleFileSelect(event,'expert_photo_url')">
+          <div id="placeholder_expert_photo_url"><div class="drop-icon">📷</div><div class="drop-text">프로필 사진을 여기에 드래그하거나 <strong>클릭하여 선택</strong></div></div>
+          <div id="preview_expert_photo_url" style="display:none"></div>
+        </div>
+        <input type="hidden" id="c_expert_photo_url">
+        <div class="hint">교수 프로필 사진. 빈칸이면 기본 플레이스홀더 표시</div>
+      </div>
+      <div class="field"><label>해결책 섹션 설명</label><textarea id="c_expert_desc" rows="2" oninput="markDirty()"></textarea></div>
+      <div class="field-row">
+        <div class="field"><label>플로팅 카드 숫자</label><input id="c_expert_float_num" placeholder="No.1" oninput="markDirty()"></div>
+        <div class="field"><label>플로팅 카드 라벨</label><input id="c_expert_float_label" placeholder="보이스 컨설턴트" oninput="markDirty()"></div>
+      </div>
+      <div class="field"><label>핵심 수치 (파이프 구분)</label><input id="c_expert_stats" oninput="markDirty()"><div class="hint">형식: 숫자,라벨|숫자,라벨|숫자,라벨 — 예: 1:1,맞춤형 코칭|38,효과 기법|45,마법 훈련</div></div>
+      <div class="field"><label>자격 뱃지 (파이프 구분)</label><textarea id="c_expert_creds" rows="2" oninput="markDirty()"></textarea><div class="hint">형식: 아이콘,라벨,값|... — 예: 🎓,학력,음성학 전공|📺,미디어,방송 다수 출연</div></div>
+    </div>
+  </div>
+
+  <!-- Magic Section (45의 마법) -->
+  <div class="edit-block">
+    <div class="edit-block-header" onclick="toggleBlock(this)">
+      <h3>✨ 45의 마법 / 38 효과</h3>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="edit-block-body">
+      <div class="field"><label>마법 섹션 타이틀</label><input id="c_magic_title" placeholder="45의 마법과 38 효과" oninput="markDirty()"></div>
+      <div class="field"><label>마법 섹션 설명</label><textarea id="c_magic_desc" rows="3" oninput="markDirty()"></textarea><div class="hint">줄바꿈으로 문단을 나눌 수 있습니다</div></div>
+    </div>
+  </div>
+
+  <!-- Curriculum Section -->
+  <div class="edit-block">
+    <div class="edit-block-header" onclick="toggleBlock(this)">
+      <h3>📚 섹션 4 — 교육 과정 소개</h3>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="edit-block-body">
+      <div class="field"><label>섹션 타이틀</label><input id="c_curriculum_title" placeholder="오직 1인을 위한 완벽한 맞춤형 교육" oninput="markDirty()"><div class="hint">줄바꿈은 \n으로 구분</div></div>
+      <div class="field"><label>섹션 설명</label><textarea id="c_curriculum_desc" rows="2" oninput="markDirty()"></textarea></div>
+    </div>
+  </div>
+
+  <!-- Testimonial Section Header -->
+  <div class="edit-block">
+    <div class="edit-block-header" onclick="toggleBlock(this)">
+      <h3>💬 수강 후기 섹션 헤더</h3>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="edit-block-body">
+      <div class="field"><label>섹션 타이틀</label><input id="c_testimonial_title" placeholder="목소리가 바뀌자 인생이 달라졌습니다" oninput="markDirty()"><div class="hint">줄바꿈은 \n으로 구분</div></div>
+      <div class="field"><label>섹션 설명</label><input id="c_testimonial_desc" placeholder="실제 수강생들의 변화를 직접 확인하세요." oninput="markDirty()"></div>
+    </div>
+  </div>
+
+  <!-- Persona Section Header -->
+  <div class="edit-block">
+    <div class="edit-block-header" onclick="toggleBlock(this)">
+      <h3>🎯 맞춤 추천 섹션 헤더</h3>
+      <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="edit-block-body">
+      <div class="field"><label>섹션 타이틀</label><input id="c_persona_title" placeholder="나에게 맞는 과정은?" oninput="markDirty()"></div>
     </div>
   </div>
 
@@ -275,6 +389,7 @@ tr:hover td{background:rgba(255,107,53,.02)}
     </div>
     <div class="edit-block-body">
       <div class="field"><label>예약 섹션 타이틀</label><input id="c_booking_title" oninput="markDirty()"></div>
+      <div class="field"><label>예약 섹션 설명</label><textarea id="c_booking_desc" rows="2" oninput="markDirty()"></textarea></div>
       <div class="field"><label>예약 버튼 텍스트</label><input id="c_booking_cta" oninput="markDirty()"></div>
       <div class="field"><label>외부 예약 링크</label><input id="c_booking_url" placeholder="https://calendly.com/..." oninput="markDirty()"></div>
     </div>
@@ -342,6 +457,65 @@ tr:hover td{background:rgba(255,107,53,.02)}
 </div>
 </div>
 
+<!-- ═══════════ SCHEDULER ═══════════ -->
+<div class="page" id="page-scheduler">
+<div class="container">
+  <div class="section-banner">
+    <div><h1>📅 스케줄러</h1><p>예약 현황을 달력으로 확인하고, 특정 날짜를 차단할 수 있습니다</p></div>
+  </div>
+
+  <!-- 달력 -->
+  <div class="card">
+    <div class="card-header" style="display:flex;justify-content:space-between;align-items:center">
+      <button class="btn btn-outline btn-sm" onclick="schMonth(-1)">◀ 이전</button>
+      <h2 id="schCalTitle" style="margin:0">2026년 4월</h2>
+      <button class="btn btn-outline btn-sm" onclick="schMonth(1)">다음 ▶</button>
+    </div>
+    <div style="margin-top:1rem">
+      <div id="schCalGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;font-size:.85rem"></div>
+    </div>
+    <div style="margin-top:1rem;display:flex;gap:1rem;flex-wrap:wrap;font-size:.78rem;color:var(--text2)">
+      <span>🟡 예약 있음</span>
+      <span>🔴 차단됨</span>
+      <span>⬜ 비어 있음</span>
+    </div>
+  </div>
+
+  <!-- 슬롯 차단 -->
+  <div class="card">
+    <div class="card-header"><h2>🚫 슬롯 차단 관리</h2></div>
+    <p style="color:var(--text2);font-size:.85rem;margin-bottom:1rem">특정 날짜의 특정 시간 또는 전체를 차단할 수 있습니다.</p>
+    <div style="display:flex;gap:.5rem;align-items:end;margin-bottom:1rem;flex-wrap:wrap">
+      <div style="flex:1;min-width:140px">
+        <label style="font-size:.75rem;color:var(--text2);margin-bottom:4px;display:block">날짜</label>
+        <input type="date" id="blockDateInput" class="input">
+      </div>
+      <div style="flex:1;min-width:140px">
+        <label style="font-size:.75rem;color:var(--text2);margin-bottom:4px;display:block">시간</label>
+        <select id="blockTimeInput" class="input" style="padding:.55rem .7rem">
+          <option value="ALL">🚫 전체 차단 (하루 종일)</option>
+          <option value="09:00">09:00</option>
+          <option value="10:00">10:00</option>
+          <option value="11:00">11:00</option>
+          <option value="13:00">13:00</option>
+          <option value="14:00">14:00</option>
+          <option value="15:00">15:00</option>
+          <option value="16:00">16:00</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="addBlockSlot()" style="height:38px">차단 추가</button>
+    </div>
+    <div id="blockedSlotsList"></div>
+  </div>
+
+  <!-- 날짜별 상세 -->
+  <div class="card" id="schDayDetail" style="display:none">
+    <div class="card-header"><h2 id="schDayTitle">날짜 상세</h2></div>
+    <div id="schDayContent"></div>
+  </div>
+</div>
+</div>
+
 <!-- ═══════════ SETTINGS ═══════════ -->
 <div class="page" id="page-settings">
 <div class="container">
@@ -393,6 +567,9 @@ tr:hover td{background:rgba(255,107,53,.02)}
   </div>
   <div class="field"><label>후기 내용</label><textarea id="tm_content" rows="4"></textarea></div>
   <div class="field"><label>별점</label><select id="tm_rating"><option value="5">★★★★★ (5)</option><option value="4">★★★★☆ (4)</option><option value="3">★★★☆☆ (3)</option></select></div>
+  <div class="field"><label>🔊 비포 음성 URL</label><input id="tm_audio_before" placeholder="비포 음성파일 URL (선택사항)"><div class="hint">Blob 저장소 또는 외부 URL</div></div>
+  <div class="field"><label>🔊 애프터 음성 URL</label><input id="tm_audio_after" placeholder="애프터 음성파일 URL (선택사항)"><div class="hint">Blob 저장소 또는 외부 URL</div></div>
+  <div class="field"><label>🎤 음성 설명</label><input id="tm_audio_label" placeholder="예: 떨리는 목소리 → 안정적이고 힘 있는 목소리"><div class="hint">비포/애프터 변화 설명</div></div>
   <div class="modal-footer">
     <button class="btn btn-outline" onclick="closeTestiModal()">취소</button>
     <button class="btn btn-primary" onclick="saveTesti()">저장</button>
@@ -410,11 +587,20 @@ let isDirty = false;
 
 // ── Content key mapping ──
 const CONTENT_KEYS = [
-  'hero_title','hero_subtitle','hero_cta','hero_cta_url',
+  'hero_title','hero_subtitle','hero_cta','hero_cta_url','hero_badge',
+  'free_trial_title','free_trial_desc','free_trial_cta',
   'youtube_url','youtube_title','youtube_desc',
+  'youtube_url_2','youtube_title_2','youtube_desc_2',
+  'media_title',
   'problem_title','problem_desc','problem_left','problem_right',
   'expert_name','expert_title','expert_intro','expert_credentials',
-  'booking_title','booking_cta','booking_url',
+  'expert_photo_url','expert_intro_image','expert_desc','expert_float_num','expert_float_label',
+  'expert_stats','expert_creds',
+  'magic_title','magic_desc',
+  'curriculum_title','curriculum_desc',
+  'testimonial_title','testimonial_desc',
+  'persona_title',
+  'booking_title','booking_desc','booking_cta','booking_url',
   'footer_text','trust_1','trust_2','trust_3'
 ];
 
@@ -424,7 +610,7 @@ function nav(page, el) {
   document.getElementById('page-' + page).classList.add('active');
   document.querySelectorAll('.topnav-links a').forEach(a => a.classList.remove('active'));
   if (el) el.classList.add('active');
-  const loaders = {dashboard:loadDash, content:loadContent, courses:loadCourses, testimonials:loadTestimonials, bookings:loadBookings};
+  const loaders = {dashboard:loadDash, content:loadContent, courses:loadCourses, testimonials:loadTestimonials, bookings:loadBookings, scheduler:loadScheduler};
   if (loaders[page]) loaders[page]();
   window.scrollTo(0,0);
 }
@@ -444,6 +630,85 @@ function toggleBlock(header) {
 }
 function markDirty() { isDirty = true; }
 
+// ── Image Upload Handlers ──
+const IMAGE_FIELDS = ['expert_photo_url','expert_intro_image'];
+
+function handleDragOver(e, el) { e.preventDefault(); e.stopPropagation(); el.classList.add('dragover'); }
+function handleDragLeave(e, el) { e.preventDefault(); e.stopPropagation(); el.classList.remove('dragover'); }
+function handleDrop(e, el, key) {
+  e.preventDefault(); e.stopPropagation(); el.classList.remove('dragover');
+  const files = e.dataTransfer.files;
+  if (files.length > 0 && files[0].type.startsWith('image/')) processImageFile(files[0], key);
+}
+function handleFileSelect(e, key) {
+  const files = e.target.files;
+  if (files.length > 0) processImageFile(files[0], key);
+}
+function processImageFile(file, key) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const maxW = 600, maxH = 600;
+      let w = img.width, h = img.height;
+      if (w > maxW || h > maxH) {
+        const ratio = Math.min(maxW/w, maxH/h);
+        w = Math.round(w*ratio); h = Math.round(h*ratio);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+      uploadImageToServer(key, dataUrl);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+async function uploadImageToServer(key, dataUrl) {
+  const dropZone = document.getElementById('drop_'+key);
+  try {
+    if(dropZone) dropZone.style.opacity = '0.5';
+    const resp = await fetch(API+'/upload', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ key, data: dataUrl })
+    });
+    const result = await resp.json();
+    if(dropZone) dropZone.style.opacity = '1';
+    if (result.success && result.url) {
+      document.getElementById('c_'+key).value = result.url;
+      showImagePreview(key, result.url);
+      markDirty();
+      toast('이미지 업로드 완료!');
+    } else { toast('업로드 실패: '+(result.error||''), 'error'); }
+  } catch(e) {
+    if(dropZone) dropZone.style.opacity = '1';
+    toast('업로드 오류: '+e.message, 'error');
+  }
+}
+function showImagePreview(key, src) {
+  const placeholder = document.getElementById('placeholder_'+key);
+  const preview = document.getElementById('preview_'+key);
+  if (!placeholder || !preview) return;
+  if (src) {
+    placeholder.style.display = 'none';
+    preview.style.display = 'block';
+    preview.innerHTML = '<div class="preview-wrap"><img src="'+src+'" alt="미리보기"><button class="remove-btn" onclick="event.stopPropagation();removeImage(\''+key+'\')" title="이미지 제거">✕</button></div>';
+  } else {
+    placeholder.style.display = 'block';
+    preview.style.display = 'none';
+    preview.innerHTML = '';
+  }
+}
+async function removeImage(key) {
+  document.getElementById('c_'+key).value = '';
+  document.getElementById('file_'+key).value = '';
+  showImagePreview(key, '');
+  // Remove from server too
+  try { await fetch(API+'/upload?key='+key, { method:'DELETE' }); } catch{}
+  markDirty();
+}
+
 // ═══════ DASHBOARD ═══════
 async function loadDash() {
   try {
@@ -456,10 +721,11 @@ async function loadDash() {
     const recent = bk.slice(0,5);
     document.getElementById('recentList').innerHTML = recent.length ? recent.map(b => `
       <div style="display:flex;align-items:center;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--border)">
-        <div><strong style="font-size:.9rem">${b.name}</strong> <span style="color:var(--text2);font-size:.8rem">— ${b.course}</span></div>
+        <div><strong style="font-size:.9rem">${b.guest_name||b.name||''}</strong> <span style="color:var(--text2);font-size:.8rem">— ${b.course_name||b.course||''}</span></div>
         <div style="display:flex;align-items:center;gap:.5rem">
-          <span style="font-size:.78rem;color:var(--text3)">${b.date} ${b.time}</span>
+          <span style="font-size:.78rem;color:var(--text3)">${b.start_date||b.date||''} ${b.time_slot||b.time||''}</span>
           <span class="badge badge-${b.status}">${b.status==='pending'?'대기':b.status==='confirmed'?'확정':'취소'}</span>
+          ${b.payment ? `<span style="font-size:.7rem;color:var(--text3)">₩${Number(b.payment.totalAmount||0).toLocaleString()}</span>` : ''}
         </div>
       </div>
     `).join('') : '<div class="empty"><div class="icon">📋</div><p>아직 예약이 없습니다</p></div>';
@@ -476,6 +742,21 @@ async function loadContent() {
       const el = document.getElementById('c_'+k);
       if (el) el.value = data[k]||'';
     });
+    // Load image previews from Blob storage
+    for (const k of IMAGE_FIELDS) {
+      const val = document.getElementById('c_'+k)?.value || '';
+      if (val && val.startsWith('http')) {
+        showImagePreview(k, val);
+      } else {
+        // Try fetching from blob by key
+        try {
+          const imgResp = await fetch(API+'/upload?key='+k);
+          const imgData = await imgResp.json();
+          if (imgData.url) { showImagePreview(k, imgData.url); document.getElementById('c_'+k).value = imgData.url; }
+          else { showImagePreview(k, ''); }
+        } catch{ showImagePreview(k, ''); }
+      }
+    }
     isDirty = false;
   } catch {}
 }
@@ -579,6 +860,7 @@ function renderTestimonials() {
       </div>
       <div style="color:#f59e0b;font-size:.8rem;margin-top:.2rem">${'★'.repeat(t.rating||5)}${'☆'.repeat(5-(t.rating||5))}</div>
       <div class="desc">"${t.content}"</div>
+      ${(t.audio_before || t.audio_after) ? `<div style="margin-top:.5rem;font-size:.75rem;color:var(--text2);">🔊 ${t.audio_label||'음성 비포/애프터 포함'}</div>` : ''}
     </div>
   `).join('') : '<div class="empty"><div class="icon">💬</div><p>등록된 후기가 없습니다</p></div>';
 }
@@ -590,6 +872,9 @@ function openTestiModal(data) {
   document.getElementById('tm_role').value = data?.role||'';
   document.getElementById('tm_content').value = data?.content||'';
   document.getElementById('tm_rating').value = data?.rating||5;
+  document.getElementById('tm_audio_before').value = data?.audio_before||'';
+  document.getElementById('tm_audio_after').value = data?.audio_after||'';
+  document.getElementById('tm_audio_label').value = data?.audio_label||'';
   document.getElementById('testiModal').classList.add('show');
 }
 function closeTestiModal() { document.getElementById('testiModal').classList.remove('show'); }
@@ -605,7 +890,10 @@ async function saveTesti() {
     name: document.getElementById('tm_name').value,
     role: document.getElementById('tm_role').value,
     content: document.getElementById('tm_content').value,
-    rating: parseInt(document.getElementById('tm_rating').value)||5
+    rating: parseInt(document.getElementById('tm_rating').value)||5,
+    audio_before: document.getElementById('tm_audio_before').value||'',
+    audio_after: document.getElementById('tm_audio_after').value||'',
+    audio_label: document.getElementById('tm_audio_label').value||''
   };
   try {
     if (id) {
@@ -645,17 +933,21 @@ function filterB(status, el) {
 function renderBookings(list) {
   document.getElementById('bookingsBody').innerHTML = list.length ? list.map(b => `
     <tr>
-      <td><strong>${b.name}</strong></td>
-      <td><div style="font-size:.82rem">${b.email||''}</div><div style="font-size:.78rem;color:var(--text3)">${b.phone||''}</div></td>
-      <td>${b.course}</td>
-      <td><div>${b.date}</div><div style="font-size:.78rem;color:var(--text3)">${b.time}</div></td>
-      <td><span class="badge badge-${b.status}">${b.status==='pending'?'대기':b.status==='confirmed'?'확정':'취소'}</span></td>
+      <td><strong>${b.guest_name||b.name||''}</strong></td>
+      <td><div style="font-size:.82rem">${b.guest_email||b.email||''}</div><div style="font-size:.78rem;color:var(--text3)">${b.guest_phone||b.phone||''}</div></td>
+      <td>${b.course_name||b.course||''}</td>
+      <td><div>${b.start_date||b.date||''}</div><div style="font-size:.78rem;color:var(--text3)">${b.time_slot||b.time||''}</div></td>
       <td>
-        <div style="display:flex;gap:.3rem">
+        <span class="badge badge-${b.status}">${b.status==='pending'?'대기':b.status==='confirmed'?'확정':'취소'}</span>
+        ${b.payment ? `<div style="font-size:.72rem;color:var(--text3);margin-top:.2rem">${b.payment.method||''} ₩${Number(b.payment.totalAmount||0).toLocaleString()}</div>` : ''}
+      </td>
+      <td>
+        <div style="display:flex;gap:.3rem;align-items:center">
           ${b.status==='pending'?`
             <button class="btn btn-green btn-sm" onclick="setStatus('${b.id}','confirmed')">확정</button>
             <button class="btn btn-red btn-sm" onclick="setStatus('${b.id}','cancelled')">취소</button>
           `:`<span style="font-size:.75rem;color:var(--text3)">—</span>`}
+          ${b.payment && b.payment.receipt ? `<a href="${b.payment.receipt}" target="_blank" style="font-size:.72rem;color:#C9933E;text-decoration:none" title="영수증">🧾</a>` : ''}
         </div>
       </td>
     </tr>
@@ -700,6 +992,205 @@ document.addEventListener('keydown', e => {
     if (document.getElementById('page-content').classList.contains('active')) saveAllContent();
   }
 });
+
+// ══════════════════════════════════════════
+// SCHEDULER
+// ══════════════════════════════════════════
+let schY = 2026, schM = 3; // April 2026
+let schSchedule = {};
+let schBlockedSlots = [];
+let schBookings = [];
+
+function schMonth(dir) {
+  schM += dir;
+  if (schM > 11) { schM = 0; schY++; }
+  if (schM < 0) { schM = 11; schY--; }
+  renderSchCal();
+}
+
+async function loadScheduler() {
+  try {
+    const [schedRes, bookRes] = await Promise.all([
+      fetch('/api/schedule'),
+      fetch('/api/bookings')
+    ]);
+    if (schedRes.ok) {
+      const d = await schedRes.json();
+      schSchedule = d.schedule || {};
+      schBlockedSlots = d.blockedSlots || [];
+    }
+    if (bookRes.ok) {
+      schBookings = await bookRes.json();
+      if (Array.isArray(schBookings)) {
+        schBookings = schBookings.filter(b => b.status !== 'cancelled');
+      }
+    }
+  } catch (e) { console.log('스케줄러 로드 실패:', e); }
+  renderSchCal();
+  renderBlockedSlots();
+}
+
+function renderSchCal() {
+  const MN = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+  const DN = ['일','월','화','수','목','금','토'];
+  document.getElementById('schCalTitle').textContent = `${schY}년 ${MN[schM]}`;
+  const g = document.getElementById('schCalGrid');
+  let h = '';
+  DN.forEach(d => h += `<div style="font-weight:700;padding:6px 0;color:var(--text2);font-size:.75rem">${d}</div>`);
+  const fd = new Date(schY, schM, 1).getDay();
+  const dim = new Date(schY, schM + 1, 0).getDate();
+  const today = new Date();
+  for (let i = 0; i < fd; i++) h += '<div></div>';
+  for (let d = 1; d <= dim; d++) {
+    const ds = `${schY}-${String(schM+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const hasBooking = schSchedule[ds] && schSchedule[ds].length > 0;
+    const isFullBlock = schBlockedSlots.some(s => s.date === ds && s.time === 'ALL');
+    const dateBlockedCount = schBlockedSlots.filter(s => s.date === ds && s.time !== 'ALL').length;
+    const dt = new Date(schY, schM, d);
+    const isToday = dt.toDateString() === today.toDateString();
+    let bg = '#f8f9fa'; let clr = 'var(--text1)'; let bdr = '2px solid transparent';
+    if (isFullBlock) { bg = '#fee2e2'; clr = '#dc2626'; }
+    else if (dateBlockedCount > 0) { bg = '#fef3c7'; clr = '#b45309'; }
+    else if (hasBooking) { bg = '#fef3c7'; clr = '#b45309'; }
+    if (isToday) bdr = '2px solid var(--primary)';
+    const cnt = hasBooking ? schSchedule[ds].length : 0;
+    const blockIndicator = isFullBlock ? '🚫' : (dateBlockedCount > 0 ? `🚫${dateBlockedCount}` : '');
+    h += `<div style="padding:6px 2px;border-radius:8px;background:${bg};color:${clr};cursor:pointer;border:${bdr};position:relative" onclick="showSchDay('${ds}')">
+      <div style="font-weight:600">${d}</div>
+      ${cnt > 0 ? `<div style="font-size:.6rem;margin-top:1px">${cnt}건</div>` : ''}
+      ${blockIndicator ? `<div style="font-size:.6rem">${blockIndicator}</div>` : ''}
+    </div>`;
+  }
+  g.innerHTML = h;
+}
+
+function showSchDay(dateStr) {
+  const box = document.getElementById('schDayDetail');
+  box.style.display = 'block';
+  const [y, m, d] = dateStr.split('-');
+  const DN = ['일','월','화','수','목','금','토'];
+  const dt = new Date(+y, +m-1, +d);
+  document.getElementById('schDayTitle').textContent = `${y}년 ${+m}월 ${+d}일 (${DN[dt.getDay()]})`;
+
+  const times = schSchedule[dateStr] || [];
+  const isFullBlock = schBlockedSlots.some(s => s.date === dateStr && s.time === 'ALL');
+  const blockedTimes = schBlockedSlots.filter(s => s.date === dateStr && s.time !== 'ALL').map(s => s.time);
+  const allTimes = ['09:00','10:00','11:00','13:00','14:00','15:00','16:00'];
+
+  // 이 날짜의 예약 찾기
+  const dayBookings = schBookings.filter(b => {
+    if (b.start_date === dateStr) return true;
+    return false;
+  });
+
+  let html = '';
+  if (isFullBlock) html += '<div style="padding:.75rem;background:#fee2e2;border-radius:8px;margin-bottom:1rem;color:#dc2626;font-weight:600">🚫 이 날짜는 차단되어 있습니다</div>';
+
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.5rem">';
+  allTimes.forEach(t => {
+    const booked = times.includes(t);
+    const blocked = blockedTimes.includes(t);
+    let bg, icon;
+    if (blocked) { bg = '#fee2e2'; icon = '🔴 차단됨'; }
+    else if (booked) { bg = '#fef3c7'; icon = '🟡 예약됨'; }
+    else { bg = '#f0fdf4'; icon = '⬜ 가능'; }
+    const unblockBtn = blocked ? `<button class="btn btn-sm" style="margin-top:.3rem;font-size:.65rem;padding:.2rem .3rem" onclick="removeBlockSlot('${dateStr}','${t}')">차단 해제</button>` : '';
+    const blockBtn = !blocked && !booked ? `<button class="btn btn-sm" style="margin-top:.3rem;font-size:.65rem;padding:.2rem .3rem" onclick="addBlockSlot('${dateStr}','${t}')">차단</button>` : '';
+    html += `<div style="padding:.6rem;border-radius:8px;background:${bg};text-align:center;font-size:.82rem">
+      <div style="font-weight:700">${t}</div>
+      <div style="font-size:.7rem;margin-top:2px">${icon}</div>
+      ${unblockBtn}${blockBtn}
+    </div>`;
+  });
+  html += '</div>';
+
+  if (dayBookings.length > 0) {
+    html += '<div style="margin-top:1rem"><strong>예약 목록:</strong></div>';
+    dayBookings.forEach(b => {
+      html += `<div style="padding:.5rem;border:1px solid #e5e7eb;border-radius:6px;margin-top:.5rem;font-size:.82rem">
+        <strong>${b.guest_name}</strong> · ${b.course_name || ''} · ${b.time_slot} · ${b.guest_phone || ''}
+        <span class="badge badge-${b.status}" style="margin-left:.5rem">${b.status === 'confirmed' ? '✅ 확정' : b.status === 'pending' ? '⏳ 대기' : b.status}</span>
+      </div>`;
+    });
+  }
+
+  document.getElementById('schDayContent').innerHTML = html;
+}
+
+async function addBlockSlot(dateArg, timeArg) {
+  let date, time;
+  if (dateArg && timeArg) {
+    // Called from showSchDay with date and time
+    date = dateArg;
+    time = timeArg;
+  } else {
+    // Called from form inputs
+    date = document.getElementById('blockDateInput').value;
+    time = document.getElementById('blockTimeInput').value;
+  }
+
+  if (!date) { alert('날짜를 선택해주세요'); return; }
+
+  try {
+    const res = await fetch('/api/schedule', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date, time })
+    });
+    if (res.ok) {
+      const d = await res.json();
+      schBlockedSlots = d.blockedSlots || [];
+      if (!dateArg) {
+        document.getElementById('blockDateInput').value = '';
+        document.getElementById('blockTimeInput').value = 'ALL';
+      }
+      renderSchCal();
+      renderBlockedSlots();
+      if (document.getElementById('schDayDetail').style.display !== 'none') {
+        showSchDay(date);
+      }
+    }
+  } catch (e) { alert('차단 추가 실패: ' + e.message); }
+}
+
+async function removeBlockSlot(date, time) {
+  try {
+    const res = await fetch('/api/schedule', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date, time })
+    });
+    if (res.ok) {
+      const d = await res.json();
+      schBlockedSlots = d.blockedSlots || [];
+      renderSchCal();
+      renderBlockedSlots();
+      if (document.getElementById('schDayDetail').style.display !== 'none') {
+        showSchDay(date);
+      }
+    }
+  } catch (e) { alert('차단 해제 실패: ' + e.message); }
+}
+
+function renderBlockedSlots() {
+  const box = document.getElementById('blockedSlotsList');
+  if (schBlockedSlots.length === 0) {
+    box.innerHTML = '<span style="color:var(--text2);font-size:.82rem">차단된 슬롯이 없습니다</span>';
+    return;
+  }
+  const sorted = schBlockedSlots.slice().sort((a, b) => {
+    if (a.date !== b.date) return a.date.localeCompare(b.date);
+    const allLast = (x) => x === 'ALL' ? '99:99' : x;
+    return allLast(a.time).localeCompare(allLast(b.time));
+  });
+  box.innerHTML = sorted.map(s => {
+    const label = s.time === 'ALL' ? `${s.date} (하루 종일)` : `${s.date} ${s.time}`;
+    return `<div style="display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .7rem;background:#fee2e2;border-radius:20px;font-size:.8rem;color:#dc2626">
+      ${label}
+      <span style="cursor:pointer;font-weight:700" onclick="removeBlockSlot('${s.date}','${s.time}')" title="차단 해제">✕</span>
+    </div>`;
+  }).join('');
+}
 
 // Init
 loadDash();
