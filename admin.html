@@ -160,20 +160,24 @@ tr:hover td{background:rgba(255,107,53,.02)}
   .section-banner{flex-direction:column;gap:.75rem;text-align:center}
 }
 /* ── Scheduler UX ── */
-.sch-time-btn{padding:.5rem .9rem;border-radius:10px;border:1.5px solid #e5e7eb;background:#fff;color:var(--text1);font-size:.82rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:inherit}
-.sch-time-btn:hover{border-color:var(--primary);color:var(--primary);background:#fef3c7}
+.sch-time-btn{padding:.4rem .7rem;border-radius:8px;border:1.5px solid #e5e7eb;background:#fff;color:var(--text1);font-size:.8rem;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit;min-width:38px;text-align:center}
+.sch-time-btn:hover{border-color:var(--primary);background:#fef3c7}
 .sch-time-btn.active{border-color:var(--primary);background:var(--primary);color:#fff;font-weight:600}
 .sch-time-btn.disabled{opacity:.3;pointer-events:none;text-decoration:line-through}
-.sch-type-tab{padding:.5rem 1.2rem;border-radius:10px;border:1.5px solid #e5e7eb;background:#fff;color:var(--text2);font-size:.85rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:inherit}
-.sch-type-tab:hover{border-color:var(--primary)}
-.sch-type-tab.active[data-type="schedule"]{border-color:#3b82f6;background:#dbeafe;color:#1d4ed8;font-weight:600}
-.sch-type-tab.active[data-type="block"]{border-color:#dc2626;background:#fee2e2;color:#dc2626;font-weight:600}
-.my-sched-item{display:flex;align-items:center;justify-content:space-between;padding:.6rem .8rem;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;margin-bottom:.4rem;font-size:.82rem;color:#1d4ed8;transition:all .2s}
-.my-sched-item:hover{background:#dbeafe;border-color:#93c5fd}
-.block-item{display:flex;align-items:center;justify-content:space-between;padding:.6rem .8rem;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;margin-bottom:.4rem;font-size:.82rem;color:#dc2626;transition:all .2s}
-.block-item:hover{background:#fee2e2;border-color:#fca5a5}
-.sch-del-btn{background:none;border:none;cursor:pointer;font-size:.9rem;padding:.2rem .4rem;border-radius:6px;transition:all .2s;opacity:.6}
-.sch-del-btn:hover{opacity:1;background:rgba(0,0,0,.05)}
+.sch-mode-btn{padding:.4rem .8rem;border-radius:8px;border:1.5px solid #e5e7eb;background:#fff;color:var(--text2);font-size:.8rem;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit}
+.sch-mode-btn:hover{border-color:var(--primary)}
+.sch-mode-btn.active{border-color:var(--primary);background:var(--primary);color:#fff;font-weight:600}
+.sch-day-btn{width:34px;height:34px;border-radius:50%;border:1.5px solid #e5e7eb;background:#fff;color:var(--text1);font-size:.8rem;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit;display:flex;align-items:center;justify-content:center}
+.sch-day-btn:hover{border-color:var(--primary);background:#fef3c7}
+.sch-day-btn.active{border-color:var(--primary);background:var(--primary);color:#fff;font-weight:600}
+.sch-slot-item{display:flex;align-items:center;justify-content:space-between;padding:.55rem .8rem;border-radius:8px;margin-bottom:.35rem;font-size:.8rem;transition:all .15s}
+.sch-slot-item.type-schedule{background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8}
+.sch-slot-item.type-schedule:hover{background:#dbeafe}
+.sch-slot-item.type-block{background:#fef2f2;border:1px solid #fecaca;color:#dc2626}
+.sch-slot-item.type-block:hover{background:#fee2e2}
+.sch-del-btn{background:none;border:none;cursor:pointer;font-size:.85rem;padding:.15rem .35rem;border-radius:6px;transition:all .15s;opacity:.5}
+.sch-del-btn:hover{opacity:1;background:rgba(0,0,0,.06)}
+@media(max-width:768px){#schLayout{grid-template-columns:1fr !important}}
 </style>
 </head>
 <body>
@@ -476,97 +480,121 @@ tr:hover td{background:rgba(255,107,53,.02)}
 <div class="page" id="page-scheduler">
 <div class="container">
   <div class="section-banner">
-    <div><h1>📅 스케줄러</h1><p>예약 현황을 달력으로 확인하고, 특정 날짜를 차단할 수 있습니다</p></div>
+    <div><h1>📅 스케줄러</h1><p>내 일정을 등록하면 해당 시간이 예약 불가로 자동 처리됩니다</p></div>
   </div>
 
-  <!-- 달력 -->
-  <div class="card">
-    <div class="card-header" style="display:flex;justify-content:space-between;align-items:center">
-      <button class="btn btn-outline btn-sm" onclick="schMonth(-1)">◀ 이전</button>
-      <h2 id="schCalTitle" style="margin:0">2026년 4월</h2>
-      <button class="btn btn-outline btn-sm" onclick="schMonth(1)">다음 ▶</button>
-    </div>
-    <div style="margin-top:1rem">
-      <div id="schCalGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;font-size:.85rem"></div>
-    </div>
-    <div style="margin-top:1rem;display:flex;gap:1rem;flex-wrap:wrap;font-size:.78rem;color:var(--text2)">
-      <span>🟡 예약 있음</span>
-      <span>📌 내 일정</span>
-      <span>🔴 차단됨</span>
-      <span>⬜ 비어 있음</span>
-    </div>
-  </div>
+  <!-- 토스트 -->
+  <div id="schToast" style="display:none;padding:.7rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;text-align:center;margin-bottom:1rem"></div>
 
-  <!-- 내 일정 등록 + 슬롯 차단 통합 -->
-  <div class="card">
-    <div class="card-header"><h2>🗓️ 일정 등록 & 차단</h2></div>
-    <p style="color:var(--text2);font-size:.85rem;margin-bottom:.8rem">달력에서 날짜를 클릭하거나 직접 선택하세요. 여러 시간대를 한번에 등록할 수 있습니다.</p>
+  <!-- 2단 레이아웃: 달력 + 등록 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem" id="schLayout">
 
-    <!-- 토스트 -->
-    <div id="schToast" style="display:none;padding:.6rem 1rem;border-radius:10px;font-size:.82rem;font-weight:600;margin-bottom:1rem;transition:all .3s;text-align:center"></div>
-
-    <!-- 날짜 선택 -->
-    <div style="display:flex;gap:.8rem;align-items:end;margin-bottom:1rem;flex-wrap:wrap">
-      <div style="min-width:160px">
-        <label style="font-size:.75rem;color:var(--text2);margin-bottom:4px;display:block">📆 날짜</label>
-        <input type="date" id="schDateInput" class="input" onchange="onSchDateChange()">
+    <!-- 왼쪽: 달력 -->
+    <div class="card" style="margin-bottom:0">
+      <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;padding-bottom:.5rem">
+        <button class="btn btn-outline btn-sm" onclick="schMonth(-1)">◀</button>
+        <h2 id="schCalTitle" style="margin:0;font-size:1.05rem">2026년 4월</h2>
+        <button class="btn btn-outline btn-sm" onclick="schMonth(1)">▶</button>
       </div>
-      <div id="schSelectedDateLabel" style="font-size:.9rem;font-weight:600;color:var(--primary);padding-bottom:.5rem"></div>
-    </div>
-
-    <!-- 시간대 토글 버튼 -->
-    <div style="margin-bottom:1rem">
-      <label style="font-size:.75rem;color:var(--text2);margin-bottom:6px;display:block">⏰ 시간 선택 (여러 개 가능)</label>
-      <div id="schTimeToggles" style="display:flex;gap:.4rem;flex-wrap:wrap">
-        <button class="sch-time-btn active" data-time="ALL" onclick="toggleSchTime(this)">하루 종일</button>
-        <button class="sch-time-btn" data-time="09:00" onclick="toggleSchTime(this)">09:00</button>
-        <button class="sch-time-btn" data-time="10:00" onclick="toggleSchTime(this)">10:00</button>
-        <button class="sch-time-btn" data-time="11:00" onclick="toggleSchTime(this)">11:00</button>
-        <button class="sch-time-btn" data-time="13:00" onclick="toggleSchTime(this)">13:00</button>
-        <button class="sch-time-btn" data-time="14:00" onclick="toggleSchTime(this)">14:00</button>
-        <button class="sch-time-btn" data-time="15:00" onclick="toggleSchTime(this)">15:00</button>
-        <button class="sch-time-btn" data-time="16:00" onclick="toggleSchTime(this)">16:00</button>
+      <div id="schCalGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center;font-size:.82rem"></div>
+      <div style="margin-top:.8rem;display:flex;gap:.8rem;flex-wrap:wrap;font-size:.72rem;color:var(--text2)">
+        <span>🟡 예약</span><span>📌 내 일정</span><span>🔴 차단</span><span>⬜ 비어있음</span>
       </div>
     </div>
 
-    <!-- 유형 탭 -->
-    <div style="display:flex;gap:.5rem;margin-bottom:1rem">
-      <button class="sch-type-tab active" data-type="schedule" onclick="switchSchType(this)">📌 내 일정</button>
-      <button class="sch-type-tab" data-type="block" onclick="switchSchType(this)">🚫 차단</button>
-    </div>
+    <!-- 오른쪽: 일정 등록 폼 -->
+    <div class="card" style="margin-bottom:0">
+      <div class="card-header" style="padding-bottom:.5rem"><h2 style="font-size:1.05rem">일정 등록</h2></div>
 
-    <!-- 사유 (내 일정일 때만) -->
-    <div id="schReasonWrap" style="margin-bottom:1rem">
-      <label style="font-size:.75rem;color:var(--text2);margin-bottom:4px;display:block">📝 사유 (메모)</label>
-      <input type="text" id="schReasonInput" class="input" placeholder="예: 외부 미팅, 개인 일정, 병원 등">
-    </div>
+      <!-- 날짜 방식 선택 -->
+      <div style="margin-bottom:.8rem">
+        <div style="display:flex;gap:.4rem;margin-bottom:.6rem">
+          <button class="sch-mode-btn active" data-mode="single" onclick="switchDateMode('single',this)">하루</button>
+          <button class="sch-mode-btn" data-mode="range" onclick="switchDateMode('range',this)">기간</button>
+          <button class="sch-mode-btn" data-mode="weekday" onclick="switchDateMode('weekday',this)">매주 반복</button>
+        </div>
+        <!-- 하루 -->
+        <div id="dateModeSingle">
+          <input type="date" id="schDate1" class="input" onchange="onSchDateChange()" style="font-size:.85rem">
+        </div>
+        <!-- 기간 -->
+        <div id="dateModeRange" style="display:none">
+          <div style="display:flex;gap:.4rem;align-items:center">
+            <input type="date" id="schRangeFrom" class="input" style="font-size:.85rem;flex:1">
+            <span style="color:var(--text2);font-size:.85rem">~</span>
+            <input type="date" id="schRangeTo" class="input" style="font-size:.85rem;flex:1">
+          </div>
+        </div>
+        <!-- 매주 반복 -->
+        <div id="dateModeWeekday" style="display:none">
+          <div style="display:flex;gap:.4rem;align-items:center;margin-bottom:.5rem">
+            <input type="date" id="schWeekFrom" class="input" style="font-size:.85rem;flex:1">
+            <span style="color:var(--text2);font-size:.85rem">부터</span>
+            <select id="schWeekCount" class="input" style="font-size:.85rem;width:auto;padding:.45rem .6rem">
+              <option value="4">4주간</option>
+              <option value="8">8주간</option>
+              <option value="12">12주간</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:.3rem;flex-wrap:wrap">
+            <button class="sch-day-btn" data-day="1" onclick="toggleWeekday(this)">월</button>
+            <button class="sch-day-btn" data-day="2" onclick="toggleWeekday(this)">화</button>
+            <button class="sch-day-btn" data-day="3" onclick="toggleWeekday(this)">수</button>
+            <button class="sch-day-btn" data-day="4" onclick="toggleWeekday(this)">목</button>
+            <button class="sch-day-btn" data-day="5" onclick="toggleWeekday(this)">금</button>
+            <button class="sch-day-btn" data-day="6" onclick="toggleWeekday(this)">토</button>
+            <button class="sch-day-btn" data-day="0" onclick="toggleWeekday(this)">일</button>
+          </div>
+        </div>
+      </div>
 
-    <!-- 등록 버튼 -->
-    <button class="btn btn-primary" onclick="submitScheduleEntry()" style="width:100%;padding:.7rem;font-size:.95rem" id="schSubmitBtn">📌 내 일정 등록</button>
+      <!-- 시간 -->
+      <div style="margin-bottom:.8rem">
+        <label style="font-size:.72rem;color:var(--text2);margin-bottom:4px;display:block">시간</label>
+        <div style="display:flex;gap:.3rem;flex-wrap:wrap">
+          <button class="sch-time-btn active" data-time="ALL" onclick="toggleSchTime(this)">하루종일</button>
+          <button class="sch-time-btn" data-time="09:00" onclick="toggleSchTime(this)">9</button>
+          <button class="sch-time-btn" data-time="10:00" onclick="toggleSchTime(this)">10</button>
+          <button class="sch-time-btn" data-time="11:00" onclick="toggleSchTime(this)">11</button>
+          <button class="sch-time-btn" data-time="13:00" onclick="toggleSchTime(this)">13</button>
+          <button class="sch-time-btn" data-time="14:00" onclick="toggleSchTime(this)">14</button>
+          <button class="sch-time-btn" data-time="15:00" onclick="toggleSchTime(this)">15</button>
+          <button class="sch-time-btn" data-time="16:00" onclick="toggleSchTime(this)">16</button>
+        </div>
+      </div>
+
+      <!-- 사유 -->
+      <div style="margin-bottom:.8rem">
+        <label style="font-size:.72rem;color:var(--text2);margin-bottom:4px;display:block">사유 (선택)</label>
+        <input type="text" id="schReasonInput" class="input" placeholder="미입력 시 '차단' 처리" style="font-size:.85rem">
+      </div>
+
+      <!-- 등록 버튼 -->
+      <button class="btn btn-primary" onclick="submitScheduleEntry()" style="width:100%;padding:.65rem;font-size:.9rem">등록</button>
+    </div>
   </div>
 
-  <!-- 등록된 내 일정 목록 -->
-  <div class="card">
+  <!-- 날짜별 상세 (달력 클릭 시) -->
+  <div class="card" id="schDayDetail" style="display:none;margin-bottom:1rem">
     <div class="card-header" style="display:flex;justify-content:space-between;align-items:center">
-      <h2>📌 등록된 내 일정</h2>
-      <span id="mySchedCount" style="font-size:.78rem;color:var(--text2)"></span>
+      <h2 id="schDayTitle" style="font-size:1rem">날짜 상세</h2>
+      <button class="btn btn-outline btn-sm" onclick="document.getElementById('schDayDetail').style.display='none'">닫기</button>
     </div>
-    <div id="myScheduleList"></div>
-  </div>
-
-  <!-- 차단 목록 -->
-  <div class="card">
-    <div class="card-header" style="display:flex;justify-content:space-between;align-items:center">
-      <h2>🚫 차단된 슬롯</h2>
-      <span id="blockCount" style="font-size:.78rem;color:var(--text2)"></span>
-    </div>
-    <div id="blockedSlotsList"></div>
-  </div>
-
-  <!-- 날짜별 상세 -->
-  <div class="card" id="schDayDetail" style="display:none">
-    <div class="card-header"><h2 id="schDayTitle">날짜 상세</h2></div>
     <div id="schDayContent"></div>
+  </div>
+
+  <!-- 등록된 일정 목록 (내 일정 + 차단 통합) -->
+  <div class="card">
+    <div class="card-header" style="display:flex;justify-content:space-between;align-items:center">
+      <h2 style="font-size:1.05rem">등록된 일정</h2>
+      <span id="schTotalCount" style="font-size:.78rem;color:var(--text2)"></span>
+    </div>
+    <div style="display:flex;gap:.4rem;margin-bottom:.8rem">
+      <button class="btn btn-sm filter-btn active" onclick="filterSchList('all',this)">전체</button>
+      <button class="btn btn-outline btn-sm filter-btn" onclick="filterSchList('schedule',this)">📌 내 일정</button>
+      <button class="btn btn-outline btn-sm filter-btn" onclick="filterSchList('block',this)">🚫 차단</button>
+    </div>
+    <div id="schSlotsList"></div>
   </div>
 </div>
 </div>
@@ -1051,10 +1079,14 @@ document.addEventListener('keydown', e => {
 // ══════════════════════════════════════════
 // SCHEDULER
 // ══════════════════════════════════════════
-let schY = 2026, schM = 3; // April 2026
+let schY = 2026, schM = 3;
 let schSchedule = {};
 let schBlockedSlots = [];
 let schBookings = [];
+let schSelectedTimes = ['ALL'];
+let schSelectedWeekdays = [];
+let schDateMode = 'single';
+let schListFilter = 'all';
 
 function schMonth(dir) {
   schM += dir;
@@ -1130,7 +1162,7 @@ function renderSchCal() {
 
 function showSchDay(dateStr) {
   // 날짜 자동 입력
-  document.getElementById('schDateInput').value = dateStr;
+  document.getElementById('schDate1').value = dateStr;
   onSchDateChange();
   const box = document.getElementById('schDayDetail');
   box.style.display = 'block';
@@ -1250,101 +1282,100 @@ async function removeBlockSlot(date, time) {
 }
 
 // ── 스케줄러 UX ──
-let schType = 'schedule'; // 'schedule' or 'block'
-let schSelectedTimes = ['ALL'];
-
 function toggleSchTime(btn) {
   const time = btn.dataset.time;
   if (time === 'ALL') {
-    // "하루 종일" 클릭 → 다른 모든 시간 해제
     schSelectedTimes = ['ALL'];
   } else {
-    // 개별 시간 → ALL 해제, 토글
     schSelectedTimes = schSelectedTimes.filter(t => t !== 'ALL');
-    if (schSelectedTimes.includes(time)) {
-      schSelectedTimes = schSelectedTimes.filter(t => t !== time);
-    } else {
-      schSelectedTimes.push(time);
-    }
+    if (schSelectedTimes.includes(time)) schSelectedTimes = schSelectedTimes.filter(t => t !== time);
+    else schSelectedTimes.push(time);
     if (schSelectedTimes.length === 0) schSelectedTimes = ['ALL'];
   }
-  updateTimeToggleUI();
+  document.querySelectorAll('.sch-time-btn').forEach(b => b.classList.toggle('active', schSelectedTimes.includes(b.dataset.time)));
 }
 
-function updateTimeToggleUI() {
-  document.querySelectorAll('.sch-time-btn').forEach(btn => {
-    btn.classList.toggle('active', schSelectedTimes.includes(btn.dataset.time));
-  });
-}
-
-function switchSchType(tab) {
-  schType = tab.dataset.type;
-  document.querySelectorAll('.sch-type-tab').forEach(t => t.classList.remove('active'));
-  tab.classList.add('active');
-  const reasonWrap = document.getElementById('schReasonWrap');
-  const submitBtn = document.getElementById('schSubmitBtn');
-  if (schType === 'schedule') {
-    reasonWrap.style.display = 'block';
-    submitBtn.textContent = '📌 내 일정 등록';
-    submitBtn.style.background = '#3b82f6';
+function toggleWeekday(btn) {
+  const day = +btn.dataset.day;
+  if (schSelectedWeekdays.includes(day)) {
+    schSelectedWeekdays = schSelectedWeekdays.filter(d => d !== day);
   } else {
-    reasonWrap.style.display = 'none';
-    submitBtn.textContent = '🚫 차단 등록';
-    submitBtn.style.background = '#dc2626';
+    schSelectedWeekdays.push(day);
   }
+  btn.classList.toggle('active');
 }
 
-function onSchDateChange() {
-  const date = document.getElementById('schDateInput').value;
-  if (!date) { document.getElementById('schSelectedDateLabel').textContent = ''; return; }
-  const DN = ['일','월','화','수','목','금','토'];
-  const [y,m,d] = date.split('-');
-  const dt = new Date(+y, +m-1, +d);
-  document.getElementById('schSelectedDateLabel').textContent = `${+m}월 ${+d}일 (${DN[dt.getDay()]})`;
-  // 이미 차단/등록된 시간 표시
-  updateTimeToggleStatus(date);
+function switchDateMode(mode, btn) {
+  schDateMode = mode;
+  document.querySelectorAll('.sch-mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('dateModeSingle').style.display = mode === 'single' ? '' : 'none';
+  document.getElementById('dateModeRange').style.display = mode === 'range' ? '' : 'none';
+  document.getElementById('dateModeWeekday').style.display = mode === 'weekday' ? '' : 'none';
 }
 
-function updateTimeToggleStatus(date) {
-  const existingTimes = schBlockedSlots.filter(s => s.date === date).map(s => s.time);
-  document.querySelectorAll('.sch-time-btn').forEach(btn => {
-    const t = btn.dataset.time;
-    if (existingTimes.includes(t)) {
-      btn.classList.add('disabled');
-      btn.title = '이미 등록/차단됨';
-    } else {
-      btn.classList.remove('disabled');
-      btn.title = '';
-    }
-  });
-}
+function onSchDateChange() {}
 
 function showSchToast(msg, type) {
-  const toast = document.getElementById('schToast');
-  toast.textContent = msg;
-  toast.style.display = 'block';
-  if (type === 'success') { toast.style.background = '#dcfce7'; toast.style.color = '#16a34a'; }
-  else if (type === 'error') { toast.style.background = '#fee2e2'; toast.style.color = '#dc2626'; }
-  else { toast.style.background = '#dbeafe'; toast.style.color = '#1d4ed8'; }
-  setTimeout(() => { toast.style.display = 'none'; }, 2500);
+  const t = document.getElementById('schToast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  t.style.background = type === 'success' ? '#dcfce7' : type === 'error' ? '#fee2e2' : '#dbeafe';
+  t.style.color = type === 'success' ? '#16a34a' : type === 'error' ? '#dc2626' : '#1d4ed8';
+  setTimeout(() => { t.style.display = 'none'; }, 3000);
+}
+
+// 날짜 목록 생성
+function collectDates() {
+  const dates = [];
+  if (schDateMode === 'single') {
+    const d = document.getElementById('schDate1').value;
+    if (d) dates.push(d);
+  } else if (schDateMode === 'range') {
+    const from = document.getElementById('schRangeFrom').value;
+    const to = document.getElementById('schRangeTo').value;
+    if (from && to) {
+      let cur = new Date(from + 'T00:00:00');
+      const end = new Date(to + 'T00:00:00');
+      while (cur <= end) {
+        dates.push(cur.toISOString().slice(0,10));
+        cur.setDate(cur.getDate() + 1);
+      }
+    }
+  } else if (schDateMode === 'weekday') {
+    const from = document.getElementById('schWeekFrom').value;
+    const weeks = +(document.getElementById('schWeekCount').value || 4);
+    if (from && schSelectedWeekdays.length > 0) {
+      let cur = new Date(from + 'T00:00:00');
+      const end = new Date(cur);
+      end.setDate(end.getDate() + weeks * 7);
+      while (cur < end) {
+        if (schSelectedWeekdays.includes(cur.getDay())) {
+          dates.push(cur.toISOString().slice(0,10));
+        }
+        cur.setDate(cur.getDate() + 1);
+      }
+    }
+  }
+  return dates;
 }
 
 async function submitScheduleEntry() {
-  const date = document.getElementById('schDateInput').value;
-  if (!date) { showSchToast('날짜를 선택해주세요', 'error'); return; }
-  const reason = schType === 'schedule' ? document.getElementById('schReasonInput').value.trim() : '';
-  if (schType === 'schedule' && !reason) { showSchToast('사유를 입력해주세요', 'error'); return; }
+  const dates = collectDates();
+  if (dates.length === 0) { showSchToast('날짜를 선택해주세요', 'error'); return; }
+  const reason = document.getElementById('schReasonInput').value.trim();
+  const times = schSelectedTimes.includes('ALL') ? ['ALL'] : [...schSelectedTimes];
 
-  const timesToAdd = schSelectedTimes.includes('ALL') ? ['ALL'] : [...schSelectedTimes];
-  let addedCount = 0;
+  const slots = [];
+  dates.forEach(date => {
+    times.forEach(time => {
+      const entry = { date, time };
+      if (reason) entry.reason = reason;
+      slots.push(entry);
+    });
+  });
 
   try {
-    // 여러 시간을 한번에 등록 (bulk)
-    const slots = timesToAdd.map(t => {
-      const entry = { date, time: t };
-      if (reason) entry.reason = reason;
-      return entry;
-    });
     const res = await fetch(API+'/schedule', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -1353,56 +1384,56 @@ async function submitScheduleEntry() {
     if (res.ok) {
       const d = await res.json();
       schBlockedSlots = d.blockedSlots || [];
-      addedCount = timesToAdd.length;
     }
   } catch (e) { showSchToast('등록 실패: ' + e.message, 'error'); return; }
 
-  // 성공 피드백
-  const label = schType === 'schedule' ? '내 일정' : '차단';
-  const timeLabel = timesToAdd.includes('ALL') ? '하루 종일' : timesToAdd.join(', ');
-  showSchToast(`✅ ${label} ${addedCount}건 등록 완료 (${date} ${timeLabel})`, 'success');
+  const label = reason ? '내 일정' : '차단';
+  showSchToast(`✅ ${label} ${slots.length}건 등록 완료 (${dates.length}일 × ${times.length}슬롯)`, 'success');
 
-  // 날짜는 유지, 사유+시간만 초기화 → 연속 추가 가능
   document.getElementById('schReasonInput').value = '';
-  schSelectedTimes = ['ALL'];
-  updateTimeToggleUI();
-  updateTimeToggleStatus(date);
   renderSchCal();
-  renderMySchedule();
-  renderBlockedSlots();
+  renderSchSlots();
   if (document.getElementById('schDayDetail').style.display !== 'none') {
-    showSchDay(date);
+    const openDate = document.getElementById('schDayTitle').dataset.date;
+    if (openDate) showSchDay(openDate);
   }
 }
 
-function renderMySchedule() {
-  const box = document.getElementById('myScheduleList');
-  const countEl = document.getElementById('mySchedCount');
-  const mySlots = schBlockedSlots.filter(s => s.reason);
-  if (countEl) countEl.textContent = `총 ${mySlots.length}건`;
-  if (mySlots.length === 0) {
-    box.innerHTML = '<p style="color:var(--text2);font-size:.82rem;text-align:center;padding:1rem 0">등록된 일정이 없습니다</p>';
+function filterSchList(filter, btn) {
+  schListFilter = filter;
+  document.querySelectorAll('#page-scheduler .filter-btn').forEach(b => { b.classList.remove('active'); b.classList.add('btn-outline'); });
+  btn.classList.add('active'); btn.classList.remove('btn-outline');
+  renderSchSlots();
+}
+
+function renderSchSlots() {
+  const box = document.getElementById('schSlotsList');
+  const countEl = document.getElementById('schTotalCount');
+  let items = schBlockedSlots;
+  if (schListFilter === 'schedule') items = items.filter(s => s.reason);
+  else if (schListFilter === 'block') items = items.filter(s => !s.reason);
+  if (countEl) countEl.textContent = `총 ${items.length}건`;
+  if (items.length === 0) {
+    box.innerHTML = '<p style="color:var(--text2);font-size:.82rem;text-align:center;padding:1rem 0">등록된 항목이 없습니다</p>';
     return;
   }
-  // 날짜별 그룹핑
   const grouped = {};
-  mySlots.forEach(s => {
-    if (!grouped[s.date]) grouped[s.date] = [];
-    grouped[s.date].push(s);
-  });
-  const sortedDates = Object.keys(grouped).sort();
+  items.forEach(s => { if (!grouped[s.date]) grouped[s.date] = []; grouped[s.date].push(s); });
   const DN = ['일','월','화','수','목','금','토'];
   let html = '';
-  sortedDates.forEach(date => {
+  Object.keys(grouped).sort().forEach(date => {
     const [y,m,d] = date.split('-');
     const dt = new Date(+y, +m-1, +d);
-    const dayName = DN[dt.getDay()];
-    html += `<div style="font-size:.72rem;font-weight:700;color:var(--text2);margin-top:.6rem;margin-bottom:.3rem">${+m}/${+d} (${dayName})</div>`;
+    html += `<div style="font-size:.72rem;font-weight:700;color:var(--text2);margin-top:.5rem;margin-bottom:.25rem">${+m}/${+d} (${DN[dt.getDay()]})</div>`;
     grouped[date].sort((a,b) => (a.time==='ALL'?'00:00':a.time).localeCompare(b.time==='ALL'?'00:00':b.time));
     grouped[date].forEach(s => {
       const timeLabel = s.time === 'ALL' ? '하루 종일' : s.time;
-      html += `<div class="my-sched-item">
-        <span>📌 <strong>${timeLabel}</strong> — ${s.reason}</span>
+      const isMy = !!s.reason;
+      const cls = isMy ? 'type-schedule' : 'type-block';
+      const icon = isMy ? '📌' : '🚫';
+      const desc = isMy ? ` — ${s.reason}` : '';
+      html += `<div class="sch-slot-item ${cls}">
+        <span>${icon} <strong>${timeLabel}</strong>${desc}</span>
         <button class="sch-del-btn" onclick="removeBlockSlot('${s.date}','${s.time}')" title="삭제">✕</button>
       </div>`;
     });
@@ -1410,39 +1441,9 @@ function renderMySchedule() {
   box.innerHTML = html;
 }
 
-function renderBlockedSlots() {
-  const box = document.getElementById('blockedSlotsList');
-  const countEl = document.getElementById('blockCount');
-  const blockSlots = schBlockedSlots.filter(s => !s.reason);
-  if (countEl) countEl.textContent = `총 ${blockSlots.length}건`;
-  if (blockSlots.length === 0) {
-    box.innerHTML = '<p style="color:var(--text2);font-size:.82rem;text-align:center;padding:1rem 0">차단된 슬롯이 없습니다</p>';
-    return;
-  }
-  const grouped = {};
-  blockSlots.forEach(s => {
-    if (!grouped[s.date]) grouped[s.date] = [];
-    grouped[s.date].push(s);
-  });
-  const sortedDates = Object.keys(grouped).sort();
-  const DN = ['일','월','화','수','목','금','토'];
-  let html = '';
-  sortedDates.forEach(date => {
-    const [y,m,d] = date.split('-');
-    const dt = new Date(+y, +m-1, +d);
-    const dayName = DN[dt.getDay()];
-    html += `<div style="font-size:.72rem;font-weight:700;color:var(--text2);margin-top:.6rem;margin-bottom:.3rem">${+m}/${+d} (${dayName})</div>`;
-    grouped[date].sort((a,b) => (a.time==='ALL'?'00:00':a.time).localeCompare(b.time==='ALL'?'00:00':b.time));
-    grouped[date].forEach(s => {
-      const timeLabel = s.time === 'ALL' ? '하루 종일' : s.time;
-      html += `<div class="block-item">
-        <span>🚫 <strong>${timeLabel}</strong></span>
-        <button class="sch-del-btn" onclick="removeBlockSlot('${s.date}','${s.time}')" title="차단 해제">✕</button>
-      </div>`;
-    });
-  });
-  box.innerHTML = html;
-}
+// 호환용 alias
+function renderMySchedule() { renderSchSlots(); }
+function renderBlockedSlots() { renderSchSlots(); }
 
 // Init
 loadDash();
