@@ -48,7 +48,7 @@ module.exports = async function handler(req, res) {
     // === GET: 스케줄 현황 ===
     if (req.method === 'GET') {
       const bookings = await getEdgeItem('bookings');
-      const blockedSlots = await getEdgeItem('blocked_slots');
+      const blockedSlots = await getEdgeItemConsistent('blocked_slots');
       const legacyBlockedDates = await getEdgeItem('blocked_dates');
       const activeBookings = Array.isArray(bookings) ? bookings.filter(b => b.status === 'confirmed' || b.status === 'pending') : [];
 
