@@ -895,8 +895,8 @@ footer a { color: var(--warm-gold); text-decoration: none; }
 <section class="booking" id="booking">
   <div class="booking-inner">
     <div class="reveal">
-      <span class="section-label">예약</span>
-      <h2 class="section-title">지금 바로 시작하세요</h2>
+      <span class="section-label" id="dyn-booking-label">예약</span>
+      <h2 class="section-title" id="dyn-booking-title">지금 바로 시작하세요</h2>
       <p class="section-desc" id="dyn-booking-desc">사람의 마음을 사는 따뜻하고 힘 있는 목소리, 지금 바로 완성하세요.</p>
     </div>
 
@@ -908,7 +908,7 @@ footer a { color: var(--warm-gold); text-decoration: none; }
       <div class="airbnb-left">
         <!-- Day Pattern (for multi-week) -->
         <div class="bk-day-pattern" id="dayPatternBox" style="display:none;">
-          <h4>수업 요일을 선택하세요 <span style="font-size:0.78rem;color:rgba(255,255,255,0.35);font-weight:400;">주 2회</span></h4>
+          <h4 id="dyn-day-heading">수업 요일을 선택하세요 <span style="font-size:0.78rem;color:rgba(255,255,255,0.35);font-weight:400;">주 2회</span></h4>
           <div class="pattern-options" id="patternOptions"></div>
         </div>
 
@@ -927,7 +927,7 @@ footer a { color: var(--warm-gold); text-decoration: none; }
 
         <!-- Time -->
         <div class="ab-timeslots">
-          <h4>희망 시간을 선택하세요</h4>
+          <h4 id="dyn-time-heading">희망 시간을 선택하세요</h4>
           <div class="time-grid" id="timeGrid">
             <div class="time-slot" onclick="pickTime(this)">09:00</div>
             <div class="time-slot" onclick="pickTime(this)">10:00</div>
@@ -955,7 +955,7 @@ footer a { color: var(--warm-gold); text-decoration: none; }
             <div class="course-name" id="cardCourseName">4주 정규 과정</div>
             <div class="course-meta" id="cardCourseMeta">주 2회 · 총 8회 · 1회 60분</div>
           </div>
-          <div class="ab-card-rating"><span class="stars">★★★★★</span><span>수강생 만족도 최상위</span></div>
+          <div class="ab-card-rating"><span class="stars">★★★★★</span><span id="dyn-booking-rating">수강생 만족도 최상위</span></div>
 
           <div class="ab-input-group">
             <div class="ab-input-row">
@@ -986,7 +986,7 @@ footer a { color: var(--warm-gold); text-decoration: none; }
           </div>
 
           <div class="ab-guest-form">
-            <div class="form-title">예약자 정보</div>
+            <div class="form-title" id="dyn-form-title">예약자 정보</div>
             <div class="ab-form-row">
               <input type="text" class="ab-form-input" id="guestName" placeholder="이름 (필수)">
               <input type="tel" class="ab-form-input" id="guestPhone" placeholder="연락처 (필수)">
@@ -994,7 +994,7 @@ footer a { color: var(--warm-gold); text-decoration: none; }
             <input type="email" class="ab-form-input" id="guestEmail" placeholder="이메일 (선택)">
           </div>
 
-          <button class="ab-cta" id="bookBtn" onclick="handleBook()">결제하고 예약 확정하기</button>
+          <button class="ab-cta" id="bookBtn" onclick="handleBook()"><span id="dyn-booking-cta">결제하고 예약 확정하기</span></button>
           <p class="ab-card-note" id="dyn-payment-note">토스페이먼츠 안전결제 · 카드 / 계좌이체 / 간편결제</p>
 
           <div class="ab-breakdown" id="priceBreakdown">
@@ -1749,15 +1749,17 @@ function loadServerImage(key, contentValue, callback) {
       if (el) el.textContent = d.footer_text;
     }
 
-    // ── Contact / SNS ──
+  } catch(e) { console.log('Dynamic content load error (main):', e.message); }
+
+  // ── Contact / SNS (독립 블록) ──
+  try {
     const footerContact = document.getElementById('dyn-footer-contact');
     if (footerContact) {
       let contactHtml = '';
-      if (d.contact_email) contactHtml += '문의: <a href="mailto:' + d.contact_email + '">' + d.contact_email + '</a>';
+      if (d.contact_email) contactHtml += '문의: <a href="mai' + 'lto:' + d.contact_email + '">' + d.contact_email + '</a>';
       if (d.contact_phone) contactHtml += (contactHtml ? ' · ' : '') + '<a href="tel:' + d.contact_phone.replace(/-/g,'') + '">' + d.contact_phone + '</a>';
       if (contactHtml) footerContact.innerHTML = contactHtml;
     }
-    // SNS icons in footer
     const snsWrap = document.getElementById('dyn-footer-sns');
     if (snsWrap) {
       let snsHtml = '';
@@ -1767,39 +1769,35 @@ function loadServerImage(key, contentValue, callback) {
       if (d.contact_blog) snsHtml += '<a href="'+d.contact_blog+'" target="_blank" rel="noopener" title="블로그" style="color:rgba(255,255,255,.5);text-decoration:none;font-size:1.1rem">📝</a>';
       if (snsHtml) snsWrap.innerHTML = snsHtml;
     }
+  } catch(e) { console.log('Contact/SNS load error:', e.message); }
 
-    // ── Booking Guide Text ──
-    if (d.payment_note) {
-      const el = document.getElementById('dyn-payment-note');
-      if (el) el.textContent = d.payment_note;
-    }
-    if (d.trust_banner) {
-      const el = document.getElementById('dyn-trust-banner');
-      if (el) el.textContent = d.trust_banner;
-    }
-    if (d.included_note) {
-      const el = document.getElementById('dyn-included-note');
-      if (el) el.textContent = d.included_note;
-    }
-    if (d.booking_success_msg) {
-      window.__bookingSuccessMsg = d.booking_success_msg;
-    }
+  // ── Booking Guide Text (독립 블록) ──
+  try {
+    if (d.payment_note) { const el = document.getElementById('dyn-payment-note'); if (el) el.textContent = d.payment_note; }
+    if (d.trust_banner) { const el = document.getElementById('dyn-trust-banner'); if (el) el.textContent = d.trust_banner; }
+    if (d.included_note) { const el = document.getElementById('dyn-included-note'); if (el) el.textContent = d.included_note; }
+    if (d.booking_success_msg) window.__bookingSuccessMsg = d.booking_success_msg;
 
-    // ── SEO / Branding ──
-    if (d.logo_text) {
-      const el = document.getElementById('dyn-logo');
-      if (el) el.innerHTML = d.logo_text + '<span>.</span>';
-    }
-    if (d.seo_title) {
-      document.title = d.seo_title;
-    }
+    // ── 섹션5 예약 유도 세부 항목 ──
+    if (d.booking_section_label) { const el = document.getElementById('dyn-booking-label'); if (el) el.textContent = d.booking_section_label; }
+    if (d.booking_title) { const el = document.getElementById('dyn-booking-title'); if (el) el.textContent = d.booking_title; }
+    if (d.booking_cta) { const el = document.getElementById('dyn-booking-cta'); if (el) el.textContent = d.booking_cta; }
+    if (d.booking_rating_text) { const el = document.getElementById('dyn-booking-rating'); if (el) el.textContent = d.booking_rating_text; }
+    if (d.booking_form_title) { const el = document.getElementById('dyn-form-title'); if (el) el.textContent = d.booking_form_title; }
+    if (d.booking_time_heading) { const el = document.getElementById('dyn-time-heading'); if (el) el.textContent = d.booking_time_heading; }
+    if (d.booking_day_heading) { const el = document.getElementById('dyn-day-heading'); if (el) el.innerHTML = d.booking_day_heading; }
+  } catch(e) { console.log('Booking text load error:', e.message); }
+
+  // ── SEO / Branding (독립 블록) ──
+  try {
+    if (d.logo_text) { const el = document.getElementById('dyn-logo'); if (el) el.innerHTML = d.logo_text + '<span>.</span>'; }
+    if (d.seo_title) document.title = d.seo_title;
     if (d.seo_desc) {
       let meta = document.querySelector('meta[name="description"]');
       if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta); }
       meta.content = d.seo_desc;
     }
-
-  } catch(e) { console.log('Dynamic content load skipped:', e.message); }
+  } catch(e) { console.log('SEO load error:', e.message); }
 })();
 
 // ── Init ──

@@ -408,10 +408,21 @@ tr:hover td{background:rgba(255,107,53,.02)}
       <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
     </div>
     <div class="edit-block-body">
-      <div class="field"><label>예약 섹션 타이틀</label><input id="c_booking_title" oninput="markDirty()"></div>
-      <div class="field"><label>예약 섹션 설명</label><textarea id="c_booking_desc" rows="2" oninput="markDirty()"></textarea></div>
-      <div class="field"><label>예약 버튼 텍스트</label><input id="c_booking_cta" oninput="markDirty()"></div>
-      <div class="field"><label>외부 예약 링크</label><input id="c_booking_url" placeholder="https://calendly.com/..." oninput="markDirty()"></div>
+      <div class="field"><label>섹션 라벨</label><input id="c_booking_section_label" placeholder="예약" oninput="markDirty()"><div class="hint">섹션 상단의 작은 라벨 텍스트</div></div>
+      <div class="field"><label>섹션 타이틀</label><input id="c_booking_title" placeholder="지금 바로 시작하세요" oninput="markDirty()"></div>
+      <div class="field"><label>섹션 설명</label><textarea id="c_booking_desc" rows="2" oninput="markDirty()"></textarea></div>
+      <div class="field-row">
+        <div class="field"><label>CTA 버튼 텍스트</label><input id="c_booking_cta" placeholder="결제하고 예약 확정하기" oninput="markDirty()"><div class="hint">예약 카드의 메인 버튼 문구</div></div>
+        <div class="field"><label>외부 예약 링크</label><input id="c_booking_url" placeholder="https://calendly.com/..." oninput="markDirty()"><div class="hint">빈칸이면 내부 예약 사용</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>만족도 문구</label><input id="c_booking_rating_text" placeholder="수강생 만족도 최상위" oninput="markDirty()"><div class="hint">별점 옆 텍스트</div></div>
+        <div class="field"><label>예약자 정보 타이틀</label><input id="c_booking_form_title" placeholder="예약자 정보" oninput="markDirty()"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>시간 선택 안내</label><input id="c_booking_time_heading" placeholder="희망 시간을 선택하세요" oninput="markDirty()"></div>
+        <div class="field"><label>요일 선택 안내</label><input id="c_booking_day_heading" placeholder="수업 요일을 선택하세요" oninput="markDirty()"></div>
+      </div>
     </div>
   </div>
 
@@ -736,7 +747,8 @@ const CONTENT_KEYS = [
   'curriculum_title','curriculum_desc',
   'testimonial_title','testimonial_desc',
   'persona_title',
-  'booking_title','booking_desc','booking_cta','booking_url',
+  'booking_section_label','booking_title','booking_desc','booking_cta','booking_url',
+  'booking_rating_text','booking_form_title','booking_time_heading','booking_day_heading',
   'contact_email','contact_phone','contact_kakao','contact_instagram','contact_youtube','contact_blog',
   'payment_note','trust_banner','included_note','booking_success_msg',
   'logo_text','seo_title','seo_desc',
