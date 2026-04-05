@@ -159,6 +159,46 @@ tr:hover td{background:rgba(255,107,53,.02)}
   .stats-row{grid-template-columns:1fr 1fr}
   .section-banner{flex-direction:column;gap:.75rem;text-align:center}
 }
+/* ── Dark Mode ── */
+[data-theme="dark"]{
+  --bg:#13141a;--bg-card:#1c1d25;--bg-hover:#24252f;--bg-input:#1e1f29;
+  --border:#2e3040;--border-focus:#ff6b35;
+  --text:#e4e6ef;--text2:#9ca0b5;--text3:#6b6f85;
+  --shadow:0 1px 3px rgba(0,0,0,.3),0 1px 2px rgba(0,0,0,.2);
+  --shadow-lg:0 4px 16px rgba(0,0,0,.4);
+}
+[data-theme="dark"] .topnav{background:#1c1d25;border-color:#2e3040}
+[data-theme="dark"] .section-banner{background:linear-gradient(135deg,#c2410c 0%,#be123c 100%)}
+[data-theme="dark"] .toast{background:#e4e6ef;color:#13141a}
+[data-theme="dark"] .toast.success{background:#16a34a;color:#fff}
+[data-theme="dark"] .toast.error{background:#dc2626;color:#fff}
+[data-theme="dark"] .modal-overlay{background:rgba(0,0,0,.6)}
+[data-theme="dark"] .modal{background:#1c1d25;border:1px solid #2e3040}
+[data-theme="dark"] table th{background:#24252f}
+[data-theme="dark"] .sch-time-btn{background:#1c1d25;border-color:#2e3040;color:#e4e6ef}
+[data-theme="dark"] .sch-mode-btn{background:#1c1d25;border-color:#2e3040;color:#9ca0b5}
+[data-theme="dark"] .sch-day-btn{background:#1c1d25;border-color:#2e3040;color:#e4e6ef}
+[data-theme="dark"] .edit-block-header{background:#24252f}
+
+/* ── Audio Player in Diagnosis ── */
+.audio-mini{height:28px;width:160px}
+.diag-card{border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:.75rem;background:var(--bg-card);transition:all .2s}
+.diag-card:hover{box-shadow:var(--shadow-lg)}
+.diag-rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.5rem;margin-top:.75rem}
+.diag-rec-item{background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.6rem .8rem;font-size:.82rem}
+.diag-rec-item audio{width:100%;height:28px;margin-top:.3rem}
+
+/* ── Inquiry Chat ── */
+.inq-card{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:.75rem;background:var(--bg-card);overflow:hidden;transition:all .2s}
+.inq-card:hover{box-shadow:var(--shadow-lg)}
+.inq-header{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;border-bottom:1px solid var(--border)}
+.inq-messages{max-height:300px;overflow-y:auto;padding:1rem 1.25rem;display:none}
+.inq-messages.open{display:block}
+.inq-msg{margin-bottom:.6rem;display:flex;gap:.5rem}
+.inq-msg.user .inq-bubble{background:var(--accent-light);color:var(--accent);border-radius:12px 12px 4px 12px}
+.inq-msg.bot .inq-bubble{background:var(--bg-input);color:var(--text2);border-radius:12px 12px 12px 4px}
+.inq-bubble{padding:.5rem .8rem;font-size:.82rem;line-height:1.5;max-width:80%}
+
 /* ── Scheduler UX ── */
 .sch-time-btn{padding:.4rem .7rem;border-radius:8px;border:1.5px solid #e5e7eb;background:#fff;color:var(--text1);font-size:.8rem;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit;min-width:38px;text-align:center}
 .sch-time-btn:hover{border-color:var(--primary);background:#fef3c7}
@@ -192,6 +232,8 @@ tr:hover td{background:rgba(255,107,53,.02)}
     <a onclick="nav('courses',this)">교육 과정</a>
     <a onclick="nav('testimonials',this)">수강 후기</a>
     <a onclick="nav('bookings',this)">예약 관리</a>
+    <a onclick="nav('diagnosis',this)">🎙️ 진단 보드</a>
+    <a onclick="nav('inquiries',this)">💬 문의 보드</a>
     <a onclick="nav('scheduler',this)">📅 스케줄러</a>
     <a onclick="nav('settings',this)">설정</a>
   </div>
@@ -213,19 +255,35 @@ tr:hover td{background:rgba(255,107,53,.02)}
     <div class="stat-item"><div class="num" id="sTotal">-</div><div class="label">전체 예약</div></div>
     <div class="stat-item"><div class="num" id="sPending">-</div><div class="label">⏳ 대기 중</div></div>
     <div class="stat-item"><div class="num" id="sConfirmed">-</div><div class="label">✅ 확정</div></div>
-    <div class="stat-item"><div class="num" id="sCancelled">-</div><div class="label">❌ 취소</div></div>
+    <div class="stat-item"><div class="num" id="sDiag">-</div><div class="label">🎙️ 진단 신청</div></div>
+    <div class="stat-item"><div class="num" id="sInquiry">-</div><div class="label">💬 챗봇 문의</div></div>
   </div>
+
+  <!-- 최근 예약 -->
   <div class="card">
     <div class="card-header"><h2>📋 최근 예약</h2><a style="font-size:.8rem;color:var(--accent);cursor:pointer;text-decoration:none" onclick="nav('bookings',document.querySelector('.topnav-links a:nth-child(5)'))">전체 보기 →</a></div>
     <div id="recentList" style="min-height:60px"></div>
   </div>
+
+  <!-- 최근 진단 & 문의 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+    <div class="card">
+      <div class="card-header"><h2>🎙️ 최근 진단</h2><a style="font-size:.8rem;color:var(--accent);cursor:pointer;text-decoration:none" onclick="nav('diagnosis',document.querySelector('.topnav-links a:nth-child(6)'))">전체 →</a></div>
+      <div id="recentDiag" style="min-height:40px"><div class="empty" style="padding:1rem"><p style="font-size:.82rem">진단 내역이 없습니다</p></div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><h2>💬 최근 문의</h2><a style="font-size:.8rem;color:var(--accent);cursor:pointer;text-decoration:none" onclick="nav('inquiries',document.querySelector('.topnav-links a:nth-child(7)'))">전체 →</a></div>
+      <div id="recentInq" style="min-height:40px"><div class="empty" style="padding:1rem"><p style="font-size:.82rem">문의 내역이 없습니다</p></div></div>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-header"><h2>🚀 빠른 작업</h2></div>
     <div style="display:flex;gap:.75rem;flex-wrap:wrap">
       <button class="btn btn-outline" onclick="nav('content',document.querySelector('.topnav-links a:nth-child(2)'))">📝 콘텐츠 편집</button>
       <button class="btn btn-outline" onclick="nav('courses',document.querySelector('.topnav-links a:nth-child(3)'))">📚 과정 관리</button>
-      <button class="btn btn-outline" onclick="nav('testimonials',document.querySelector('.topnav-links a:nth-child(4)'))">💬 후기 관리</button>
-      <button class="btn btn-outline" onclick="nav('settings',document.querySelector('.topnav-links a:nth-child(6)'))">⚙️ DB 초기화</button>
+      <button class="btn btn-outline" onclick="nav('diagnosis',document.querySelector('.topnav-links a:nth-child(6)'))">🎙️ 진단 관리</button>
+      <button class="btn btn-outline" onclick="nav('inquiries',document.querySelector('.topnav-links a:nth-child(7)'))">💬 문의 확인</button>
     </div>
   </div>
 </div>
@@ -537,6 +595,39 @@ tr:hover td{background:rgba(255,107,53,.02)}
 </div>
 </div>
 
+<!-- ═══════════ DIAGNOSIS BOARD ═══════════ -->
+<div class="page" id="page-diagnosis">
+<div class="container">
+  <div class="section-banner">
+    <div><h1>🎙️ 진단 보드</h1><p>무료 목소리 진단 신청 내역을 관리하세요</p></div>
+    <div class="actions"><button class="btn" style="background:rgba(255,255,255,.2);color:#fff" onclick="loadDiagnosis()">🔄 새로고침</button></div>
+  </div>
+  <div style="margin-bottom:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+    <button class="btn btn-primary btn-sm filter-btn active" onclick="filterDiag('all',this)">전체</button>
+    <button class="btn btn-outline btn-sm filter-btn" onclick="filterDiag('pending',this)">⏳ 대기</button>
+    <button class="btn btn-outline btn-sm filter-btn" onclick="filterDiag('reviewed',this)">📋 검토</button>
+    <button class="btn btn-outline btn-sm filter-btn" onclick="filterDiag('contacted',this)">📞 연락완료</button>
+  </div>
+  <div id="diagList"></div>
+</div>
+</div>
+
+<!-- ═══════════ INQUIRIES BOARD ═══════════ -->
+<div class="page" id="page-inquiries">
+<div class="container">
+  <div class="section-banner">
+    <div><h1>💬 문의 보드</h1><p>챗봇 대화 내역을 확인하고 관리하세요</p></div>
+    <div class="actions"><button class="btn" style="background:rgba(255,255,255,.2);color:#fff" onclick="loadInquiries()">🔄 새로고침</button></div>
+  </div>
+  <div style="margin-bottom:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+    <button class="btn btn-primary btn-sm filter-btn active" onclick="filterInq('all',this)">전체</button>
+    <button class="btn btn-outline btn-sm filter-btn" onclick="filterInq('open',this)">🔵 진행중</button>
+    <button class="btn btn-outline btn-sm filter-btn" onclick="filterInq('resolved',this)">✅ 해결</button>
+  </div>
+  <div id="inqList"></div>
+</div>
+</div>
+
 <!-- ═══════════ SCHEDULER ═══════════ -->
 <div class="page" id="page-scheduler">
 <div class="container">
@@ -667,8 +758,25 @@ tr:hover td{background:rgba(255,107,53,.02)}
 <div class="page" id="page-settings">
 <div class="container">
   <div class="section-banner">
-    <div><h1>설정</h1><p>데이터베이스 및 시스템 설정</p></div>
+    <div><h1>설정</h1><p>테마, 데이터베이스 및 시스템 설정</p></div>
   </div>
+
+  <!-- Theme Mode -->
+  <div class="card">
+    <div class="card-header"><h2>🎨 테마 모드</h2></div>
+    <p style="color:var(--text2);font-size:.88rem;margin-bottom:1rem">관리자 페이지의 테마를 선택하세요.</p>
+    <div style="display:flex;gap:1.5rem;align-items:center">
+      <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;padding:.6rem 1rem;border:2px solid var(--border);border-radius:var(--radius-sm);transition:all .15s" id="themeLight">
+        <input type="radio" name="themeMode" value="light" checked onchange="setTheme('light')" style="accent-color:var(--accent)">
+        <span style="font-size:.9rem;font-weight:500">☀️ 라이트 모드</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;padding:.6rem 1rem;border:2px solid var(--border);border-radius:var(--radius-sm);transition:all .15s" id="themeDark">
+        <input type="radio" name="themeMode" value="dark" onchange="setTheme('dark')" style="accent-color:var(--accent)">
+        <span style="font-size:.9rem;font-weight:500">🌙 다크 모드</span>
+      </label>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-header"><h2>🗄️ 데이터베이스 초기화</h2></div>
     <p style="color:var(--text2);font-size:.88rem;margin-bottom:1rem">DB를 초기화하면 기본 교육 과정, 콘텐츠, 후기 데이터가 생성됩니다. 기존 데이터가 있으면 유지됩니다.</p>
@@ -761,7 +869,7 @@ function nav(page, el) {
   document.getElementById('page-' + page).classList.add('active');
   document.querySelectorAll('.topnav-links a').forEach(a => a.classList.remove('active'));
   if (el) el.classList.add('active');
-  const loaders = {dashboard:loadDash, content:loadContent, courses:loadCourses, testimonials:loadTestimonials, bookings:loadBookings, scheduler:loadScheduler};
+  const loaders = {dashboard:loadDash, content:loadContent, courses:loadCourses, testimonials:loadTestimonials, bookings:loadBookings, diagnosis:loadDiagnosis, inquiries:loadInquiries, scheduler:loadScheduler};
   if (loaders[page]) loaders[page]();
   window.scrollTo(0,0);
 }
@@ -867,7 +975,7 @@ async function loadDash() {
     document.getElementById('sTotal').textContent = stats.total||0;
     document.getElementById('sPending').textContent = stats.pending||0;
     document.getElementById('sConfirmed').textContent = stats.confirmed||0;
-    document.getElementById('sCancelled').textContent = (stats.total||0)-(stats.pending||0)-(stats.confirmed||0);
+    // Removed cancelled stat, replaced with diagnosis and inquiry counts below
     const bk = await fetch(API+'/bookings').then(r=>r.json());
     const recent = bk.slice(0,5);
     document.getElementById('recentList').innerHTML = recent.length ? recent.map(b => `
@@ -883,6 +991,31 @@ async function loadDash() {
   } catch(e) {
     document.getElementById('recentList').innerHTML = '<div class="empty"><div class="icon">🗄️</div><p>DB를 초기화해주세요<br><small style="color:var(--text3)">설정 → 데이터베이스 초기화</small></p></div>';
   }
+  // Load diagnosis & inquiry stats
+  try {
+    const diags = await fetch(API+'/diagnosis').then(r=>r.json());
+    document.getElementById('sDiag').textContent = diags.length||0;
+    const recentDiags = diags.slice(0,3);
+    document.getElementById('recentDiag').innerHTML = recentDiags.length ? recentDiags.map(d => {
+      const dt=new Date(d.date); const ds=`${dt.getMonth()+1}/${dt.getDate()}`;
+      return `<div style="display:flex;align-items:center;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.82rem">
+        <span><strong>${d.name}</strong> · ${d.recordingCount||0}개 녹음</span>
+        <span style="color:var(--text3)">${ds}</span>
+      </div>`;
+    }).join('') : '<div class="empty" style="padding:1rem"><p style="font-size:.82rem">진단 내역이 없습니다</p></div>';
+  } catch{ document.getElementById('sDiag').textContent='0'; }
+  try {
+    const inqs = await fetch(API+'/chatbot').then(r=>r.json());
+    document.getElementById('sInquiry').textContent = inqs.length||0;
+    const recentInqs = inqs.slice(0,3);
+    document.getElementById('recentInq').innerHTML = recentInqs.length ? recentInqs.map(i => {
+      const dt=new Date(i.date); const ds=`${dt.getMonth()+1}/${dt.getDate()}`;
+      return `<div style="display:flex;align-items:center;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.82rem">
+        <span><strong>${i.name||'방문자'}</strong> · ${i.category||''}</span>
+        <span style="color:var(--text3)">${ds}</span>
+      </div>`;
+    }).join('') : '<div class="empty" style="padding:1rem"><p style="font-size:.82rem">문의 내역이 없습니다</p></div>';
+  } catch{ document.getElementById('sInquiry').textContent='0'; }
 }
 
 // ═══════ CONTENT ═══════
@@ -1126,6 +1259,158 @@ async function initDB() {
     el.innerHTML = '<span style="color:var(--red)">❌ 오류: '+e.message+'</span>';
     toast('초기화 실패','error');
   }
+}
+
+// ═══════ DIAGNOSIS BOARD ═══════
+let allDiagnoses = [];
+let diagFilter = 'all';
+
+async function loadDiagnosis() {
+  try {
+    allDiagnoses = await fetch(API+'/diagnosis').then(r=>r.json());
+    renderDiagnosis();
+  } catch(e) {
+    document.getElementById('diagList').innerHTML='<div class="empty"><div class="icon">🎙️</div><p>데이터를 불러올 수 없습니다</p></div>';
+  }
+}
+
+function filterDiag(status, el) {
+  diagFilter = status;
+  document.querySelectorAll('#page-diagnosis .filter-btn').forEach(b=>{b.classList.remove('active','btn-primary');b.classList.add('btn-outline')});
+  el.classList.add('active','btn-primary');el.classList.remove('btn-outline');
+  renderDiagnosis();
+}
+
+function renderDiagnosis() {
+  const filtered = diagFilter==='all' ? allDiagnoses : allDiagnoses.filter(d=>d.status===diagFilter);
+  const box = document.getElementById('diagList');
+  if (!filtered.length) { box.innerHTML='<div class="empty"><div class="icon">🎙️</div><p>진단 내역이 없습니다</p></div>'; return; }
+  box.innerHTML = filtered.map(d => {
+    const dt = new Date(d.date);
+    const dateStr = `${dt.getFullYear()}.${dt.getMonth()+1}.${dt.getDate()} ${dt.getHours()}:${String(dt.getMinutes()).padStart(2,'0')}`;
+    const statusBadge = d.status==='pending'?'<span class="badge badge-pending">⏳ 대기</span>':d.status==='reviewed'?'<span class="badge" style="background:var(--blue-bg);color:var(--blue)">📋 검토</span>':'<span class="badge badge-confirmed">📞 연락완료</span>';
+    const recs = d.recordings || {};
+    const labels = ['음색·음역대','호흡 패턴','공명 상태','억양 패턴','속도·리듬','감정 전달력'];
+    let recHtml = '';
+    for (let i = 1; i <= 6; i++) {
+      const r = recs[i];
+      if (r && r.url) {
+        recHtml += `<div class="diag-rec-item"><div style="font-weight:600">${labels[i-1]||'테스트 '+i}</div><audio controls preload="none" src="${r.url}" class="audio-mini"></audio></div>`;
+      } else if (r) {
+        recHtml += `<div class="diag-rec-item"><div style="font-weight:600">${r.label||labels[i-1]||'테스트 '+i}</div><div style="color:var(--text3);font-size:.75rem">${r.sim?'시뮬레이션':'녹음 없음'}</div></div>`;
+      }
+    }
+    return `<div class="diag-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
+        <div>
+          <strong style="font-size:1rem">${d.name}</strong>
+          <span style="color:var(--text2);font-size:.85rem;margin-left:.5rem">${d.phone}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <span style="font-size:.78rem;color:var(--text3)">${dateStr}</span>
+          ${statusBadge}
+        </div>
+      </div>
+      <div style="font-size:.8rem;color:var(--text2);margin-bottom:.5rem">녹음 ${d.recordingCount||0}개 ${d.note?'· 메모: '+d.note:''}</div>
+      ${recHtml?`<div class="diag-rec-grid">${recHtml}</div>`:''}
+      <div style="display:flex;gap:.3rem;margin-top:.75rem">
+        ${d.status==='pending'?`<button class="btn btn-outline btn-sm" onclick="setDiagStatus('${d.id}','reviewed')">📋 검토 완료</button>`:''}
+        ${d.status!=='contacted'?`<button class="btn btn-green btn-sm" onclick="setDiagStatus('${d.id}','contacted')">📞 연락 완료</button>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function setDiagStatus(id, status) {
+  try {
+    await fetch(API+'/diagnosis',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,status})});
+    const item = allDiagnoses.find(d=>d.id===id);
+    if(item) item.status = status;
+    renderDiagnosis();
+    toast(status==='reviewed'?'검토 완료 처리됨':'연락 완료 처리됨');
+  } catch(e) { toast('상태 변경 실패','error'); }
+}
+
+// ═══════ INQUIRIES BOARD ═══════
+let allInquiries = [];
+let inqFilter = 'all';
+
+async function loadInquiries() {
+  try {
+    allInquiries = await fetch(API+'/chatbot').then(r=>r.json());
+    renderInquiries();
+  } catch(e) {
+    document.getElementById('inqList').innerHTML='<div class="empty"><div class="icon">💬</div><p>데이터를 불러올 수 없습니다</p></div>';
+  }
+}
+
+function filterInq(status, el) {
+  inqFilter = status;
+  document.querySelectorAll('#page-inquiries .filter-btn').forEach(b=>{b.classList.remove('active','btn-primary');b.classList.add('btn-outline')});
+  el.classList.add('active','btn-primary');el.classList.remove('btn-outline');
+  renderInquiries();
+}
+
+function renderInquiries() {
+  const filtered = inqFilter==='all' ? allInquiries : allInquiries.filter(i=>i.status===inqFilter);
+  const box = document.getElementById('inqList');
+  if (!filtered.length) { box.innerHTML='<div class="empty"><div class="icon">💬</div><p>문의 내역이 없습니다</p></div>'; return; }
+  box.innerHTML = filtered.map(inq => {
+    const dt = new Date(inq.date);
+    const dateStr = `${dt.getMonth()+1}/${dt.getDate()} ${dt.getHours()}:${String(dt.getMinutes()).padStart(2,'0')}`;
+    const statusBadge = inq.status==='open'?'<span class="badge" style="background:var(--blue-bg);color:var(--blue)">🔵 진행중</span>':'<span class="badge badge-confirmed">✅ 해결</span>';
+    const msgCount = (inq.messages||[]).length;
+    const lastMsg = inq.messages && inq.messages.length>0 ? inq.messages[inq.messages.length-1] : null;
+    const preview = lastMsg ? (lastMsg.text||'').slice(0,50)+'...' : '';
+    const messagesHtml = (inq.messages||[]).map(m => `
+      <div class="inq-msg ${m.role}">
+        <div class="inq-bubble">${(m.text||'').replace(/\n/g,'<br>')}</div>
+      </div>
+    `).join('');
+    return `<div class="inq-card">
+      <div class="inq-header" onclick="this.nextElementSibling.classList.toggle('open')">
+        <div>
+          <strong>${inq.name||'방문자'}</strong>
+          <span style="color:var(--text2);font-size:.82rem;margin-left:.5rem">${inq.phone||''}</span>
+          <span style="color:var(--text3);font-size:.75rem;margin-left:.5rem">${inq.category||''}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <span style="font-size:.72rem;color:var(--text3)">${dateStr} · ${msgCount}건</span>
+          ${statusBadge}
+          ${inq.status==='open'?`<button class="btn btn-green btn-sm" onclick="event.stopPropagation();setInqStatus('${inq.sessionId}','resolved')">해결</button>`:''}
+        </div>
+      </div>
+      <div class="inq-messages">${messagesHtml}</div>
+    </div>`;
+  }).join('');
+}
+
+async function setInqStatus(sessionId, status) {
+  try {
+    await fetch(API+'/chatbot',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId,status})});
+    const item = allInquiries.find(i=>i.sessionId===sessionId);
+    if(item) item.status = status;
+    renderInquiries();
+    toast('문의가 해결 처리되었습니다');
+  } catch(e) { toast('상태 변경 실패','error'); }
+}
+
+// ═══════ DARK MODE ═══════
+function setTheme(mode) {
+  document.documentElement.setAttribute('data-theme', mode);
+  localStorage.setItem('admin_theme', mode);
+  // Update radio button highlight
+  document.getElementById('themeLight').style.borderColor = mode==='light'?'var(--accent)':'var(--border)';
+  document.getElementById('themeDark').style.borderColor = mode==='dark'?'var(--accent)':'var(--border)';
+}
+
+function loadTheme() {
+  const saved = localStorage.getItem('admin_theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  const radio = document.querySelector(`input[name="themeMode"][value="${saved}"]`);
+  if (radio) radio.checked = true;
+  document.getElementById('themeLight').style.borderColor = saved==='light'?'var(--accent)':'var(--border)';
+  document.getElementById('themeDark').style.borderColor = saved==='dark'?'var(--accent)':'var(--border)';
 }
 
 // ── Modal close on backdrop ──
@@ -1550,6 +1835,7 @@ function renderMySchedule() { renderSchSlots(); }
 function renderBlockedSlots() { renderSchSlots(); }
 
 // Init
+loadTheme();
 loadDash();
 </script>
 </body>
