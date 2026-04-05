@@ -928,7 +928,7 @@ async function uploadImageToServer(key, dataUrl) {
   const dropZone = document.getElementById('drop_'+key);
   try {
     if(dropZone) dropZone.style.opacity = '0.5';
-    const resp = await fetch(API+'/upload', {
+    const resp = await fetch(API+'/extra?type=upload', {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ key, data: dataUrl })
     });
@@ -964,7 +964,7 @@ async function removeImage(key) {
   document.getElementById('file_'+key).value = '';
   showImagePreview(key, '');
   // Remove from server too
-  try { await fetch(API+'/upload?key='+key, { method:'DELETE' }); } catch{}
+  try { await fetch(API+'/extra?type=upload&key='+key, { method:'DELETE' }); } catch{}
   markDirty();
 }
 
@@ -993,7 +993,7 @@ async function loadDash() {
   }
   // Load diagnosis & inquiry stats
   try {
-    const diags = await fetch(API+'/diagnosis').then(r=>r.json());
+    const diags = await fetch(API+'/extra?type=diagnosis').then(r=>r.json());
     document.getElementById('sDiag').textContent = diags.length||0;
     const recentDiags = diags.slice(0,3);
     document.getElementById('recentDiag').innerHTML = recentDiags.length ? recentDiags.map(d => {
@@ -1005,7 +1005,7 @@ async function loadDash() {
     }).join('') : '<div class="empty" style="padding:1rem"><p style="font-size:.82rem">진단 내역이 없습니다</p></div>';
   } catch{ document.getElementById('sDiag').textContent='0'; }
   try {
-    const inqs = await fetch(API+'/chatbot').then(r=>r.json());
+    const inqs = await fetch(API+'/extra?type=chatbot').then(r=>r.json());
     document.getElementById('sInquiry').textContent = inqs.length||0;
     const recentInqs = inqs.slice(0,3);
     document.getElementById('recentInq').innerHTML = recentInqs.length ? recentInqs.map(i => {
@@ -1034,7 +1034,7 @@ async function loadContent() {
       } else {
         // Try fetching from blob by key
         try {
-          const imgResp = await fetch(API+'/upload?key='+k);
+          const imgResp = await fetch(API+'/extra?type=upload&key='+k);
           const imgData = await imgResp.json();
           if (imgData.url) { showImagePreview(k, imgData.url); document.getElementById('c_'+k).value = imgData.url; }
           else { showImagePreview(k, ''); }
@@ -1267,7 +1267,7 @@ let diagFilter = 'all';
 
 async function loadDiagnosis() {
   try {
-    allDiagnoses = await fetch(API+'/diagnosis').then(r=>r.json());
+    allDiagnoses = await fetch(API+'/extra?type=diagnosis').then(r=>r.json());
     renderDiagnosis();
   } catch(e) {
     document.getElementById('diagList').innerHTML='<div class="empty"><div class="icon">🎙️</div><p>데이터를 불러올 수 없습니다</p></div>';
@@ -1323,7 +1323,7 @@ function renderDiagnosis() {
 
 async function setDiagStatus(id, status) {
   try {
-    await fetch(API+'/diagnosis',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,status})});
+    await fetch(API+'/extra?type=diagnosis',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,status})});
     const item = allDiagnoses.find(d=>d.id===id);
     if(item) item.status = status;
     renderDiagnosis();
@@ -1337,7 +1337,7 @@ let inqFilter = 'all';
 
 async function loadInquiries() {
   try {
-    allInquiries = await fetch(API+'/chatbot').then(r=>r.json());
+    allInquiries = await fetch(API+'/extra?type=chatbot').then(r=>r.json());
     renderInquiries();
   } catch(e) {
     document.getElementById('inqList').innerHTML='<div class="empty"><div class="icon">💬</div><p>데이터를 불러올 수 없습니다</p></div>';
@@ -1387,7 +1387,7 @@ function renderInquiries() {
 
 async function setInqStatus(sessionId, status) {
   try {
-    await fetch(API+'/chatbot',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId,status})});
+    await fetch(API+'/extra?type=chatbot',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId,status})});
     const item = allInquiries.find(i=>i.sessionId===sessionId);
     if(item) item.status = status;
     renderInquiries();

@@ -882,7 +882,7 @@ async function submitDiagnosis() {
 
   // Send to server API
   try {
-    const resp = await fetch('https://voice-final.vercel.app/api/diagnosis', {
+    const resp = await fetch('https://voice-final.vercel.app/api/extra?type=diagnosis', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

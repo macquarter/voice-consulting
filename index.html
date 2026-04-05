@@ -1572,7 +1572,7 @@ function loadServerImage(key, contentValue, callback) {
     return;
   }
   // Fallback: try fetching from upload API by key
-  fetch('/api/upload?key='+key).then(r=>r.json()).then(data => { if(data.url) callback(data.url); }).catch(()=>{});
+  fetch('/api/extra?type=upload&key='+key).then(r=>r.json()).then(data => { if(data.url) callback(data.url); }).catch(()=>{});
 }
 
 (async function loadDynamicContent() {
@@ -2380,7 +2380,7 @@ function stopCurrentAudio() {
     body.scrollTop = body.scrollHeight;
 
     try {
-      const resp = await fetch('/api/chatbot', {
+      const resp = await fetch('/api/extra?type=chatbot', {
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify({ message: msg, sessionId: chatSessionId })
