@@ -504,7 +504,7 @@ footer a { color: var(--warm-gold); text-decoration: none; }
       <h3 id="dyn-free-trial-title"><em>15분 무료</em> 목소리 진단<span class="free-trial-badge">NEW</span></h3>
       <p id="dyn-free-trial-desc">내 목소리의 7가지 핵심 문제점을 무료로 진단받으세요. 부담 없이 시작하고, 변화를 직접 느껴보세요.</p>
     </div>
-    <a href="#booking" class="free-trial-cta" id="dyn-free-trial-cta">무료 진단 신청 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <a href="javascript:void(0)" onclick="openDiagnosisModal()" class="free-trial-cta" id="dyn-free-trial-cta">무료 진단 신청 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
   </div>
 </section>
 
@@ -1018,6 +1018,14 @@ footer a { color: var(--warm-gold); text-decoration: none; }
   <div class="booking-success-card" id="successCard"></div>
 </div>
 
+<!-- DIAGNOSIS MODAL -->
+<div id="diagnosisOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:10000;backdrop-filter:blur(4px);justify-content:center;align-items:center">
+  <div style="position:relative;width:94%;max-width:780px;height:90vh;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25)">
+    <button onclick="closeDiagnosisModal()" style="position:absolute;top:12px;right:12px;z-index:10001;width:36px;height:36px;border-radius:50%;border:none;background:rgba(0,0,0,.6);color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s" onmouseover="this.style.background='rgba(0,0,0,.8)'" onmouseout="this.style.background='rgba(0,0,0,.6)'">✕</button>
+    <iframe id="diagnosisFrame" src="" style="width:100%;height:100%;border:none" allow="microphone"></iframe>
+  </div>
+</div>
+
 <footer>
   <p id="dyn-footer">© 2026 손수오 교수 보이스 컨설팅. All Rights Reserved.</p>
   <p id="dyn-footer-contact" style="margin-top:0.5rem;"></p>
@@ -1025,6 +1033,25 @@ footer a { color: var(--warm-gold); text-decoration: none; }
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── Diagnosis Modal ──
+function openDiagnosisModal() {
+  const overlay = document.getElementById('diagnosisOverlay');
+  const frame = document.getElementById('diagnosisFrame');
+  frame.src = '/diagnosis.html';
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeDiagnosisModal() {
+  const overlay = document.getElementById('diagnosisOverlay');
+  const frame = document.getElementById('diagnosisFrame');
+  overlay.style.display = 'none';
+  frame.src = '';
+  document.body.style.overflow = '';
+}
+document.getElementById('diagnosisOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeDiagnosisModal();
+});
+
 // ── Nav / Reveal / Particles / Scroll / Accordion ──
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
@@ -1597,7 +1624,11 @@ function loadServerImage(key, contentValue, callback) {
     }
     if (d.free_trial_cta) {
       const el = document.getElementById('dyn-free-trial-cta');
-      if (el) el.innerHTML = d.free_trial_cta + ' <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      if (el) {
+        el.innerHTML = d.free_trial_cta + ' <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+        el.href = 'javascript:void(0)';
+        el.onclick = openDiagnosisModal;
+      }
     }
 
     // YouTube — 두 카드 모두 업데이트

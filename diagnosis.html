@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>무료 목소리 진단 | 손수오 보이스 컨설팅</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fafbfc;--bg-card:#ffffff;--bg-hover:#f4f5f7;--bg-input:#f8f9fb;
+  --border:#e2e4e9;--border-focus:#ff6b35;
+  --text:#1a1d26;--text2:#5e6278;--text3:#9ca0b0;
+  --accent:#ff6b35;--accent-light:rgba(255,107,53,.08);--accent-hover:#e85d2c;
+  --green:#22c55e;--green-bg:rgba(34,197,94,.08);
+  --red:#ef4444;--red-bg:rgba(239,68,68,.08);
+  --yellow:#f59e0b;--yellow-bg:rgba(245,158,11,.08);
+  --blue:#3b82f6;--blue-bg:rgba(59,130,246,.08);
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --shadow-lg:0 4px 16px rgba(0,0,0,.08);
+  --radius:12px;--radius-sm:8px;
+}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+
+/* ── Top Nav (동일) ── */
+.topnav{background:var(--bg-card);border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:60px}
+.topnav .logo{display:flex;align-items:center;font-weight:700;font-size:1.2rem;color:var(--text)}
+
+.topnav-right{display:flex;align-items:center;gap:.75rem}
+.topnav-right a{font-size:.8rem;color:var(--text2);text-decoration:none;padding:.4rem .7rem;border-radius:var(--radius-sm);transition:all .15s}
+.topnav-right a:hover{background:var(--bg-hover);color:var(--text)}
+
+/* ── Layout ── */
+.container{max-width:720px;margin:0 auto;padding:2rem 1.5rem}
+
+/* ── Section Banner (동일) ── */
+.section-banner{background:linear-gradient(135deg,#ff6b35 0%,#ff3366 100%);border-radius:var(--radius);padding:1.75rem 2rem;margin-bottom:1.5rem;color:#fff}
+.section-banner h1{font-size:1.3rem;font-weight:700}
+.section-banner p{font-size:.85rem;opacity:.85;margin-top:.25rem}
+
+/* ── Card (동일) ── */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem;box-shadow:var(--shadow);transition:box-shadow .2s}
+.card:hover{box-shadow:var(--shadow-lg)}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.card-header h2{font-size:1.1rem;font-weight:600;display:flex;align-items:center;gap:.5rem}
+
+/* ── Buttons (동일) ── */
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-hover)}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--text2)}.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-green{background:var(--green-bg);color:var(--green);border:1.5px solid rgba(34,197,94,.2)}.btn-green:hover{background:rgba(34,197,94,.15)}
+.btn-red{background:var(--red-bg);color:var(--red);border:1.5px solid rgba(239,68,68,.2)}.btn-red:hover{background:rgba(239,68,68,.15)}
+.btn-lg{padding:.75rem 1.5rem;font-size:.95rem;border-radius:var(--radius)}
+
+/* ── Badge ── */
+.badge{display:inline-flex;align-items:center;padding:.2rem .55rem;border-radius:6px;font-size:.72rem;font-weight:600;letter-spacing:.02em}
+.badge-accent{background:var(--accent-light);color:var(--accent)}
+.badge-green{background:var(--green-bg);color:var(--green)}
+
+/* ── Progress Bar ── */
+.progress-wrap{height:6px;background:var(--bg-hover);border-radius:3px;overflow:hidden;margin-bottom:1.5rem}
+.progress-bar{height:100%;background:linear-gradient(90deg,#ff6b35,#ff3366);border-radius:3px;transition:width .4s cubic-bezier(.22,1,.36,1)}
+
+/* ── Step Dots ── */
+.step-dots{display:flex;justify-content:center;gap:6px;margin-bottom:1.5rem}
+.step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s}
+.step-dot.active{width:24px;border-radius:4px;background:linear-gradient(90deg,#ff6b35,#ff3366)}
+.step-dot.done{background:var(--green)}
+.step-dot.recorded{background:var(--green);position:relative}
+
+/* ── Prompt Card ── */
+.prompt-card{background:linear-gradient(145deg,#fff8f5,#fff);border:1.5px solid rgba(255,107,53,.15);border-radius:var(--radius);padding:1.5rem;text-align:center;margin-bottom:1.25rem;transition:all .3s}
+.prompt-card.recording{border-color:var(--red);background:linear-gradient(145deg,#fff5f5,#fff);box-shadow:0 0 0 3px rgba(239,68,68,.08)}
+.prompt-card .prompt-label{font-size:.72rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem}
+.prompt-card .prompt-text{font-size:1.35rem;font-weight:700;line-height:1.8;color:var(--text);white-space:pre-line}
+.prompt-card.recording .prompt-text{color:var(--red)}
+
+/* ── Guide Box ── */
+.guide-box{background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.25rem;margin-bottom:1.25rem}
+.guide-box p{font-size:.85rem;color:var(--text2);line-height:1.7}
+.guide-box .tip{display:flex;align-items:flex-start;gap:.4rem;margin-top:.6rem;font-size:.8rem;color:var(--yellow);font-weight:500}
+
+/* ── Waveform ── */
+.waveform-wrap{display:flex;align-items:center;justify-content:center;height:64px;margin-bottom:1rem}
+
+/* ── Timer Ring ── */
+.timer-wrap{display:flex;justify-content:center;margin-bottom:1.25rem}
+.timer-inner{position:relative;width:80px;height:80px}
+.timer-inner svg{transform:rotate(-90deg)}
+.timer-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.timer-label .num{font-size:1.4rem;font-weight:700;font-variant-numeric:tabular-nums}
+.timer-label .unit{font-size:.65rem;color:var(--text3)}
+
+/* ── Record Button ── */
+.rec-btn-wrap{display:flex;justify-content:center;margin-bottom:.75rem}
+.rec-btn{width:64px;height:64px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 4px 16px rgba(239,68,68,.25)}
+.rec-btn:hover{transform:scale(1.06)}
+.rec-btn:active{transform:scale(.94)}
+.rec-btn-start{background:linear-gradient(135deg,#ef4444,#f87171)}
+.rec-btn-stop{background:linear-gradient(135deg,#ef4444,#f87171);animation:recPulse 1.8s ease infinite}
+.rec-btn .inner-circle{width:22px;height:22px;border-radius:50%;background:#fff}
+.rec-btn .inner-square{width:20px;height:20px;border-radius:4px;background:#fff}
+@keyframes recPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.35)}50%{box-shadow:0 0 0 14px rgba(239,68,68,0)}}
+
+/* ── Record Status ── */
+.rec-status{text-align:center;font-size:.78rem;color:var(--text3);margin-bottom:1rem}
+.rec-status.recording{color:var(--red);font-weight:600}
+
+/* ── Post-Record Actions ── */
+.post-record{display:flex;gap:.75rem;justify-content:center;margin-bottom:1rem}
+
+/* ── Recording State Bar (항상 표시) ── */
+.rec-state-bar{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;border-radius:var(--radius-sm);margin-bottom:1.25rem;border:1.5px solid var(--border);background:var(--bg-input);transition:all .25s}
+.rec-state-bar.is-done{background:var(--green-bg);border-color:rgba(34,197,94,.2)}
+.rec-state-bar.is-rec{background:var(--red-bg);border-color:rgba(239,68,68,.2);animation:recBarPulse 1.5s ease infinite}
+.rec-state-bar.is-empty{background:var(--bg-input);border-color:var(--border)}
+.rec-state-left{display:flex;align-items:center;gap:.5rem}
+.rec-state-icon{font-size:1rem}
+.rec-state-text{font-size:.85rem;font-weight:600}
+.rec-state-bar.is-done .rec-state-text{color:var(--green)}
+.rec-state-bar.is-rec .rec-state-text{color:var(--red)}
+.rec-state-bar.is-empty .rec-state-text{color:var(--text3)}
+.rec-state-right{display:flex;gap:.4rem}
+@keyframes recBarPulse{0%,100%{opacity:1}50%{opacity:.7}}
+
+/* ── Post-Record Card ── */
+.post-record-card{background:var(--green-bg);border:1.5px solid rgba(34,197,94,.2);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem}
+.post-record-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;font-size:.9rem;font-weight:600;color:var(--green)}
+.post-record-actions{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+
+/* ── Prompt Card completed state ── */
+.prompt-card.completed{border-color:rgba(34,197,94,.2);background:linear-gradient(145deg,#f0fdf4,#fff)}
+
+/* ── Nav Buttons ── */
+.nav-row{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);margin-top:1rem}
+.nav-row .step-info{font-size:.78rem;color:var(--text3);font-weight:500}
+
+/* ── Diagnosis Items Grid ── */
+.diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1.5rem}
+.diag-item{display:flex;align-items:center;gap:.6rem;padding:.65rem .85rem;border-radius:var(--radius-sm);background:var(--bg-hover);border:1px solid transparent;transition:all .2s;font-size:.85rem;color:var(--text2)}
+.diag-item.done{background:var(--green-bg);border-color:rgba(34,197,94,.15);color:var(--green)}
+.diag-item .diag-icon{display:inline-flex;align-items:center;justify-content:center;width:1.6rem;height:1.6rem;color:var(--accent);flex-shrink:0}
+.diag-item .check{margin-left:auto;font-size:.75rem}
+
+/* ── Form ── */
+.field{margin-bottom:1.25rem}
+.field label{display:block;font-size:.8rem;font-weight:600;color:var(--text2);margin-bottom:.4rem;letter-spacing:.02em;text-transform:uppercase}
+.field input{width:100%;padding:.65rem .9rem;background:var(--bg-input);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:inherit;font-size:.9rem;transition:all .15s;outline:none}
+.field input:focus{border-color:var(--border-focus);box-shadow:0 0 0 3px rgba(255,107,53,.1)}
+.field .hint{font-size:.75rem;color:var(--text3);margin-top:.3rem}
+
+/* ── Toast ── */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--text);color:#fff;padding:.75rem 1.25rem;border-radius:var(--radius-sm);font-size:.85rem;font-weight:500;box-shadow:var(--shadow-lg);transform:translateY(100px);opacity:0;transition:all .3s;z-index:999}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{background:#16a34a}
+.toast.error{background:var(--red)}
+
+/* ── Playback ── */
+.playback-wrap{display:flex;align-items:center;gap:.75rem;padding:.6rem .9rem;background:var(--green-bg);border:1px solid rgba(34,197,94,.15);border-radius:var(--radius-sm);margin-bottom:1rem}
+.playback-wrap .play-btn{width:32px;height:32px;border-radius:50%;background:var(--green);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .15s;flex-shrink:0}
+.playback-wrap .play-btn:hover{background:#16a34a}
+.playback-wrap .play-info{font-size:.82rem;color:var(--green);font-weight:500}
+
+/* ── Animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.fade-up{animation:fadeUp .45s cubic-bezier(.22,1,.36,1) both}
+.delay-1{animation-delay:.05s}.delay-2{animation-delay:.1s}.delay-3{animation-delay:.15s}.delay-4{animation-delay:.2s}
+
+/* ── Completion ── */
+.done-icon{width:72px;height:72px;border-radius:50%;background:var(--green-bg);border:2px solid rgba(34,197,94,.2);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 1.25rem}
+.confetti{position:absolute;width:8px;height:8px;border-radius:50%}
+
+/* ── Responsive ── */
+@media(max-width:640px){
+  .container{padding:1.25rem 1rem}
+  .topnav{padding:0 1rem}
+  .section-banner{padding:1.25rem 1.25rem}
+  .diag-grid{grid-template-columns:1fr}
+  .prompt-card .prompt-text{font-size:1.15rem}
+}
+
+/* ── Footer ── */
+.site-footer{background:#1a1d26;padding:2.5rem 1.5rem 2rem;margin-top:2rem;text-align:center;border-top:1px solid rgba(255,255,255,.06)}
+.footer-logo{height:28px;margin-bottom:1rem;opacity:.75;transition:opacity .2s}
+.footer-logo:hover{opacity:1}
+.footer-divider{width:48px;height:1px;background:rgba(255,255,255,.08);margin:.75rem auto}
+.footer-text{font-size:.72rem;color:rgba(255,255,255,.25);line-height:1.8}
+.footer-links{display:flex;justify-content:center;gap:1.25rem;margin-bottom:.5rem;flex-wrap:wrap}
+.footer-links a{font-size:.75rem;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s}
+.footer-links a:hover{color:rgba(255,255,255,.65)}
+
+/* ── Serif Headings (메인 웹사이트 동일) ── */
+.section-banner h1,.card-header h2,.prompt-card .prompt-text,.done-icon+h2,
+h1,h2{font-family:'Noto Serif KR',serif}
+.topnav .logo{font-family:'Noto Serif KR',serif;font-weight:600;letter-spacing:-.02em}
+
+.footer-logo-text{font-family:'Noto Serif KR',serif;font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:1rem;letter-spacing:-.02em}
+/* Hide nav & footer when in iframe */
+.in-iframe .topnav{display:none}
+.in-iframe .site-footer{display:none}
+.in-iframe .container{padding-top:1rem}
+</style>
+</head>
+<body>
+<script>if(window.self!==window.top)document.body.classList.add('in-iframe');</script>
+
+<!-- Top Navigation -->
+<nav class="topnav">
+  <div class="logo">손수오<span style="color:#c0392b">.</span></div>
+  <div class="topnav-right">
+    <a href="https://voice-final.vercel.app" target="_blank">🔗 메인 사이트</a>
+  </div>
+</nav>
+
+<div class="container" id="app"></div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-logo-text">손수오<span style="color:#c0392b">.</span></div>
+  <div class="footer-divider"></div>
+  <div class="footer-links">
+    <a href="https://voice-final.vercel.app" target="_blank">메인 사이트</a>
+    <a href="https://voice-final.vercel.app/#booking" target="_blank">예약하기</a>
+    <a href="https://voice-admin-theta.vercel.app" target="_blank">관리자</a>
+  </div>
+  <div class="footer-text">
+    &copy; 2026 손수오 교수 보이스 컨설팅. All Rights Reserved.
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════ DATA ═══════
+const STEPS = [
+  { id:'intro', phase:'시작', icon:'🎙️' },
+  { id:'vowel', phase:'TEST 1 / 6', icon:'🎵', title:'모음 발성', subtitle:'기본 발성 상태를 확인합니다',
+    analyzes:'음색 · 음역대 · 성대 상태',
+    prompt:'아 — 에 — 이 — 오 — 우',
+    guide:'각 모음을 3초씩 편안하게 길게 발성해주세요.\n평소 말하는 톤 그대로, 자연스럽게.',
+    tip:'입 모양을 크게 벌리고, 목에 힘을 빼세요', duration:15 },
+  { id:'breathing', phase:'TEST 2 / 6', icon:'🌬️', title:'호흡 지속력', subtitle:'폐활량과 호흡 패턴을 측정합니다',
+    analyzes:'호흡 지속력 · 복식호흡 여부',
+    prompt:'아 ———————————',
+    guide:'숨을 깊게 들이쉰 후, "아" 소리를 최대한 길게 유지해주세요.\n끊기지 않게, 일정한 크기로.',
+    tip:'배에 손을 대고 복식호흡으로 시작하세요', duration:20 },
+  { id:'resonance', phase:'TEST 3 / 6', icon:'🔔', title:'공명 테스트', subtitle:'목소리의 울림과 깊이를 확인합니다',
+    analyzes:'비강 · 흉강 공명 상태',
+    prompt:'음 ~~~ 맘 ~~~ 남 ~~~',
+    guide:'"음", "맘", "남"을 각각 길게 발성해주세요.\n코와 가슴에서 울림이 느껴지는지 집중하세요.',
+    tip:'콧대에 손가락을 대면 진동이 느껴질 수 있어요', duration:15 },
+  { id:'pitch', phase:'TEST 4 / 6', icon:'🎼', title:'음높이 변화', subtitle:'억양과 톤 조절 능력을 확인합니다',
+    analyzes:'음높이 조절 · 억양 패턴',
+    prompt:'"정말요?" ↗\n"네, 정말이에요." →\n"아, 그렇군요." ↘',
+    guide:'각 문장의 화살표 방향대로\n올림·평탄·내림 톤으로 자연스럽게 말해주세요.',
+    tip:'일상 대화하듯 감정을 넣어보세요', duration:12 },
+  { id:'speed', phase:'TEST 5 / 6', icon:'🥁', title:'속도와 리듬', subtitle:'말하기 속도와 자연스러운 리듬감을 측정합니다',
+    analyzes:'말하기 속도 · 쉼 · 리듬감',
+    prompt:'안녕하세요,\n저는 오늘 이 자리에서\n제 목소리의 변화를 위한\n첫 걸음을 내딛습니다.',
+    guide:'편안한 속도로 자연스럽게 읽어주세요.\n쉼표에서 살짝 멈추고, 마침표에서 숨을 쉬세요.',
+    tip:'청중 앞에서 발표한다고 상상해보세요', duration:15 },
+  { id:'emotion', phase:'TEST 6 / 6', icon:'🎭', title:'감정 전달력', subtitle:'목소리로 감정을 전달하는 능력을 확인합니다',
+    analyzes:'감정 전달력 · 설득력',
+    prompt:'"이 프로젝트는\n반드시 성공시킬 겁니다.\n저를 믿어주십시오."',
+    guide:'확신과 열정을 담아 말해주세요.\n마지막 문장은 특히 힘있게, 진심을 담아서.',
+    tip:'눈을 들어 정면을 바라보며 말해보세요', duration:12 },
+  { id:'contact', phase:'마무리', icon:'✅' },
+  { id:'done', phase:'완료', icon:'🎉' },
+];
+
+const DIAG_LABELS = [
+  {icon:`<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M9 18V5l12-2v13'/><circle cx='6' cy='18' r='3'/><circle cx='18' cy='16' r='3'/></svg>`,label:'음색·음역대'},
+  {icon:`<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M8 2c0 0-4 6-4 10a4 4 0 008 0C12 8 8 2 8 2z'/><path d='M16 4c0 0-3 4.5-3 7.5a3 3 0 006 0C19 8.5 16 4 16 4z'/></svg>`,label:'호흡 패턴'},
+  {icon:`<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9'/><path d='M13.73 21a2 2 0 01-3.46 0'/></svg>`,label:'공명 상태'},
+  {icon:`<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><polyline points='22 12 18 12 15 21 9 3 6 12 2 12'/></svg>`,label:'억양 패턴'},
+  {icon:`<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='10'/><polyline points='12 6 12 12 16 14'/></svg>`,label:'속도·리듬'},
+  {icon:`<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z'/></svg>`,label:'감정 전달력'},
+];
+
+// ═══════ STATE ═══════
+let step = 0;
+let isRecording = false;
+let elapsed = 0;
+let recordings = {}; // stepIndex -> { blob, url }
+let mediaRecorder = null;
+let analyserNode = null;
+let audioStream = null;
+let audioCtx = null;
+let timerInterval = null;
+let animFrame = null;
+let chunks = [];
+let userName = '';
+let userPhone = '';
+
+// ═══════ RENDER ═══════
+function render() {
+  const s = STEPS[step];
+  const isTest = step >= 1 && step <= 6;
+  const testIdx = step - 1; // 0-based test index
+  const progress = isTest ? ((step - 1) / 5 * 100) : step === 0 ? 0 : step >= 7 ? 100 : 0;
+
+  let html = '';
+
+  // ── INTRO ──
+  if (step === 0) {
+    html = `
+      <div class="section-banner fade-up">
+        <h1>🎙️ 무료 목소리 진단</h1>
+        <p>3분이면 충분합니다 · 6가지 핵심 요소를 간단한 녹음으로 진단합니다</p>
+      </div>
+
+      <div class="card fade-up delay-1">
+        <div class="card-header">
+          <h2>📋 진단 항목</h2>
+          <span class="badge badge-accent">6가지 테스트</span>
+        </div>
+        <div class="diag-grid">
+          ${DIAG_LABELS.map((d,i) => `
+            <div class="diag-item ${recordings[i+1] ? 'done' : ''}">
+              <span class="diag-icon">${d.icon}</span>
+              <span>${d.label}</span>
+              ${recordings[i+1] ? '<span class="check">✅</span>' : ''}
+            </div>
+          `).join('')}
+        </div>
+        <div style="text-align:center">
+          <button class="btn btn-primary btn-lg" onclick="goTo(1)" style="width:100%;justify-content:center;padding:.85rem;font-size:1rem">
+            🎤 진단 시작하기
+          </button>
+          <p style="font-size:.75rem;color:var(--text3);margin-top:.75rem">마이크 접근 권한이 필요합니다 · 녹음은 진단 목적으로만 사용됩니다</p>
+        </div>
+      </div>
+
+      <div class="card fade-up delay-2">
+        <div class="card-header"><h2>💡 이렇게 진행됩니다</h2></div>
+        <div style="display:flex;flex-direction:column;gap:.85rem">
+          ${[
+            {n:'1',t:'화면에 표시되는 문장을 읽어주세요',d:'노래방처럼 따라 읽으면 됩니다'},
+            {n:'2',t:'녹음 버튼을 누르고 자연스럽게 발성',d:'다시 녹음도 가능하니 부담 없이'},
+            {n:'3',t:'이름과 연락처를 남기면 끝!',d:'손수오 교수님이 직접 분석 후 전화드립니다'},
+          ].map(x => `
+            <div style="display:flex;gap:.85rem;align-items:flex-start">
+              <div style="width:28px;height:28px;border-radius:50%;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;flex-shrink:0">${x.n}</div>
+              <div><div style="font-size:.9rem;font-weight:600">${x.t}</div><div style="font-size:.8rem;color:var(--text3)">${x.d}</div></div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  // ── TEST STEPS ──
+  else if (isTest) {
+    const hasRecording = !!recordings[step];
+
+    html = `
+      <div class="section-banner fade-up" style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:.72rem;opacity:.7;margin-bottom:.15rem">${s.phase}</div>
+          <h1>${s.icon} ${s.title}</h1>
+          <p>${s.subtitle}</p>
+        </div>
+        <span class="badge" style="background:rgba(255,255,255,.2);color:#fff">${s.analyzes}</span>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-wrap fade-up delay-1">
+        <div class="progress-bar" style="width:${progress}%"></div>
+      </div>
+
+      <!-- Step Dots -->
+      <div class="step-dots fade-up delay-1">
+        ${Array.from({length:6},(_,i) => {
+          let cls = 'step-dot';
+          if (recordings[i+1]) cls += ' done';
+          else if (i === testIdx) cls += ' active';
+          return `<div class="${cls}"></div>`;
+        }).join('')}
+      </div>
+
+      <!-- ★ 녹음 상태 표시 바 (항상 표시) -->
+      <div class="rec-state-bar fade-up delay-1 ${hasRecording ? 'is-done' : isRecording ? 'is-rec' : 'is-empty'}">
+        <div class="rec-state-left">
+          ${hasRecording ? `
+            <span class="rec-state-icon done">✅</span>
+            <span class="rec-state-text">녹음 완료</span>
+          ` : isRecording ? `
+            <span class="rec-state-icon rec">🔴</span>
+            <span class="rec-state-text">녹음 중...</span>
+          ` : `
+            <span class="rec-state-icon empty">⬜</span>
+            <span class="rec-state-text">미녹음</span>
+          `}
+        </div>
+        <div class="rec-state-right">
+          ${hasRecording && !isRecording ? `
+            <button class="btn btn-outline" onclick="playRecording(${step})" style="padding:.3rem .65rem;font-size:.78rem" id="playBtn">▶ 재생</button>
+          ` : ''}
+        </div>
+      </div>
+
+      <!-- Prompt Card -->
+      <div class="prompt-card ${isRecording?'recording':''} ${hasRecording && !isRecording ? 'completed' : ''} fade-up delay-2" id="promptCard">
+        <div class="prompt-label">따라 읽어주세요</div>
+        <div class="prompt-text">${s.prompt}</div>
+      </div>
+
+      <!-- Guide -->
+      <div class="guide-box fade-up delay-2">
+        <p>${s.guide.replace(/\n/g,'<br>')}</p>
+        ${s.tip ? `<div class="tip"><span>💡</span> ${s.tip}</div>` : ''}
+      </div>
+
+      <!-- Waveform -->
+      <div class="waveform-wrap fade-up delay-3">
+        <canvas id="waveCanvas" width="400" height="60" style="width:100%;max-width:400px;height:60px"></canvas>
+      </div>
+
+      <!-- Timer -->
+      <div class="timer-wrap fade-up delay-3">
+        <div class="timer-inner">
+          <svg width="80" height="80">
+            <circle cx="40" cy="40" r="34" fill="none" stroke="var(--border)" stroke-width="4"/>
+            <circle cx="40" cy="40" r="34" fill="none" stroke="${isRecording?'url(#tGrad)': hasRecording ? 'var(--green)' :'var(--border)'}" stroke-width="4" stroke-linecap="round"
+              stroke-dasharray="${2*Math.PI*34}" stroke-dashoffset="${hasRecording && !isRecording ? 0 : 2*Math.PI*34*(1-Math.min(elapsed/(s.duration||15),1))}"
+              style="transition:stroke-dashoffset .3s"/>
+            <defs><linearGradient id="tGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff6b35"/><stop offset="100%" stop-color="#ff3366"/></linearGradient></defs>
+          </svg>
+          <div class="timer-label">
+            ${hasRecording && !isRecording ? `
+              <span class="num" style="color:var(--green)">✓</span>
+            ` : `
+              <span class="num" style="color:${isRecording?'var(--accent)':'var(--text3)'}">${Math.max(0,Math.ceil((s.duration||15)-elapsed))}</span>
+              <span class="unit">초</span>
+            `}
+          </div>
+        </div>
+      </div>
+
+      <!-- ★ 메인 액션 영역 -->
+      ${!hasRecording && !isRecording ? `
+        <!-- 녹음 시작 -->
+        <div class="rec-btn-wrap fade-up delay-4">
+          <button class="rec-btn rec-btn-start" onclick="startRecording()">
+            <div class="inner-circle"></div>
+          </button>
+        </div>
+        <div class="rec-status">탭하여 녹음 시작</div>
+      ` : ''}
+
+      ${isRecording ? `
+        <!-- 녹음 중 → 정지 -->
+        <div class="rec-btn-wrap">
+          <button class="rec-btn rec-btn-stop" onclick="stopRecording()">
+            <div class="inner-square"></div>
+          </button>
+        </div>
+        <div class="rec-status recording">🔴 녹음 중... 탭하여 정지</div>
+      ` : ''}
+
+      ${hasRecording && !isRecording ? `
+        <!-- ★ 녹음 완료 → 다시녹음 / 완료 버튼 -->
+        <div class="post-record-card fade-up">
+          <div class="post-record-header">
+            <span>✅ 녹음이 완료되었습니다</span>
+          </div>
+          <div class="post-record-actions">
+            <button class="btn btn-red btn-lg" onclick="reRecord()" style="flex:1;justify-content:center">🔄 다시 녹음</button>
+            <button class="btn btn-green btn-lg" onclick="confirmAndNext()" style="flex:1;justify-content:center">✅ 완료</button>
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- ★ 이전 / 다음 네비게이션 (항상 활성) -->
+      <div class="nav-row fade-up delay-4">
+        <button class="btn btn-outline" onclick="goTo(${step-1})">← 이전</button>
+        <span class="step-info">${step} / 6</span>
+        <button class="btn btn-outline" onclick="goTo(${step < 6 ? step+1 : 7})">${step < 6 ? '다음 →' : '마무리 →'}</button>
+      </div>
+    `;
+  }
+
+  // ── CONTACT ──
+  else if (step === 7) {
+    const recordCount = Object.keys(recordings).length;
+    html = `
+      <div class="section-banner fade-up">
+        <h1>✅ 진단 완료!</h1>
+        <p>전문가가 직접 분석 후 전화로 결과를 알려드립니다</p>
+      </div>
+
+      <div class="progress-wrap fade-up delay-1"><div class="progress-bar" style="width:100%"></div></div>
+
+      <!-- Summary -->
+      <div class="card fade-up delay-1">
+        <div class="card-header">
+          <h2>📊 진단 요약</h2>
+          <span class="badge badge-green">${recordCount}개 녹음 완료</span>
+        </div>
+        <div class="diag-grid">
+          ${DIAG_LABELS.map((d,i) => `
+            <div class="diag-item ${recordings[i+1] ? 'done' : ''}">
+              <span class="diag-icon">${d.icon}</span>
+              <span>${d.label}</span>
+              ${recordings[i+1] ? '<span class="check">✅</span>' : '<span class="check" style="color:var(--text3)">—</span>'}
+            </div>
+          `).join('')}
+        </div>
+        ${recordCount < 6 ? `
+          <div style="background:var(--yellow-bg);border:1px solid rgba(245,158,11,.15);border-radius:var(--radius-sm);padding:.75rem 1rem;margin-bottom:.75rem">
+            <p style="font-size:.82rem;color:var(--yellow);font-weight:500">⚠️ ${6-recordCount}개 항목이 녹음되지 않았습니다. 더 정확한 진단을 위해 모든 항목을 녹음하시는 것을 권장합니다.</p>
+          </div>
+          <button class="btn btn-outline" onclick="goToFirstMissing()" style="margin-bottom:1rem">빠진 항목 녹음하기 →</button>
+        ` : ''}
+      </div>
+
+      <!-- Contact Form -->
+      <div class="card fade-up delay-2">
+        <div class="card-header"><h2>📞 연락처 입력</h2></div>
+        <p style="font-size:.85rem;color:var(--text2);margin-bottom:1.25rem">이름과 연락처를 남겨주시면 손수오 교수님이 직접 분석 후 전화드립니다.</p>
+
+        <div class="field">
+          <label>이름</label>
+          <input id="inpName" placeholder="홍길동" value="${userName}" oninput="userName=this.value;checkContactReady()">
+        </div>
+        <div class="field">
+          <label>연락처</label>
+          <input id="inpPhone" placeholder="010-1234-5678" value="${userPhone}" oninput="userPhone=formatPhone(this.value);this.value=userPhone;checkContactReady()" type="tel">
+          <div class="hint">24시간 내 전화드리며, 통화가 어려울 경우 문자로 안내합니다</div>
+        </div>
+
+        <button class="btn btn-primary btn-lg" id="submitBtn" onclick="submitDiagnosis()" style="width:100%;justify-content:center;padding:.85rem;font-size:.95rem;opacity:.4;pointer-events:none">
+          🎤 녹음 전송 & 진단 신청
+        </button>
+        <p style="font-size:.72rem;color:var(--text3);margin-top:.75rem;text-align:center">수집된 정보는 목소리 진단 회신 목적으로만 사용됩니다</p>
+      </div>
+
+      <!-- Nav -->
+      <div class="nav-row fade-up delay-3">
+        <button class="btn btn-outline" onclick="goTo(6)">← 이전</button>
+        <span class="step-info">마무리</span>
+        <div style="width:72px"></div>
+      </div>
+    `;
+  }
+
+  // ── DONE ──
+  else if (step === 8) {
+    html = `
+      <div style="text-align:center;padding:2rem 0" class="fade-up">
+        <div class="done-icon">🎉</div>
+        <h2 style="font-size:1.4rem;font-weight:700;margin-bottom:.5rem">신청 완료!</h2>
+        <p style="color:var(--text2);font-size:.95rem;margin-bottom:.25rem"><strong>${userName}</strong>님의 목소리 진단이 접수되었습니다.</p>
+        <p style="color:var(--text2);font-size:.95rem;margin-bottom:2rem"><strong>${userPhone}</strong>으로 24시간 내 전화드립니다.</p>
+      </div>
+
+      <div class="card fade-up delay-1">
+        <div class="card-header"><h2>📊 진단 요약</h2><span class="badge badge-green">${Object.keys(recordings).length}개 완료</span></div>
+        <div class="diag-grid">
+          ${DIAG_LABELS.map((d,i) => `
+            <div class="diag-item ${recordings[i+1] ? 'done' : ''}">
+              <span class="diag-icon">${d.icon}</span>
+              <span>${d.label}</span>
+              ${recordings[i+1] ? '<span class="check">✅</span>' : '<span class="check" style="color:var(--text3)">—</span>'}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="card fade-up delay-2" style="text-align:center">
+        <p style="font-size:.9rem;color:var(--text2);margin-bottom:1rem">손수오 교수의 보이스 컨설팅이 궁금하시다면</p>
+        <a href="https://voice-final.vercel.app" class="btn btn-primary btn-lg" style="text-decoration:none;justify-content:center;width:100%;padding:.85rem">🔗 메인 사이트 방문하기</a>
+      </div>
+
+      <div style="text-align:center;margin-top:1.5rem" class="fade-up delay-3">
+        <button class="btn btn-outline" onclick="resetAll()">🔄 처음부터 다시하기</button>
+      </div>
+    `;
+  }
+
+  document.getElementById('app').innerHTML = html;
+
+  // Post-render
+  if (isTest) {
+    drawIdleWaveform();
+    if (isRecording) drawLiveWaveform();
+  }
+  if (step === 7) checkContactReady();
+}
+
+// ═══════ NAVIGATION ═══════
+function goTo(s) {
+  if (s < 0 || s >= STEPS.length) return;
+  // Cleanup recording if in progress
+  if (isRecording) cancelRecording();
+  step = s;
+  elapsed = 0;
+  isRecording = false;
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function confirmAndNext() {
+  if (step < 6) goTo(step + 1);
+  else goTo(7); // go to contact
+}
+
+function goToFirstMissing() {
+  for (let i = 1; i <= 6; i++) {
+    if (!recordings[i]) { goTo(i); return; }
+  }
+}
+
+function resetAll() {
+  step = 0; recordings = {}; userName = ''; userPhone = '';
+  render();
+}
+
+// ═══════ RECORDING ═══════
+let simMode = false; // 시뮬레이션 모드
+let simInterval = null;
+
+async function startRecording() {
+  // 먼저 실제 마이크 시도
+  try {
+    audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const source = audioCtx.createMediaStreamSource(audioStream);
+    analyserNode = audioCtx.createAnalyser();
+    analyserNode.fftSize = 256;
+    source.connect(analyserNode);
+
+    mediaRecorder = new MediaRecorder(audioStream);
+    chunks = [];
+    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(chunks, { type:'audio/webm' });
+      const url = URL.createObjectURL(blob);
+      recordings[step] = { blob, url };
+      isRecording = false;
+      render();
+    };
+    mediaRecorder.start();
+    simMode = false;
+  } catch(e) {
+    // 마이크 실패 → 시뮬레이션 모드
+    console.log('마이크 접근 불가, 시뮬레이션 모드로 전환:', e.message);
+    simMode = true;
+    analyserNode = null;
+    toast('🔧 시뮬레이션 모드로 녹음합니다','success');
+  }
+
+  isRecording = true;
+  elapsed = 0;
+
+  const startTime = Date.now();
+  const maxDur = STEPS[step].duration || 15;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    elapsed = (Date.now() - startTime) / 1000;
+    if (elapsed >= maxDur) {
+      stopRecording();
+      return;
+    }
+    updateTimerDisplay(maxDur);
+    // 시뮬레이션 모드: 상태바 업데이트
+    const stateBar = document.querySelector('.rec-state-bar');
+    if (stateBar && !stateBar.classList.contains('is-rec')) {
+      stateBar.className = 'rec-state-bar fade-up delay-1 is-rec';
+      stateBar.querySelector('.rec-state-left').innerHTML = '<span class="rec-state-icon rec">🔴</span><span class="rec-state-text">녹음 중...</span>';
+      stateBar.querySelector('.rec-state-right').innerHTML = '';
+    }
+  }, 100);
+
+  render();
+  if (!simMode) {
+    drawLiveWaveform();
+  } else {
+    drawSimWaveform();
+  }
+}
+
+function stopRecording() {
+  clearInterval(timerInterval);
+  clearInterval(simInterval);
+  cancelAnimationFrame(animFrame);
+
+  if (!simMode) {
+    // 실제 녹음 정지
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+    if (audioStream) audioStream.getTracks().forEach(t => t.stop());
+    // onstop 핸들러에서 render() 호출됨
+  } else {
+    // 시뮬레이션: 가짜 blob 생성
+    const fakePCM = new Float32Array(44100); // 1초짜리 무음
+    for (let i = 0; i < fakePCM.length; i++) fakePCM[i] = Math.sin(i * 0.05) * 0.3;
+    const blob = new Blob([fakePCM.buffer], { type:'audio/wav' });
+    const url = URL.createObjectURL(blob);
+    recordings[step] = { blob, url, sim: true };
+    isRecording = false;
+    render();
+  }
+}
+
+function cancelRecording() {
+  clearInterval(timerInterval);
+  clearInterval(simInterval);
+  cancelAnimationFrame(animFrame);
+  if (!simMode) {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      mediaRecorder.ondataavailable = null;
+      mediaRecorder.onstop = null;
+      mediaRecorder.stop();
+    }
+    if (audioStream) audioStream.getTracks().forEach(t => t.stop());
+  }
+  isRecording = false;
+}
+
+function reRecord() {
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  delete recordings[step];
+  elapsed = 0;
+  render();
+}
+
+function updateTimerDisplay(maxDur) {
+  const svg = document.querySelector('.timer-inner svg circle:nth-child(2)');
+  const numEl = document.querySelector('.timer-label .num');
+  if (svg) svg.setAttribute('stroke-dashoffset', 2*Math.PI*34*(1-Math.min(elapsed/maxDur,1)));
+  if (numEl) numEl.textContent = Math.max(0, Math.ceil(maxDur - elapsed));
+}
+
+// ═══════ WAVEFORM ═══════
+function roundedRect(ctx, x, y, w, h, r) {
+  // roundRect 미지원 브라우저 호환
+  if (ctx.roundRect) { ctx.beginPath(); ctx.roundRect(x,y,w,h,r); ctx.fill(); return; }
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath(); ctx.fill();
+}
+
+function drawIdleWaveform() {
+  const canvas = document.getElementById('waveCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const barCount = 48, barW = W / barCount - 2;
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    const t = Date.now()/1000;
+    for (let i=0;i<barCount;i++) {
+      const h = 4 + Math.sin(t*1.5+i*.3)*3 + Math.sin(t*2.5+i*.5)*2;
+      const x = i*(barW+2);
+      ctx.fillStyle = 'rgba(226,228,233,.5)';
+      roundedRect(ctx, x, H/2-h/2, barW, h, 2);
+    }
+    if (!isRecording) animFrame = requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+function drawLiveWaveform() {
+  const canvas = document.getElementById('waveCanvas');
+  if (!canvas || !analyserNode) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const barCount = 48, barW = W / barCount - 2;
+  const data = new Uint8Array(analyserNode.frequencyBinCount);
+  function draw() {
+    if (!isRecording) return;
+    ctx.clearRect(0,0,W,H);
+    analyserNode.getByteTimeDomainData(data);
+    for (let i=0;i<barCount;i++) {
+      const idx = Math.floor(i*data.length/barCount);
+      const v = (data[idx]-128)/128;
+      const h = Math.abs(v)*H*.85+3;
+      const x = i*(barW+2);
+      const grad = ctx.createLinearGradient(x,H/2-h/2,x,H/2+h/2);
+      grad.addColorStop(0,'#ff6b35');grad.addColorStop(1,'#ff3366');
+      ctx.fillStyle = grad;
+      roundedRect(ctx, x, H/2-h/2, barW, h, 2);
+    }
+    animFrame = requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// 시뮬레이션 웨이브폼 (마이크 없을 때)
+function drawSimWaveform() {
+  const canvas = document.getElementById('waveCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const barCount = 48, barW = W / barCount - 2;
+  function draw() {
+    if (!isRecording) return;
+    ctx.clearRect(0,0,W,H);
+    const t = Date.now()/1000;
+    for (let i=0;i<barCount;i++) {
+      const h = 6 + Math.sin(t*3+i*.4)*10 + Math.sin(t*5+i*.7)*8 + Math.random()*4;
+      const x = i*(barW+2);
+      const grad = ctx.createLinearGradient(x,H/2-h/2,x,H/2+h/2);
+      grad.addColorStop(0,'#ff6b35');grad.addColorStop(1,'#ff3366');
+      ctx.fillStyle = grad;
+      roundedRect(ctx, x, H/2-h/2, barW, h, 2);
+    }
+    animFrame = requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ═══════ PLAYBACK ═══════
+let currentAudio = null;
+function playRecording(stepIdx) {
+  const rec = recordings[stepIdx];
+  if (!rec) return;
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; updatePlayBtns('▶'); return; }
+  if (rec.sim) {
+    // 시뮬레이션 녹음 → 재생 시뮬레이션
+    updatePlayBtns('⏸');
+    toast('🔊 시뮬레이션 재생 중...','success');
+    setTimeout(() => { updatePlayBtns('▶'); }, 1500);
+    return;
+  }
+  currentAudio = new Audio(rec.url);
+  currentAudio.play().catch(() => { toast('재생할 수 없습니다','error'); currentAudio=null; updatePlayBtns('▶'); });
+  updatePlayBtns('⏸');
+  currentAudio.onended = () => { updatePlayBtns('▶'); currentAudio=null; };
+}
+function updatePlayBtns(icon) {
+  const b1 = document.getElementById('playBtn');
+  if (b1) b1.textContent = icon + (icon==='▶' ? ' 재생' : ' 정지');
+}
+
+// ═══════ CONTACT ═══════
+function formatPhone(v) {
+  const nums = v.replace(/\D/g,'').slice(0,11);
+  if (nums.length<=3) return nums;
+  if (nums.length<=7) return nums.slice(0,3)+'-'+nums.slice(3);
+  return nums.slice(0,3)+'-'+nums.slice(3,7)+'-'+nums.slice(7);
+}
+
+function checkContactReady() {
+  const btn = document.getElementById('submitBtn');
+  if (!btn) return;
+  const ready = userName.trim().length > 0 && userPhone.replace(/\D/g,'').length >= 10;
+  btn.style.opacity = ready ? '1' : '.4';
+  btn.style.pointerEvents = ready ? 'auto' : 'none';
+}
+
+async function submitDiagnosis() {
+  if (!userName.trim() || userPhone.replace(/\D/g,'').length < 10) return;
+
+  const btn = document.getElementById('submitBtn');
+  if (btn) { btn.style.opacity='.5'; btn.style.pointerEvents='none'; btn.textContent='⏳ 전송 중...'; }
+
+  // Convert recordings to base64 for server
+  const recData = {};
+  for (let i = 1; i <= 6; i++) {
+    if (recordings[i] && recordings[i].blob) {
+      try {
+        const buf = await recordings[i].blob.arrayBuffer();
+        const bytes = new Uint8Array(buf);
+        let binary = '';
+        bytes.forEach(b => binary += String.fromCharCode(b));
+        recData[i] = {
+          base64: btoa(binary),
+          type: recordings[i].blob.type || 'audio/webm',
+          label: DIAG_LABELS[i-1]?.label || ('테스트 '+i)
+        };
+      } catch(e) {
+        recData[i] = { label: DIAG_LABELS[i-1]?.label || ('테스트 '+i), sim: true };
+      }
+    } else if (recordings[i] && recordings[i].sim) {
+      recData[i] = { label: DIAG_LABELS[i-1]?.label || ('테스트 '+i), sim: true };
+    }
+  }
+
+  // Send to server API
+  try {
+    const resp = await fetch('https://voice-final.vercel.app/api/diagnosis', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: userName.trim(),
+        phone: userPhone,
+        recordings: recData
+      })
+    });
+    const result = await resp.json();
+    if (result.success) {
+      toast('진단이 접수되었습니다!','success');
+      goTo(8);
+    } else {
+      toast('전송 실패: '+(result.error||''),'error');
+      if (btn) { btn.style.opacity='1'; btn.style.pointerEvents='auto'; btn.textContent='🎤 녹음 전송 & 진단 신청'; }
+    }
+  } catch(e) {
+    // Fallback: save to localStorage
+    const entry = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+      name: userName.trim(),
+      phone: userPhone,
+      date: new Date().toISOString(),
+      recordings: recData
+    };
+    try {
+      const all = JSON.parse(localStorage.getItem('sonsuo_diagnosis') || '[]');
+      all.unshift(entry);
+      localStorage.setItem('sonsuo_diagnosis', JSON.stringify(all));
+    } catch{}
+    toast('진단이 접수되었습니다! (오프라인 저장)','success');
+    goTo(8);
+  }
+}
+
+// ═══════ TOAST ═══════
+function toast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type + ' show';
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ═══════ INIT ═══════
+render();
+</script>
+</body>
+</html>
