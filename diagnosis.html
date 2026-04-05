@@ -199,30 +199,30 @@ h1,h2{font-family:'Noto Serif KR',serif}
 /* Hide nav & footer when in iframe */
 .in-iframe .topnav{display:none}
 .in-iframe .site-footer{display:none}
-.in-iframe .container{padding-top:.5rem;padding-bottom:.5rem}
-.in-iframe .section-banner{padding:1rem 1.25rem;margin-bottom:.75rem}
+.in-iframe .container{padding-top:.75rem;padding-bottom:70px}
+.in-iframe .section-banner{padding:1.1rem 1.25rem;margin-bottom:.85rem}
 .in-iframe .section-banner h1{font-size:1.1rem}
-.in-iframe .section-banner p{font-size:.78rem;margin-top:.1rem}
+.in-iframe .section-banner p{font-size:.78rem;margin-top:.15rem}
 .in-iframe .section-banner .badge{font-size:.65rem;padding:.15rem .4rem}
-.in-iframe .progress-wrap{margin-bottom:.75rem}
-.in-iframe .step-dots{margin-bottom:.75rem}
-.in-iframe .rec-state-bar{padding:.4rem .75rem;margin-bottom:.75rem}
-.in-iframe .prompt-card{padding:1rem;margin-bottom:.75rem}
-.in-iframe .prompt-card .prompt-label{margin-bottom:.4rem;font-size:.68rem}
-.in-iframe .prompt-card .prompt-text{font-size:1.1rem;line-height:1.6}
-.in-iframe .guide-box{padding:.65rem .9rem;margin-bottom:.75rem}
-.in-iframe .guide-box p{font-size:.8rem;line-height:1.5}
-.in-iframe .waveform-wrap{height:48px;margin-bottom:.5rem}
+.in-iframe .progress-wrap{margin-bottom:.85rem}
+.in-iframe .step-dots{margin-bottom:.85rem}
+.in-iframe .rec-state-bar{padding:.45rem .75rem;margin-bottom:.85rem}
+.in-iframe .prompt-card{padding:1.1rem;margin-bottom:.85rem}
+.in-iframe .prompt-card .prompt-label{margin-bottom:.4rem;font-size:.7rem}
+.in-iframe .prompt-card .prompt-text{font-size:1.15rem;line-height:1.6}
+.in-iframe .guide-box{padding:.75rem 1rem;margin-bottom:.85rem}
+.in-iframe .guide-box p{font-size:.82rem;line-height:1.5}
+.in-iframe .waveform-wrap{height:50px;margin-bottom:.6rem}
 .in-iframe .timer-wrap{margin-bottom:.75rem}
-.in-iframe .timer-inner{width:64px;height:64px}
-.in-iframe .timer-inner svg{width:64px;height:64px;transform:rotate(-90deg) scale(.8);transform-origin:center}
-.in-iframe .timer-label .num{font-size:1.1rem}
-.in-iframe .rec-btn{width:52px;height:52px}
-.in-iframe .rec-status{margin-bottom:.5rem;font-size:.75rem}
-.in-iframe .post-record-card{padding:.85rem;margin-bottom:.5rem}
-.in-iframe .nav-row{padding-top:.5rem;margin-top:.5rem}
-.in-iframe .card{padding:1.25rem;margin-bottom:.75rem}
-.in-iframe .card-header{margin-bottom:.75rem;padding-bottom:.5rem}
+.in-iframe .timer-inner{width:70px;height:70px}
+.in-iframe .timer-inner svg{width:70px;height:70px}
+.in-iframe .timer-label .num{font-size:1.2rem}
+.in-iframe .rec-btn{width:56px;height:56px}
+.in-iframe .rec-status{margin-bottom:.6rem;font-size:.75rem}
+.in-iframe .post-record-card{padding:.9rem;margin-bottom:.6rem}
+.in-iframe .nav-row{position:fixed;bottom:0;left:0;right:0;padding:.6rem 1.5rem;margin-top:0;border-top:1px solid var(--border);background:var(--bg-card);box-shadow:0 -2px 8px rgba(0,0,0,.06);z-index:50}
+.in-iframe .card{padding:1.25rem;margin-bottom:.85rem}
+.in-iframe .card-header{margin-bottom:.85rem;padding-bottom:.6rem}
 </style>
 </head>
 <body>
@@ -442,7 +442,7 @@ function render() {
       <!-- Timer -->
       <div class="timer-wrap fade-up delay-3">
         <div class="timer-inner">
-          <svg width="80" height="80">
+          <svg viewBox="0 0 80 80" width="80" height="80" style="width:100%;height:100%">
             <circle cx="40" cy="40" r="34" fill="none" stroke="var(--border)" stroke-width="4"/>
             <circle cx="40" cy="40" r="34" fill="none" stroke="${isRecording?'url(#tGrad)': hasRecording ? 'var(--green)' :'var(--border)'}" stroke-width="4" stroke-linecap="round"
               stroke-dasharray="${2*Math.PI*34}" stroke-dashoffset="${hasRecording && !isRecording ? 0 : 2*Math.PI*34*(1-Math.min(elapsed/(s.duration||15),1))}"
